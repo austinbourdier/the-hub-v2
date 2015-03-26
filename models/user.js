@@ -22,7 +22,9 @@ var userSchema = new mongoose.Schema({
       id: String,
       token: String,
       email: String,
-      name: String,
+      profPicture: String,
+      firstName: String,
+      lastName: String
     },
     createdAt: {
       type: Date,

@@ -11,13 +11,15 @@ var cookieParser = require('cookie-parser');
 var passport = require('passport');
 var auth = require('./config/auth/init');
 var swig = require('swig');
-
+var http = require('http');
+var port = process.env.PORT || '3000';
 database.connect();
 auth(passport);
 
 var app = express();
 
 // view engine setup
+app.set('port', port);
 app.engine('html', swig.renderFile);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'html');
@@ -77,5 +79,18 @@ app.use(function(err, req, res, next) {
     });
 });
 
+
+
+/**
+ * Create HTTP server.
+ */
+
+var server = http.createServer(app);
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+
+server.listen(port);
 
 module.exports = app;
