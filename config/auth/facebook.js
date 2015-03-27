@@ -30,7 +30,7 @@ module.exports = function(passport) {
               if(err) return callback(err);
               callback(null, savedUser);
             });
-          })
+          });
         });
       });
   }))

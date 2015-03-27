@@ -1,8 +1,8 @@
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
-var logger = require('morgan');
 var cookieParser = require('cookie-parser');
+var logger = require('morgan');
 var bodyParser = require('body-parser');
 var database = require('./config/database');
 var routes = require('./routes/index');
@@ -13,6 +13,7 @@ var auth = require('./config/auth/init');
 var swig = require('swig');
 var http = require('http');
 var port = process.env.PORT || '3000';
+var apis = require('./apis')
 database.connect();
 auth(passport);
 
@@ -27,7 +28,7 @@ app.set('view engine', 'html');
 var sessionOpts = {
   saveUninitialized: true,
   resave: true,
-  secret: 'session-secret-12o3129873-0983234',
+  secret: process.env.sessionSecret || require('./config.js').get('session:secret'),
       cookie: {
         maxAge: new Date(Date.now() + 1209600000),
         expires: new Date(Date.now() + 1209600000)
@@ -86,7 +87,8 @@ app.use(function(err, req, res, next) {
  */
 
 var server = http.createServer(app);
-
+apis.text_service.app.listen(3001);
+apis.email_service.app.listen(3002);
 /**
  * Listen on provided port, on all network interfaces.
  */

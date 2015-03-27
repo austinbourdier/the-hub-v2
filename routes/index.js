@@ -6,13 +6,10 @@ var controller = require('../controller');
 module.exports = function(app, passport) {
   router.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email', 'public_profile', 'publish_actions'] }));
   router.get('/auth/facebook/callback', passport.authenticate('facebook', { successRedirect: '/auth/fb-success', failureRedirect: '/auth/fb-fail' }));
-  router.get('/auth/fb-success', function(req, res, next){
-    req.session.user = req.user;
-    res.redirect('/')
-  })
+  router.get('/auth/fb-success', controller.auth.createSessionUser)
 
   router.get('/auth/fb-fail', function(req, res, next){
-    res.redirect('/');
+    controller.redirectHome;
   })
 
   // require logged in for all routes starting now (don't need to be logged in to log in through facebook, above)
@@ -24,5 +21,6 @@ module.exports = function(app, passport) {
   });
 
   router.get('/auth/logout', controller.auth.logout)
+  router.get('/getUserTextsAndEmails', controller.db.getUserTextsAndEmails)
   app.use(router);
 }
