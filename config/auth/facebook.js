@@ -7,9 +7,9 @@ module.exports = function(passport) {
 
   passport.use( new FacebookStrategy({
 
-    clientID: config.get('facebook:app_id'),
-    clientSecret: config.get('facebook:app_secret'),
-    callbackURL: config.get('facebook:app_callback'),
+    clientID: process.env.facebookAppId || require('../../config.js').get('facebook:app_id'),
+    clientSecret: process.env.facebookAppSecret || require('../../config.js').get('facebook:app_secret'),
+    callbackURL: process.env.facebookAppCallback || require('../../config.js').get('facebook:app_callback'),
     },
 
   function(token, refreshToken, profile, callback) {

@@ -1,13 +1,12 @@
 var mongoose = require('mongoose');
 var User = require('../models/user.js');
-var config = require('../config.js');
 
 exports.connect = function() {
-  mongoose.connect(config.get('uri'), function(err){
+  mongoose.connect(process.env.mongoURI || require('../config.js').get('mongoURI'), function(err){
     if(err) console.log(err);
   });
   mongoose.connection.on('connected', function() {
-    console.log("Mongo successfully connected at", config.get('uri'));
+    console.log("Mongo successfully connected at", process.env.mongoURI || require('../config.js').get('mongoURI'));
   });
 
   mongoose.connection.on('disconnected', function(){
