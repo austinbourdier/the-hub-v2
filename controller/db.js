@@ -10,8 +10,11 @@ exports.getUserTextsAndEmails = function(req,res,next){
       method: "GET",
       headers:{"x-apikey":process.env.textApiKey || require('../config.js').get('text_service:apikey')}, "x-user-id": req.session.user._id}, function (error, response, body) {
         if (error) return done('TEXT SERVICE ERROR: ' + error);
+        console.log(JSON.parse(111)
         console.log(JSON.parse(response.body))
+        console.log(JSON.parse(222)
         console.log(JSON.parse(response.body).texts)
+        console.log(JSON.parse(333)
         console.log(JSON.parse(response.body)['texts'])
 
         done(null, {texts: JSON.parse(response.body).texts});
