@@ -4,7 +4,7 @@ exports.index = function(req, res) {
     Text.find({ 'senderID' : req.headers['x-user-id'] }, function(err, texts) {
       console.log('texts: ', texts)
       if(err) return res.status(500).send({error: "Internal Text Service error" + err})
-      res.json({texts:texts});
+      res.send({texts:texts});
     });
   } else {
     res.status(401).send({err: "Invalid API Key"});

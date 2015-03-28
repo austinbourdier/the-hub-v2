@@ -12,7 +12,6 @@ mainApp.controller('dashboardCtrl', function($scope, $http, $rootScope, $locatio
       } else {
         alert(data.err);
       }
-      console.log($scope.texts)
     });
   }
 })
