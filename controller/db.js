@@ -10,14 +10,7 @@ exports.getUserTextsAndEmails = function(req,res,next){
       method: "GET",
       headers:{"x-apikey":process.env.textApiKey || require('../config.js').get('text_service:apikey')}, "x-user-id": req.session.user._id}, function (error, response, body) {
         if (error) return done('TEXT SERVICE ERROR: ' + error);
-        console.log(JSON.parse(111))
-        console.log(JSON.parse(response.body))
-        console.log(JSON.parse(222))
-        console.log(JSON.parse(response.body).texts)
-        console.log(JSON.parse(333))
-        console.log(JSON.parse(response.body)['texts'])
-
-        done(null, {texts: JSON.parse(response.body).texts});
+        done(null, {texts: response.body});
       })
     },
     function(data, done){
@@ -25,20 +18,13 @@ exports.getUserTextsAndEmails = function(req,res,next){
       request({url:(process.env.email_service_url || require("../config.js").get('email_service').url) + '/1/emails',
       method: "GET",
       headers:{"x-apikey":process.env.emailApiKey || require('../config.js').get('email_service:apikey')}, "x-user-id": req.session.user._id}, function (error, response, body) {
-        console.log(3333)
-        console.log(error)
-        console.log(response.body.status)
         if (error) return done('EMAIL SERVICE ERROR: ' + error);
-        data.emails =  JSON.parse(response.body).emails;
-                console.log('yolo 2')
-
+        data.emails =  response.body;
         done(null, data);
       })
     }
     ], function(err, data){
       if(err) return res.send({err:err});
-              console.log('yolo 3')
-
       res.send(data)
     })
 };

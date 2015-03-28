@@ -5,14 +5,13 @@ mainApp.controller('dashboardCtrl', function($scope, $http, $rootScope, $locatio
   this.getUserTextsAndEmails = function(){
     $http.get('/getUserTextsAndEmails')
     .success(function (data, status, headers, config) {
-      console.log(data)
-      console.log(status)
       if(!data.err){
-        $scope.texts = data.texts;
-        $scope.emails = data.emails;
+        $scope.texts = JSON.parse(data.texts);
+        $scope.emails = JSON.parse(data.emails);
       } else {
         alert(data.err);
       }
+      console.log($scope.texts)
     });
   }
 })
