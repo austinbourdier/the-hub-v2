@@ -10,6 +10,7 @@ exports.getUserTextsAndEmails = function(req,res,next){
       method: "GET",
       headers:{"x-apikey":process.env.textApiKey || require('../config.js').get('text_service:apikey')}, "x-user-id": req.session.user._id}, function (error, response, body) {
         if (error) return done('TEXT SERVICE ERROR: ' + error);
+        console.log('yolo 1')
         done(null, {texts: JSON.parse(response.body).texts});
       })
     },
@@ -19,11 +20,15 @@ exports.getUserTextsAndEmails = function(req,res,next){
       headers:{"x-apikey":process.env.emailApiKey || require('../config.js').get('email_service:apikey')}, "x-user-id": req.session.user._id}, function (error, response, body) {
         if (error) return done('EMAIL SERVICE ERROR: ' + error);
         data.emails =  JSON.parse(response.body).emails;
+                console.log('yolo 2')
+
         done(null, data);
       })
     }
     ], function(err, data){
       if(err) return res.send({err:err});
+              console.log('yolo 3')
+
       res.send(data)
     })
 };
