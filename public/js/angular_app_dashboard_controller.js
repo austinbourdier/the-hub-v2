@@ -6,8 +6,8 @@ mainApp.controller('dashboardCtrl', function($scope, $http, $rootScope, $locatio
     $http.get('/getUserTextsAndEmails')
     .success(function (data, status, headers, config) {
       if(!data.err){
-        $scope.texts = JSON.parse(data.texts);
-        $scope.emails = JSON.parse(data.emails);
+        $scope.texts = JSON.stringify(data.texts);
+        $scope.emails = JSON.stringify(data.emails);
       } else {
         alert(data.err);
       }
