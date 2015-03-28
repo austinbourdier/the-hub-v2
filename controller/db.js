@@ -15,6 +15,7 @@ exports.getUserTextsAndEmails = function(req,res,next){
       })
     },
     function(data, done){
+      console.log('yolo 1.5')
       request({url:(process.env.email_service_url || require("../config.js").get('email_service').url) + '/1/emails',
       method: "GET",
       headers:{"x-apikey":process.env.emailApiKey || require('../config.js').get('email_service:apikey')}, "x-user-id": req.session.user._id}, function (error, response, body) {
