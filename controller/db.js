@@ -8,7 +8,7 @@ exports.getUserTextsAndEmails = function(req,res,next){
     function(done){
       request({url:(process.env.text_service_url || require("../config.js").get('text_service').url) + '/1/texts',
       method: "GET",
-      headers:{"x-apikey":process.env.textApiKey || require('../config.js').get('text_service:apikey')}, "x-user-id": req.session.user._id}, function (error, response, body) {
+      headers:{"x-apikey":process.env.textApiKey || require('../config.js').get('text_service:apikey')}, "x-user-id": req.session.user._id, "content-type":'application/json'}, function (error, response, body) {
         if (error) return done('TEXT SERVICE ERROR: ' + error);
         console.log(1)
         console.log(response)
@@ -29,7 +29,7 @@ exports.getUserTextsAndEmails = function(req,res,next){
     }
     ], function(err, data){
       if(err) return res.send({err:err});
-      res.send(data)
+      res.json(data)
     })
 };
 
