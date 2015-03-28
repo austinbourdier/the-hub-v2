@@ -22,8 +22,8 @@ exports.getUserTextsAndEmails = function(req,res,next){
         console.log(3333)
         console.log(error)
         console.log(response.body.status)
-        if (error) return done('EMAIL SERVICE ERROR: ' + error);
-        data.emails =  JSON.parse(response.body).emails;
+        if (error){} return done('EMAIL SERVICE ERROR: ' + error);
+        data.emails =  [];
                 console.log('yolo 2')
 
         done(null, data);
