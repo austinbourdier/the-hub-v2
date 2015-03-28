@@ -11,7 +11,7 @@ exports.getUserTextsAndEmails = function(req,res,next){
       headers:{"x-apikey":process.env.textApiKey || require('../config.js').get('text_service:apikey')}, "x-user-id": req.session.user._id}, function (error, response, body) {
         if (error) return done('TEXT SERVICE ERROR: ' + error);
         console.log('yolo 1')
-        done(null, {texts: JSON.parse(response.body).texts});
+        done(null, {texts: []});
       })
     },
     function(data, done){
