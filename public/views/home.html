@@ -1,50 +1,8 @@
 <div ng-init='ctrl.initialize();'>
   <div class='container'>
-    <div id='single_message'>
-      <div>
-      <a ng-click='ctrl.changeSingleMessageType("text");'>Single Text</a>
-      <a ng-click='ctrl.changeSingleMessageType("email");'>Single Email</a>
-      </div>
-      <form class="navbar-form navbar-left" role="single" ng-hide='ctrl.singleMessageType=="email"' ng-submit='ctrl.sendSingleText()'>
-        <div class="form-group">
-          <input type="text" class="form-control" name='recipient' ng-model='ctrl.singleTextRecipient' placeholder="Recipient">
-        </div>
-        <div class="form-group">
-          <input type="text" class="form-control" name='body' ng-model='ctrl.singleTextBody' placeholder="Enter Message Here...">
-        </div>
-        <div>
-          <button type="submit" class="btn btn-default">Submit</button>
-        </div>
-      </form>
-      <form class="navbar-form navbar-left" role="single" ng-show='ctrl.singleMessageType=="email"' action='ctrl.sendSingleEmail()' method='POST'>
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Email">
-        </div>
-        <div>
-          <button type="submit" class="btn btn-default">Submit</button>
-        </div>
-      </form>
-    </div>
-    <div id='scheduled_message'>
-      <a ng-click='ctrl.changeScheduledMessageType("text");'>Scheduled Text</a>
-      <a ng-click='ctrl.changeScheduledMessageType("email");'>Scheduled Email</a>
-      <div ui-view='scheduledView'></div>
-      <form ng-hide='scheduledMessageType=="email"' class="navbar-form navbar-left" role="scheduled">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Text">
-        </div>
-        <div>
-          <button type="submit" class="btn btn-default">Submit</button>
-        </div>
-      </form>
-      <form ng-show='scheduledMessageType=="email"' class="navbar-form navbar-left" role="scheduled">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Email">
-        </div>
-        <div>
-          <button type="submit" class="btn btn-default">Submit</button>
-        </div>
-      </form>
-    </div>
+    HOME
+    <a ng-click='ctrl.dropboxLogin()'>DROPBOX</a>
+    <a ng-click='ctrl.googleDriveLogin()'>GOOGLE DRIVE</a>
+    <a ng-click='ctrl.boxLogin()'>BOX</a>
   </div>
 </div>

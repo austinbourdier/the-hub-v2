@@ -1,7 +1,7 @@
 var User = require('../../models/user');
 var FacebookStrategy = require('passport-facebook').Strategy;
 var FB = require('fb');
-
+var request  = require("request")
 module.exports = function(passport) {
 
   passport.use( new FacebookStrategy({
@@ -13,6 +13,7 @@ module.exports = function(passport) {
 
   function(token, refreshToken, profile, callback) {
     process.nextTick(function() {
+
       FB.api('/me?fields=picture.type(large)&access_token=' + token, function(data) {
     // search for user in PG database, otherwise create new user. this user becomes the serialed req.user
       User.findOne({ 'facebook.id' : profile.id }, function(err, user) {

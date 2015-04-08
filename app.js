@@ -13,7 +13,6 @@ var auth = require('./config/auth/init');
 var swig = require('swig');
 var http = require('http');
 var port = process.env.PORT || '3000';
-var apis = require('./apis')
 database.connect();
 auth(passport);
 
@@ -46,7 +45,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session(sessionOpts));
 app.use(passport.initialize());
 app.use(passport.session());
-
 routes(app, passport);
 
 // catch 404 and forward to error handler
@@ -87,8 +85,6 @@ app.use(function(err, req, res, next) {
  */
 
 var server = http.createServer(app);
-apis.text_service.app.listen(3001);
-apis.email_service.app.listen(3002);
 /**
  * Listen on provided port, on all network interfaces.
  */
