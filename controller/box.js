@@ -1,6 +1,7 @@
 var Box = require('nodejs-box');
 var querystring = require('querystring');
 var request = require('request');
+console.log('env: ', process.env)
 var boxRedirect = process.env.boxRedirect || require('../config.js').get('box:redirect');
 var boxClientID = process.env.boxClientID || require('../config.js').get('box:client_id');
 var boxClientSecurityToken = process.env.boxClientSecurityToken || require('../config.js').get('box:client_security_token');
