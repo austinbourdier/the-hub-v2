@@ -4,7 +4,6 @@ var dropboxAppCallback = process.env.dropboxAppCallback || require('../config.js
 exports.getDBoxRequestToken = function(req, res, next) {
   DBoxApp.requesttoken(function(status, request_token){
         // TODO: error catch
-
     req.session.dbox_request_token = request_token;
     next();
   })
