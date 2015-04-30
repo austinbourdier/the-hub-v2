@@ -9,11 +9,10 @@ var oauth2Client = new OAuth2(process.env.googleDriveClientId || require('../con
 var googledrive = googleapis.drive({ version: 'v2', auth: oauth2Client });
 
 exports.generateAuthUrl = function(req, res, next){
-  var googleDriveURI = oauth2Client.generateAuthUrl({
+  res.redirect(oauth2Client.generateAuthUrl({
     access_type: 'offline',
     scope: 'https://www.googleapis.com/auth/drive'
-  });
-  res.redirect(googleDriveURI);
+  }));
 };
 
 exports.getGoogleDriveToken = function(req, res, next){
@@ -24,6 +23,14 @@ exports.getGoogleDriveToken = function(req, res, next){
       refresh_token: tokens.refresh_token
     });
     req.session.user.googledrive = googledrive;
-    res.send('/');
+    next();
   })
+};
+exports.getGoogleDriveFiles = function(req, res, next){
+  googledrive.files.list({ auth: oauth2Client }, function(err, data) {
+    // TODO: Error catch
+    req.session.user.googledrive = googledrive;
+    req.session.user.googledrivefiles = data;
+    res.redirect('/');
+  });
 };

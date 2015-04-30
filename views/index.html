@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html ng-app='mainApp'>
   <head>
+      <base href="/"></base>
     <script src='/js/script.js'></script>
     <link rel="stylesheet" href="/css/style.css"></link>
     <link rel="stylesheet" href="/assets/css/bootstrap.css"></link>
@@ -12,10 +13,14 @@
     <script src="/assets/js/angular-ui-router.js"></script>
     <script src="/js/angular_app.js"></script>
     <script src="/js/angular_config.js"></script>
-    <script src="/js/angular_app_dashboard_controller.js"></script>
+    <script type="text/javascript">
+    var user = {{user|raw|json_encode}}
+    </script>
     <script src="/js/angular_app_home_controller.js"></script>
   </head>
+
   <body>
+
 <div class="navbar">
     <span id='welcome'>Welcome {{user.facebook.firstName}}</span>
     <a id='home' ui-sref="home">Home</a>
@@ -23,6 +28,7 @@
     <a id='logout' href="/auth/logout">Log Out</a>
     <img id='profilePicture' src='{{user.facebook.profPicture}}'>
   </div>
+
   <div role="main" ui-view></div>
 </body>
 </html>

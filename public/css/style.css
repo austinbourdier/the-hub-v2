@@ -53,4 +53,12 @@
 #scheduled_message{
   float:right;
 }
-
+.individualContainer{
+  width: 33%;
+  float:left;
+}
+.mainContainer{
+  width: 80%;
+  margin-right: auto;
+  margin-left: auto;
+}

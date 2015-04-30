@@ -1,12 +1,7 @@
 mainApp.config(config)
 
-function config( $stateProvider, $urlRouterProvider, $interpolateProvider, $httpProvider ) {
+function config( $stateProvider, $urlRouterProvider, $locationProvider, $interpolateProvider, $httpProvider ) {
     
-  $interpolateProvider.startSymbol('[[');
-  $interpolateProvider.endSymbol(']]');
-  $urlRouterProvider.otherwise("/");
-  $httpProvider.defaults.useXDomain = true;
-  delete $httpProvider.defaults.headers.common['X-Requested-With'];
   $stateProvider
 
   .state('home', {
@@ -19,6 +14,9 @@ function config( $stateProvider, $urlRouterProvider, $interpolateProvider, $http
     controller: 'dashboardCtrl as ctrl',
     templateUrl : '/views/dashboard.html'
   })
-
+  $locationProvider.html5Mode(true);
+  $urlRouterProvider.otherwise("/");
+ $httpProvider.defaults.useXDomain = true;
+  delete $httpProvider.defaults.headers.common['X-Requested-With'];
 };
 

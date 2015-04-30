@@ -6,7 +6,8 @@ exports.googledrive = require('./googledrive');
 
 
 exports.render = function(req, res) {
+  console.log(req.session.user.googledrivefiles)
   if(req.session.user) return res.render('index', {user: req.session.user});
-  else res.render('login')
+  else res.render('login');
 };
 

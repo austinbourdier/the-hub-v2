@@ -1,26 +1,13 @@
-mainApp.controller('homeCtrl', function($scope, $http, $rootScope, $location) {
-  $http.defaults.useXDomain = true;
+mainApp.controller('homeCtrl', function($scope, $http,$window, $rootScope, $location) {
+  this.user = user;
   this.dropboxLogin = function(){
-    console.log('logging into dropbox')
-
-    $http.get('/auth/dropbox/login')
-    .success(function (data, status, headers, config) {
-      console.log(data)
-    });
+    $window.location = $window.location.protocol + '//' + $window.location.host + $window.location.pathname + 'auth/dropbox/login'
   }
   this.boxLogin = function(){
-    console.log('logging into box')
-    $http.get('/auth/box/login')
-    .success(function (data, status, headers, config) {
-      console.log(data)
-    });
+    $window.location = $window.location.protocol + '//' + $window.location.host + $window.location.pathname + 'auth/box/login'
   }
   this.googleDriveLogin = function(){
-    console.log('logging into google drive')
-
-    $http.get('/auth/googledrive/login')
-    .success(function (data, status, headers, config) {
-      console.log(data)
-    });
+    $window.location = $window.location.protocol + '//' + $window.location.host + $window.location.pathname + 'auth/googledrive/login'
   }
 })
+

@@ -4,21 +4,22 @@ var controller = require('../controller');
 
 
 module.exports = function(app, passport) {
+
   router.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email', 'public_profile', 'publish_actions'] }));
   router.get('/auth/facebook/callback', passport.authenticate('facebook', { successRedirect: '/auth/fb-success', failureRedirect: '/auth/fb-fail' }));
 
   router.get('/auth/dropbox/callback', controller.dropbox.getDBoxAccessToken, controller.dropbox.createDBoxClient);
   router.get('/auth/googledrive/login', controller.googledrive.generateAuthUrl);
   router.get('/auth/box/callback', controller.box.getBoxAccessToken, controller.box.createBoxClient);
-  router.get('/auth/googledrive/callback', controller.googledrive.getGoogleDriveToken);
+  router.get('/auth/googledrive/callback', controller.googledrive.getGoogleDriveToken, controller.googledrive.getGoogleDriveFiles);
   router.get('/auth/box/login', controller.box.authorizeBox);
   router.get('/auth/fb-success', controller.auth.createSessionUser);
   router.get('/auth/dropbox/login', controller.dropbox.getDBoxRequestToken, controller.dropbox.requestDBoxAccessToken);
 
+
   router.get('/auth/fb-fail', controller.render);
 
   // require logged in for all routes starting now (don't need to be logged in to log in through facebook, above)
-
   router.all('*', controller.auth.requireLoggedIn);
 
   router.get('/', controller.render);
