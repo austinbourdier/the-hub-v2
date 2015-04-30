@@ -14,15 +14,16 @@
     <script src="/js/angular_app.js"></script>
     <script src="/js/angular_config.js"></script>
     <script src="/js/angular_app_home_controller.js"></script>
+    <script src="/js/angular_app_navbar_controller.js"></script>
   </head>
 
   <body>
 
-<div class="navbar">
+<div class="navbar" ng-controller='navCtrl'>
     <span id='welcome'>Welcome {{user.facebook.firstName}}</span>
     <a id='home' ui-sref="home">Home</a>
     <a id='dashboard' ui-sref="dashboard">Dashboard</a>
-    <a id='logout' href="/auth/logout">Log Out</a>
+    <a id='logout' ng-click="logout()">Log Out</a>
     <img id='profilePicture' src='{{user.facebook.profPicture}}'>
   </div>
 
