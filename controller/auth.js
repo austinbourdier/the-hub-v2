@@ -5,7 +5,7 @@ exports.requireLoggedIn = function(req,res,next){
 
 exports.logout = function(req, res, next) {
   req.session.destroy();
-  exports.redirectHome(req,res, next);
+  res.redirect('/');
 };
 
 exports.createSessionUser = function(req, res, next) {

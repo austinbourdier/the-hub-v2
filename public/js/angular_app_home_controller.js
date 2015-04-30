@@ -1,5 +1,6 @@
 mainApp.controller('homeCtrl', function($scope, $http,$window, $rootScope, $location) {
-  this.user = user;
+  // this.user assigned to the swig
+  this.user = {{user|raw|json_encode}};
   this.dropboxLogin = function(){
     $window.location = $window.location.protocol + '//' + $window.location.host + $window.location.pathname + 'auth/dropbox/login'
   }
