@@ -5,16 +5,25 @@
     <script src='/js/script.js'></script>
     <link rel="stylesheet" href="/css/style.css"></link>
     <link rel="stylesheet" href="/assets/css/bootstrap.css"></link>
+    <link rel="stylesheet" href="/assets/css/dropzone.css"></link>
     <script src="/assets/js/jquery.js"></script>
     <script src="/assets/js/bootstrap.js"></script>
     <script src="/assets/js/jquery-ui.js"></script>
+    <script src="/assets/js/dropzone.js"></script>
     <script src="/assets/js/angular.js"></script>
     <script src="/assets/js/angular-route.js"></script>
     <script src="/assets/js/angular-ui-router.js"></script>
     <script src="/js/angular_app.js"></script>
     <script src="/js/angular_config.js"></script>
-    <script src="/js/angular_app_home_controller.js"></script>
+
     <script src="/js/angular_app_navbar_controller.js"></script>
+    <script type="text/javascript">
+      var user={{user|raw|json_encode}}
+    </script>
+    <script src="/js/angular_app_home_controller.js"></script>
+    <script src="/js/angular_app_manage_controller.js"></script>
+    <script src="/js/angular_app_dashboard_controller.js"></script>
+    <script src="/js/script.js"></script>
   </head>
 
   <body>
@@ -22,6 +31,7 @@
 <div class="navbar" ng-controller='navCtrl'>
     <span id='welcome'>Welcome {{user.facebook.firstName}}</span>
     <a id='home' ui-sref="home">Home</a>
+    <a id='manage' ui-sref="manage">Manage</a>
     <a id='dashboard' ui-sref="dashboard">Dashboard</a>
     <a id='logout' ng-click="logout()">Log Out</a>
     <img id='profilePicture' src='{{user.facebook.profPicture}}'>

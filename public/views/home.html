@@ -1,4 +1,8 @@
-<div ng-init='ctrl.initialize()'>
+<div  ng-init='ctrl.initialize()'>
+<form dropzone="dropzoneConfig"
+      class="dropzone"
+      id="dropzone">
+    </form>
   <div class='mainContainer'>
     <a ng-click='ctrl.dropboxLogin()'>DROPBOX</a>
     <a ng-click='ctrl.googleDriveLogin()'>GOOGLE DRIVE</a>
@@ -7,15 +11,15 @@
   <div class='mainContainer'>
   <span class='individualContainer'>
     DROPBOX FILES
-    <p ng-repeat='file in ctrl.user.dropboxfiles'>{{file}}</p>
+    <p ng-repeat='file in user.dropboxfiles'>{{file}}</p>
   </span>
   <span class='individualContainer'>
     GOOGLE DRIVE FILES
-    <p ng-repeat='file in ctrl.user.googledrivefiles.items'>{{file.title}}</p>
+    <p ng-repeat='file in user.googledrivefiles.items'>{{file.title}}</p>
   </span>
   <span class='individualContainer'>
     BOX FILES
-    <p ng-repeat='file in ctrl.user.boxfiles.item_collection.entries'>{{file.name}}</p>
+    <p ng-repeat='file in user.boxfiles.item_collection.entries'>{{file.name}}</p>
   </span>
   </div>
 </div>

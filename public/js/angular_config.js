@@ -9,6 +9,11 @@ function config( $stateProvider, $urlRouterProvider, $locationProvider, $interpo
     controller: 'homeCtrl as ctrl',
     templateUrl: "/views/home.html"
   })
+  .state('manage', {
+    url: '/manage',
+    controller: 'manageCtrl as ctrl',
+    templateUrl : '/views/manage.html'
+  })
   .state('dashboard', {
     url: '/dashboard',
     controller: 'dashboardCtrl as ctrl',

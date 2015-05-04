@@ -1,4 +1,4 @@
-var Box = require('nodejs-box');
+var Box = require('node-fullbox-api');
 var querystring = require('querystring');
 var request = require('request');
 var boxRedirect = process.env.boxRedirect || require('../config.js').get('box:redirect');
@@ -27,9 +27,27 @@ exports.getBoxAccessToken = function(req,res,next){
 };
 
 exports.createBoxClient = function(req, res, next){
+  console.log(Object.getOwnPropertyNames(req.session.user.box))
   req.session.user.box.folders.root(function(err, data){
     // TODO: Error catch
     req.session.user.boxfiles = data;
     res.redirect('/');
   })
+};
+
+exports.upload = function(req,res,next){
+  request.post({
+  url: 'https://upload.box.com/api/2.0/files/content',
+  headers: {
+    Authorization: 'Bearer ' + req.session.user.box.options.access_token
+  },
+  form: {
+    filename: '/../public/uploaded/files/1.pdf',
+    parent_id: '0'
+  }
+}, function (error, response, body) {
+  console.log(error)
+  console.log(response)
+  console.log(body)
+});
 };

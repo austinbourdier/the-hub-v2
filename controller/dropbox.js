@@ -22,6 +22,7 @@ exports.getDBoxAccessToken = function(req, res, next) {
   })
 };
 
+
 exports.createDBoxClient = function(req, res, next) {
   req.session.user.dropbox = DBoxApp.client(req.dbox_access_token);
   req.session.user.dropbox.metadata('/',{
@@ -35,4 +36,9 @@ exports.createDBoxClient = function(req, res, next) {
     req.session.user.dropboxfiles = data.contents;
     res.redirect('/');
   })
+};
+
+exports.upload = function(req,res,next){
+
+  next();
 };

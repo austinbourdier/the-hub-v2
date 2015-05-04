@@ -13,8 +13,9 @@ var cookieParser = require('cookie-parser');
 var passport = require('passport');
 var auth = require('./config/auth/init');
 var swig = require('swig');
+var multer = require('multer');
 var http = require('http');
-var port = process.env.PORT || '3000';
+var port = process.env.PORT || '8888';
 database.connect();
 auth(passport);
 
@@ -38,6 +39,7 @@ var sessionOpts = {
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(multer());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -47,23 +49,6 @@ app.use(session(sessionOpts));
 app.use(passport.initialize());
 app.use(passport.session());
 
-var allowCrossDomain = function(req, res, next) {
-  // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-
-    // Request methods you wish to allow
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-
-    // Request headers you wish to allow
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-
-    // Set to true if you need the website to include cookies in the requests sent
-    // to the API (e.g. in case you use sessions)
-    res.setHeader('Access-Control-Allow-Credentials', true);
-
-    next();
-  }
-app.use(allowCrossDomain);
 routes(app, passport);
 
 // catch 404 and forward to error handler

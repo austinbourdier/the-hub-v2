@@ -23,6 +23,7 @@ module.exports = function(app, passport) {
   router.all('*', controller.auth.requireLoggedIn);
 
   router.get('/', controller.render);
+  router.post('/file-upload', controller.googledrive.upload, controller.googledrive.getGoogleDriveFiles);
 
   router.get('/auth/logout', controller.auth.logout);
   app.use(router);

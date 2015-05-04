@@ -25,6 +25,10 @@
   position: absolute;
 }
 #home{
+  right: 460px;
+  position: absolute;
+}
+#manage{
   right: 320px;
   position: absolute;
 }
