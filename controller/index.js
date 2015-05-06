@@ -11,3 +11,9 @@ exports.render = function(req, res) {
   else res.render('login');
 };
 
+
+
+exports.sendBackUploadedFiles = function(req, res) {
+  res.send({user: req.session.user})
+};
+

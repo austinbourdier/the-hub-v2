@@ -15,10 +15,14 @@ mainApp.controller('homeCtrl', function($scope, $http,$window, $rootScope, $loca
     },
     'eventHandlers': {
       'sending': function (file, xhr, formData) {
+        // TODO: error catch
+      },
+      'error': function (file, xhr, formData) {
+        // TODO: error catch
       },
       'success': function (file, response, body) {
-        // TODO: shouldn't be adding the name of file to array. for some reason the user from the server viw file 'index.html' isn't reevaluating.
-        $scope.user.googledrivefiles.items.unshift({title:file.name});
+        // TODO: error catch
+        $scope.user = response.user;
         $scope.$apply()
       }
     }

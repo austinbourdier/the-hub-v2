@@ -31,47 +31,26 @@ exports.getGoogleDriveToken = function(req, res, next){
       access_token: tokens.access_token,
       refresh_token: tokens.refresh_token
     });
-    req.session.user.googledrive = googledrive;
     next();
   })
 };
 exports.getGoogleDriveFiles = function(req, res, next){
   googledrive.files.list({ auth: oauth2Client }, function(err, data) {
     // TODO: Error catch
-    req.session.user.googledrive = googledrive;
     req.session.user.googledrivefiles = data;
-    res.redirect('/');
+    next();
   });
 };
 
 exports.upload = function(req,res,next){
-  fs.readFile(req.files.file.path, function (err, data) {
-  // ...
-    var newPath = __dirname + "/uploads/" + req.files.file.originalname;
-    fs.writeFile(newPath, data, function (err) {
-      // TODO: ERR CATCH
-      googledrive.files.insert({resource: {
-        title: req.files.file.originalname,
-        mimeType: req.files.file.mimetype
-      },
-      media: {
-        mimeType: req.files.file.mimetype,
-        body: data
-      }, auth: oauth2Client }, function(err, data) {
-      // TODO: Error catch
-      next();
-    });
+  googledrive.files.insert({resource: {
+    title: req.files.file.originalname,
+    mimeType: req.files.file.mimetype
+  },media: {
+    mimeType: req.files.file.mimetype,
+    body: req.fileStream
+  }, auth: oauth2Client }, function(err, data) {
+    // TODO: Error catch
+    next();
   });
-});
-
 };
-
-
-
-// exports.upload = function(req, res, next){
-//   uploader.post(req, res, function(obj) {
-//     res.send(JSON.stringify(obj));
-//     next();
-//   })
-// };
-
