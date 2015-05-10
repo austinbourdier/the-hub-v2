@@ -1,4 +1,5 @@
-mainApp.config(config)
+angular.module('mainApp', ['ui.router'])
+.config(config)
 
 function config( $stateProvider, $urlRouterProvider, $locationProvider, $interpolateProvider, $httpProvider ) {
     
@@ -21,7 +22,7 @@ function config( $stateProvider, $urlRouterProvider, $locationProvider, $interpo
   })
   $locationProvider.html5Mode(true);
   $urlRouterProvider.otherwise("/");
- $httpProvider.defaults.useXDomain = true;
+  $httpProvider.defaults.useXDomain = true;
   delete $httpProvider.defaults.headers.common['X-Requested-With'];
 };
 

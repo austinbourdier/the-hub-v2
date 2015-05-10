@@ -1,4 +1,5 @@
-mainApp.controller('dashboardCtrl', function($scope, $http,$window, $rootScope, $location) {
+angular.module('mainApp')
+.controller('dashboardCtrl', function($scope, $http,$window, $rootScope, $location) {
 
 })
 

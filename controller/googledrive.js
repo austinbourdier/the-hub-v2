@@ -6,7 +6,6 @@ var oauth2Client = new OAuth2(process.env.googleDriveClientId || require('../con
   process.env.googleDriveClientSecret || require('../config.js').get('googleDrive:client_secret'),
   process.env.googleDriveClientRedirect || require('../config.js').get('googleDrive:redirect')
   );
-var googledrive = googleapis.drive({ version: 'v2', auth: oauth2Client });
 var fs = require('fs');
 var options = {
   tmpDir: __dirname + '/../public/uploaded/tmp',
@@ -31,26 +30,35 @@ exports.getGoogleDriveToken = function(req, res, next){
       access_token: tokens.access_token,
       refresh_token: tokens.refresh_token
     });
+    req.session.googleDriveAccess = true;
     next();
   })
 };
 exports.getGoogleDriveFiles = function(req, res, next){
-  googledrive.files.list({ auth: oauth2Client }, function(err, data) {
-    // TODO: Error catch
-    req.session.user.googledrivefiles = data;
+  if(req.session.googleDriveAccess){
+    googleapis.drive({ version: 'v2', auth: oauth2Client }).files.list({ auth: oauth2Client }, function(err, data) {
+      // TODO: Error catch
+      req.session.user.googledrivefiles = data;
+      next();
+    });
+  } else {
     next();
-  });
+  }
 };
 
 exports.upload = function(req,res,next){
-  googledrive.files.insert({resource: {
-    title: req.files.file.originalname,
-    mimeType: req.files.file.mimetype
-  },media: {
-    mimeType: req.files.file.mimetype,
-    body: req.fileStream
-  }, auth: oauth2Client }, function(err, data) {
-    // TODO: Error catch
+  if(req.session.googleDriveAccess){
+    googleapis.drive({ version: 'v2', auth: oauth2Client }).files.insert({resource: {
+      title: req.files.file.originalname,
+      mimeType: req.files.file.mimetype
+    },media: {
+      mimeType: req.files.file.mimetype,
+      body: req.fileStream
+    }, auth: oauth2Client }, function(err, data) {
+      // TODO: Error catch
+      next();
+    });
+  } else {
     next();
-  });
+  }
 };

@@ -28,15 +28,15 @@
 
   <body>
 
-<div class="navbar" ng-controller='navCtrl'>
-    <span id='welcome'>Welcome {{user.facebook.firstName}}</span>
-    <a id='home' ui-sref="home">Home</a>
-    <a id='manage' ui-sref="manage">Manage</a>
-    <a id='dashboard' ui-sref="dashboard">Dashboard</a>
-    <a id='logout' ng-click="logout()">Log Out</a>
-    <img id='profilePicture' src='{{user.facebook.profPicture}}'>
-  </div>
+    <div class="navbar" ng-controller='navCtrl'>
+      <span id='welcome'>Welcome {{user.facebook.firstName}}</span>
+      <a id='home' ui-sref="home">Home</a>
+      <a id='manage' ui-sref="manage">Manage</a>
+      <a id='dashboard' ui-sref="dashboard">Dashboard</a>
+      <a id='logout' ng-click="logout()">Log Out</a>
+      <img id='profilePicture' src='{{user.facebook.profPicture}}'>
+    </div>
 
-  <div role="main" ui-view></div>
-</body>
+    <div role="main" ui-view></div>
+  </body>
 </html>

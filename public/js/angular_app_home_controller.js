@@ -1,48 +1,50 @@
-mainApp.controller('homeCtrl', function($scope, $http,$window, $rootScope, $location) {
-  $scope.user = user;
+angular.module('mainApp')
+  .controller('homeCtrl', homeController)
+  .service('UserService', UserService)
+  .directive('dropzone', DropzoneDirective);
+
+function homeController($scope, UserService) {
+  this.user = user;
   this.dropboxLogin = function(){
-    $window.location = $window.location.protocol + '//' + $window.location.host + '/auth/dropbox/login'
+    UserService.logIn('dropbox');
   }
   this.boxLogin = function(){
-    $window.location = $window.location.protocol + '//' + $window.location.host + '/auth/box/login'
+    UserService.logIn('box');
   }
   this.googleDriveLogin = function(){
-    $window.location = $window.location.protocol + '//' + $window.location.host + '/auth/googledrive/login'
+    UserService.logIn('googledrive');
   }
-  $scope.dropzoneConfig = {
-    'options': { // passed into the Dropzone constructor
-      'url': '/file-upload'
-    },
-    'eventHandlers': {
-      'sending': function (file, xhr, formData) {
-        // TODO: error catch
+}
+
+function UserService($window){
+  this.logIn = function(cloud){
+    $window.location = $window.location.protocol + '//' + $window.location.host + '/auth/' + cloud + '/login';
+  };
+}
+
+function DropzoneDirective() {
+  return function (scope, element, attrs) {
+    var dropzoneConfig = {
+      'options': { // passed into the Dropzone constructor
+        'url': '/file-upload'
       },
-      'error': function (file, xhr, formData) {
-        // TODO: error catch
-      },
-      'success': function (file, response, body) {
-        // TODO: error catch
-        $scope.user = response.user;
-        $scope.$apply()
+      'eventHandlers': {
+        'error': function (file, xhr, formData) {
+          // TODO: error catch
+        },
+        'success': function (file, response, body) {
+          // TODO: error catch
+          this.user = response.user;
+          this.$apply()
+        }
       }
     }
-  };
-
-})
-
-.directive('dropzone', function () {
-  return function (scope, element, attrs) {
-    var config, dropzone;
-
-    config = scope[attrs.dropzone];
-
     // create a Dropzone for the element with the given options
-    dropzone = new Dropzone(element[0], config.options);
+    var dropzone = new Dropzone(element[0], dropzoneConfig.options);
 
     // bind the given event handlers
-    angular.forEach(config.eventHandlers, function (handler, event) {
+    angular.forEach(dropzoneConfig.eventHandlers, function (handler, event) {
       dropzone.on(event, handler);
     });
-      // });
   };
-});
+}

@@ -1,25 +1,27 @@
 <div  ng-init='ctrl.initialize()'>
-<form dropzone="dropzoneConfig"
+<form dropzone="ctrl.dropzoneConfig"
       class="dropzone"
       id="dropzone">
     </form>
+    <div id='cloudLogins'>
+      <a ng-click='ctrl.dropboxLogin()'><img src='../images/dropbox.png'></a>
+      <a ng-click='ctrl.googleDriveLogin()'><img src='../images/googledrive.png'></a>
+      <a ng-click='ctrl.boxLogin()'><img src='../images/box.png'></a>
+    </div>
   <div class='mainContainer'>
-    <a ng-click='ctrl.dropboxLogin()'>DROPBOX</a>
-    <a ng-click='ctrl.googleDriveLogin()'>GOOGLE DRIVE</a>
-    <a ng-click='ctrl.boxLogin()'>BOX</a>
   </div>
   <div class='mainContainer'>
   <span class='individualContainer'>
     DROPBOX FILES
-    <p ng-repeat='file in user.dropboxfiles'>{{file}}</p>
+    <p ng-repeat='file in ctrl.user.dropboxfiles'>{{file}}</p>
   </span>
   <span class='individualContainer'>
     GOOGLE DRIVE FILES
-    <p ng-repeat='file in user.googledrivefiles.items'>{{file.title}}</p>
+    <p ng-repeat='file in ctrl.user.googledrivefiles.items'>{{file.title}}</p>
   </span>
   <span class='individualContainer'>
     BOX FILES
-    <p ng-repeat='file in user.boxfiles.item_collection.entries'>{{file.name}}</p>
+    <p ng-repeat='file in ctrl.user.boxfiles.item_collection.entries'>{{file.name}}</p>
   </span>
   </div>
 </div>

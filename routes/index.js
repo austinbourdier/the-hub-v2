@@ -8,7 +8,7 @@ module.exports = function(app, passport) {
   router.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email', 'public_profile', 'publish_actions'] }));
   router.get('/auth/facebook/callback', passport.authenticate('facebook', { successRedirect: '/auth/fb-success', failureRedirect: '/auth/fb-fail' }));
 
-  router.get('/auth/dropbox/callback', controller.dropbox.getDBoxAccessToken, controller.dropbox.createDBoxClient, controller.dropbox.getDropBoxFiles, controller.render);
+  router.get('/auth/dropbox/callback', controller.dropbox.getDBoxAccessToken, controller.dropbox.getDropBoxFiles, controller.render);
   router.get('/auth/googledrive/login', controller.googledrive.generateAuthUrl);
   router.get('/auth/box/callback', controller.box.getBoxAccessToken, controller.box.getBoxFiles,controller.render);
   router.get('/auth/googledrive/callback', controller.googledrive.getGoogleDriveToken, controller.googledrive.getGoogleDriveFiles, controller.render);

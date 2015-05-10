@@ -19,15 +19,31 @@
   font-size: 24px;
   font-family: Arial, Helvetica, Arial, sans-serif !important;
 }
+#cloudLogins{
+  width:50%;
+  float:right;
+  min-height: 150px;
+}
 
+#cloudLogins a{
+  width:25%;
+  min-width:25%;
+}
+#cloudLogins img{
+  width:150px;
+  height:150px;
+  cursor:pointer;
+}
 #logout{
   right: 10px;
   position: absolute;
 }
+
 #home{
   right: 460px;
   position: absolute;
 }
+
 #manage{
   right: 320px;
   position: absolute;
@@ -38,6 +54,11 @@
 }
 #welcome{
   top: 13px;
+}
+#dropzone{
+  min-height: 150px;
+  width:50%;
+  float:left;
 }
 #profilePicture{
   width: 50px;
