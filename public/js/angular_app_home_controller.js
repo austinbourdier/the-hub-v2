@@ -6,17 +6,6 @@ angular.module('mainApp')
 function homeController($rootScope, $scope, UserService) {
   $scope.user = {};
 
-  $scope.$on('userLoggedIn', function(user){
-    console.log('user', user);
-  })
-
-  // $scope.$watch('user', function() {
-  //     console.log('broadcast')
-  //     console.log('useruser', $scope.user)
-  //     $rootScope.$broadcast('userLoggedIn', $scope.user);
-  //     console.debug('user in ctrl', $scope.user);
-  // })
-
   this.dropboxLogin = function() {
     UserService.logIn('dropbox');
   }
