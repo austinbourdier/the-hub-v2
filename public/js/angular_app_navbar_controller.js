@@ -4,7 +4,6 @@ angular.module('mainApp')
     $window.location = $window.location.protocol + '//' + $window.location.host + $window.location.pathname + 'auth/logout'
   }
   $scope.$on('userLoggedIn', function($event, user){
-  	var firstName = user.facebook.firstName;
   	console.debug('User broadcasted to navCtrl :: navCtrl <-- home ctrl <--  directive', user);
   })
 })

@@ -4,12 +4,18 @@ angular.module('mainApp')
   .directive('dropzone', DropzoneDirective);
 
 function homeController($rootScope, $scope, UserService) {
-  $scope.user = user;
-  $scope.$watch('user', function() {
-    if ($scope.user.email) {
-    $rootScope.$broadcast('userLoggedIn', $scope.user);
-    }
+  $scope.user = {};
+
+  $scope.$on('userLoggedIn', function(user){
+    console.log('user', user);
   })
+
+  // $scope.$watch('user', function() {
+  //     console.log('broadcast')
+  //     console.log('useruser', $scope.user)
+  //     $rootScope.$broadcast('userLoggedIn', $scope.user);
+  //     console.debug('user in ctrl', $scope.user);
+  // })
 
   this.dropboxLogin = function() {
     UserService.logIn('dropbox');
@@ -29,7 +35,7 @@ function UserService($window) {
 }
 
 
-function DropzoneDirective() {
+function DropzoneDirective($rootScope) {
   return function(scope, element, attrs) {
     var dropzoneConfig = {
         'options': { // passed into the Dropzone constructor
@@ -43,7 +49,6 @@ function DropzoneDirective() {
             console.log(file, response, body)
               // TODO: error catch
             scope.user = response.user;
-            // this.$apply()
           }
         }
       }
