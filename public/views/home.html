@@ -17,7 +17,7 @@
   </span>
   <span class='individualContainer'>
     GOOGLE DRIVE FILES
-    <p ng-repeat='file in user.googledrivefiles.items'> {{file.title}}<span ng-click='ctrl.deleteFromCloud(file.id, "googledrive")'>Delete</span></p>
+    <p ng-repeat='file in user.googledrivefiles.items'> {{file.title}}<span ng-click='ctrl.deleteFromCloud(file.id, "googledrive")'>Delete</span><a ng-click='ctrl.downloadFromCloud(file.id, "googledrive")'>Download</a></p>
   </span>
   <span class='individualContainer'>
     BOX FILES

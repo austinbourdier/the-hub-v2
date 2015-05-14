@@ -37,7 +37,7 @@ exports.getGoogleDriveToken = function(req, res, next){
 
 exports.getGoogleDriveFiles = function(req, res, next){
   if(req.session.googleDriveAccess){
-    googleapis.drive({ version: 'v2', auth: oauth2Client }).files.list({ auth: oauth2Client }, function(err, data) {
+    googleapis.drive({ version: 'v2', auth: oauth2Client }).files.list({}, function(err, data) {
       // TODO: Error catch
       req.session.user.googledrivefiles = data;
       next();
@@ -47,11 +47,26 @@ exports.getGoogleDriveFiles = function(req, res, next){
   }
 };
 
+exports.downloadGoogleDriveFiles = function(req, res, next){
+  if(req.session.googleDriveAccess){
+    googleapis.drive({ version: 'v2', auth: oauth2Client }).files.get({fileId:req.params.id}, function(err, file) {
+      res.setHeader('Content-disposition', 'attachment; filename=' + file.title);
+      res.setHeader('Content-type', file.mimeType);
+      request({method:"GET",url:file.downloadUrl,
+        headers: {Authorization: 'Bearer ' + oauth2Client.credentials.access_token}
+      },function(err, response, body) {
+      }).pipe(res).on('error', next);
+    })
+  } else {
+    next();
+  }
+};
+
 exports.deleteGoogleDriveFiles = function(req, res, next){
   if(req.session.googleDriveAccess){
     googleapis.drive({ version: 'v2', auth: oauth2Client }).files.delete({ fileId: req.body.id }, function(err, data) {
       // TODO: Error catch
-      next();
+      console.log(err, data)
     });
   } else {
     next();
