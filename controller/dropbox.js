@@ -1,5 +1,7 @@
 var dbox  = require("dbox");
-var DBoxApp   = dbox.app({ "app_key": process.env.dropboxAppKey || require('../config.js').get('dropbox:app_key'), "app_secret": process.env.dropboxAppSecret || require('../config.js').get('dropbox:app_secret')})
+var fs  = require("fs");
+var path  = require("path");
+var DBoxApp   = dbox.app({'root' : 'dropbox', "app_key": process.env.dropboxAppKey || require('../config.js').get('dropbox:app_key'), "app_secret": process.env.dropboxAppSecret || require('../config.js').get('dropbox:app_secret')})
 var dropboxAppCallback = process.env.dropboxAppCallback || require('../config.js').get('dropbox:app_callback');
 var dropbox;
 exports.getDBoxRequestToken = function(req, res, next) {
@@ -38,6 +40,35 @@ exports.getDropBoxFiles = function(req,res,next){
       req.session.user.dropboxfiles = data.contents;
       next();
     })
+  } else {
+    next();
+  }
+};
+
+exports.deleteDropBoxFiles = function(req,res,next){
+  if(req.session.dropboxAccess){
+    DBoxApp.client(req.session.dbox_access_token).rm(req.body.id,function(status, data){
+      // TODO: error catch
+      console.log(status, data)
+      next();
+    })
+  } else {
+    next();
+  }
+};
+
+exports.downloadDropBoxFiles = function(req,res,next){
+  if(req.session.dropboxAccess){
+    var client = DBoxApp.client(req.session.dbox_access_token);
+    var file = req.params.id;
+    client.metadata(file, function(status, reply) {
+      res.setHeader('Content-disposition', 'attachment; filename=' + file);
+      res.setHeader('Content-type', reply.mime_type);
+      client
+        .stream(file)
+        .pipe(res)
+        .on('error', next);
+    });
   } else {
     next();
   }

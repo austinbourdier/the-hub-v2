@@ -17,3 +17,5 @@ exports.sendBackUploadedFiles = function(req, res) {
   res.send({user: req.session.user})
 };
 
+
+

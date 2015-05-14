@@ -41,18 +41,32 @@ exports.getBoxFiles = function(req, res, next){
   }
 };
 
+exports.deleteBoxFiles = function(req, res, next){
+  if(req.session.boxAccess){
+    request({method:"DELETE",url:"https://api.box.com/2.0/files/"+req.body.id.id,
+      headers:{
+        'Authorization': 'Bearer ' + req.session.box_access_token,
+        'If-Match':req.body.id.etag
+      }
+    },function(err, response, body) {
+        next();
+    });
+  } else {
+    next();
+  }
+};
+
+
 exports.upload = function(req,res,next){
   if(req.session.boxAccess){
     fs.stat(req.files.file.path, function(err, stats) {
       restler.post("https://upload.box.com/api/2.0/files/content", {
-        headers:{
-          'Authorization': 'Bearer ' + req.session.box_access_token
-        },
-          multipart: true,
-          data: {
-              "folder_id": "0",
-              "filename": restler.file(path.join(req.files.file.path), req.files.file.originalname, stats.size, req.files.file.originalname, req.files.file.mimetype)
-          }
+        headers:{'Authorization': 'Bearer ' + req.session.box_access_token},
+        multipart: true,
+        data: {
+          "folder_id": "0",
+          "filename": restler.file(path.join(req.files.file.path), req.files.file.originalname, stats.size, req.files.file.originalname, req.files.file.mimetype)
+        }
       }).on("complete", function(err, response, body) {
           // TODO: Error catch
           // status code 409 signifies that a file with the same name is already in this folder, need to catch for this

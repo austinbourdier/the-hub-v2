@@ -24,6 +24,10 @@ module.exports = function(app, passport) {
 
   router.get('/', controller.render);
   router.post('/file-upload', controller.uploader.readFile,controller.googledrive.upload, controller.googledrive.getGoogleDriveFiles,controller.dropbox.upload, controller.dropbox.getDropBoxFiles, controller.box.upload,controller.box.getBoxFiles, controller.sendBackUploadedFiles);
+  router.post('/delete/dropbox', controller.dropbox.deleteDropBoxFiles, controller.dropbox.getDropBoxFiles, controller.sendBackUploadedFiles);
+  router.post('/delete/googledrive', controller.googledrive.deleteGoogleDriveFiles, controller.googledrive.getGoogleDriveFiles, controller.sendBackUploadedFiles);
+  router.post('/delete/box', controller.box.deleteBoxFiles, controller.box.getBoxFiles, controller.sendBackUploadedFiles);
+  router.get('/download/dropbox/:id', controller.dropbox.downloadDropBoxFiles);
 
   router.get('/auth/logout', controller.auth.logout);
   app.use(router);

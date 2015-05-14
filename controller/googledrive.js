@@ -34,11 +34,23 @@ exports.getGoogleDriveToken = function(req, res, next){
     next();
   })
 };
+
 exports.getGoogleDriveFiles = function(req, res, next){
   if(req.session.googleDriveAccess){
     googleapis.drive({ version: 'v2', auth: oauth2Client }).files.list({ auth: oauth2Client }, function(err, data) {
       // TODO: Error catch
       req.session.user.googledrivefiles = data;
+      next();
+    });
+  } else {
+    next();
+  }
+};
+
+exports.deleteGoogleDriveFiles = function(req, res, next){
+  if(req.session.googleDriveAccess){
+    googleapis.drive({ version: 'v2', auth: oauth2Client }).files.delete({ fileId: req.body.id }, function(err, data) {
+      // TODO: Error catch
       next();
     });
   } else {
