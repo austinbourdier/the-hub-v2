@@ -56,6 +56,18 @@ exports.deleteBoxFiles = function(req, res, next){
   }
 };
 
+exports.downloadBoxFiles = function(req, res, next){
+  if(req.session.boxAccess){
+    res.setHeader('Content-disposition', 'attachment; filename=' + req.params.id);
+    request({method:"GET",url:"https://api.box.com/2.0/files/"+req.params.id+'/content',
+      headers:{'Authorization': 'Bearer ' + req.session.box_access_token}
+    },function(err, response, body) {
+      next();
+    }).pipe(res).on('error', next);
+  } else {
+    next();
+  }
+};
 
 exports.upload = function(req,res,next){
   if(req.session.boxAccess){

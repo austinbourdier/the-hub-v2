@@ -38,6 +38,7 @@
     "querystring": "^0.2.0",
     "request": "^2.54.0",
     "serve-favicon": "~2.2.0",
+    "serve-static": "^1.9.2",
     "supertest": "^0.15.0",
     "swig": "^1.4.2"
   }

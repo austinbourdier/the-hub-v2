@@ -21,7 +21,7 @@
   </span>
   <span class='individualContainer'>
     BOX FILES
-    <p ng-repeat='file in user.boxfiles.item_collection.entries'>{{file.name}} <span ng-click='ctrl.deleteFromCloud({id:file.id, etag:file.etag}, "box")'>Delete</span></p>
+    <p ng-repeat='file in user.boxfiles.item_collection.entries'>{{file.name}} <span ng-click='ctrl.deleteFromCloud({id:file.id, etag:file.etag}, "box")'>Delete</span><a ng-click='ctrl.downloadFromCloud(file.id, "box")'>Download</a></p>
   </span>
   </div>
 </div>

@@ -66,7 +66,7 @@ exports.deleteGoogleDriveFiles = function(req, res, next){
   if(req.session.googleDriveAccess){
     googleapis.drive({ version: 'v2', auth: oauth2Client }).files.delete({ fileId: req.body.id }, function(err, data) {
       // TODO: Error catch
-      console.log(err, data)
+      next();
     });
   } else {
     next();

@@ -1,0 +1,8 @@
+{
+  "restartable": "rs",
+  "ignore": [
+     "public/*",
+  ],
+  "verbose": true,
+  "ext": "js"
+}
