@@ -10,7 +10,6 @@
   position: absolute;
   font-size: 24px;
   font-family: Arial, Helvetica, Arial, sans-serif !important;
-
 }
 .navbar a{
   color: white;
@@ -81,6 +80,8 @@
 .individualContainer{
   width: 33%;
   float:left;
+  height: 500px;
+  overflow-y:scroll;
 }
 .mainContainer{
   width: 80%;

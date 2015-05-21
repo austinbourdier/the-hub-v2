@@ -1,27 +1,26 @@
 <div  ng-init='ctrl.initialize()'>
+
 <form dropzone="dropzoneConfig"
       class="dropzone"
       id="dropzone">
     </form>
     <div id='cloudLogins'>
-      <a ng-click='ctrl.cloudLogin("dropbox")'><img src='../images/dropbox.png'></a>
-      <a ng-click='ctrl.cloudLogin("googledrive")'><img src='../images/googledrive.png'></a>
-      <a ng-click='ctrl.cloudLogin("box")'><img src='../images/box.png'></a>
+      <cloud-login  ng-repeat='c in ctrl.clouds' cloud="{{c}}"></cloud-login>
     </div>
   <div class='mainContainer'>
   </div>
   <div class='mainContainer'>
   <span class='individualContainer'>
     DROPBOX FILES
-    <p ng-repeat='file in user.dropboxfiles'>{{file.path}} <span ng-click='ctrl.deleteFromCloud(file.path, "dropbox")'>Delete</span><a ng-click='ctrl.downloadFromCloud(file.path, "dropbox")'>Download</a></p>
+    <p ng-repeat='file in user.dropboxfiles'><span class='glyphicon glyphicon-cloud-download' ng-click='ctrl.downloadFromCloud(file.path, "dropbox")'></span><span class='glyphicon glyphicon-remove' ng-click='ctrl.deleteFromCloud(file.path, "dropbox")'></span>{{file.path}}</p>
   </span>
   <span class='individualContainer'>
     GOOGLE DRIVE FILES
-    <p ng-repeat='file in user.googledrivefiles.items'> {{file.title}}<span ng-click='ctrl.deleteFromCloud(file.id, "googledrive")'>Delete</span><a ng-click='ctrl.downloadFromCloud(file.id, "googledrive")'>Download</a></p>
+    <p ng-repeat='file in user.googledrivefiles.items'><span class='glyphicon glyphicon-cloud-download' ng-click='ctrl.downloadFromCloud(file.id, "googledrive")'></span><span class='glyphicon glyphicon-remove' ng-click='ctrl.deleteFromCloud(file.id, "googledrive")'></span>{{file.title}}</p>
   </span>
   <span class='individualContainer'>
     BOX FILES
-    <p ng-repeat='file in user.boxfiles.item_collection.entries'>{{file.name}} <span ng-click='ctrl.deleteFromCloud({id:file.id, etag:file.etag}, "box")'>Delete</span><a ng-click='ctrl.downloadFromCloud(file.id, "box")'>Download</a></p>
+    <p ng-repeat='file in user.boxfiles.item_collection.entries'><span class='glyphicon glyphicon-cloud-download' ng-click='ctrl.downloadFromCloud(file.id, "box")'></span><span class='glyphicon glyphicon-remove' ng-click='ctrl.deleteFromCloud({id:file.id, etag:file.etag}, "box")'></span>{{file.name}}</p>
   </span>
   </div>
 </div>
