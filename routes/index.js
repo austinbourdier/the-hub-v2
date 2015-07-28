@@ -16,7 +16,7 @@ module.exports = function(app, passport) {
 
   // oAuth logins
   router.get('/auth/dropbox/login', controller.dropbox.getDBoxRequestToken, controller.dropbox.requestDBoxAccessToken);
-  router.get('/auth/onedrive/login', controller.onedrive.getOneDriveAccessToken);
+  router.get('/auth/onedrive/login', controller.onedrive.getOneDriveAuthCode);
   router.get('/auth/googledrive/login', controller.googledrive.generateAuthUrl);
   router.get('/auth/box/login', controller.box.authorizeBox);
 

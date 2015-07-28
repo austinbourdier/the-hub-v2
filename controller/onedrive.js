@@ -10,6 +10,7 @@ exports.getOneDriveAuthCode = function(req, res, next) {
     redirect_uri: process.env.onedriveRedirectUrl || require('../config.js').get('onedrive:redirect'),
     response_type: 'code'
   };
+  console.log('https://login.live.com/oauth20_authorize.srf?' + querystring.stringify(onedriveQueryData))
   res.redirect('https://login.live.com/oauth20_authorize.srf?' + querystring.stringify(onedriveQueryData));
 };
 
@@ -21,7 +22,7 @@ exports.getOneDriveAccessToken = function(req, res, next) {
     code: req.query.code,
     grant_type: 'authorization_code'
   };
-  console.log(onedriveQueryData)
+  console.log(req.query)
   request({method: 'POST', url: 'https://login.live.com/oauth20_token.srf',
     form: onedriveQueryData,
     headers: {
@@ -29,7 +30,7 @@ exports.getOneDriveAccessToken = function(req, res, next) {
     },
   }, function(err, response, body) {
     // TODO: err catch
-    console.log(response)
+    console.log(response.body)
     console.log("HERERERERERERERRERERERE!!!!!!!!!")
   });
 };
