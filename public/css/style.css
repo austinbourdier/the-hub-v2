@@ -84,7 +84,78 @@
   overflow-y:scroll;
 }
 .mainContainer{
+  height: 600px;
+}
+#admin-section{
+  height: 150px;
+}
+
+#main-container, #admin-section{
   width: 80%;
   margin-right: auto;
   margin-left: auto;
+}
+
+#login-box{
+  margin-right: auto;
+  border-radius: 10px;
+  margin-left: auto;
+  margin-top: 10em;
+  padding-left: 15px;
+  padding-right: 15px;
+  width: 35%;
+  background-color: #57BECC;
+  text-align:center;
+}
+
+#login-box img {
+  width: 200px;
+  height: 42px;
+}
+
+#login-body{
+  background-color: #737E7F;
+}
+
+#accounts-dropdown{
+
+}
+
+#box-login{
+  right: 250px;
+  height: 100%;
+  line-height: 60px;
+  position: absolute;
+  font-size: 24px;
+  font-family: Arial, Helvetica, Arial, sans-serif !important;
+}
+#dropbox-login{
+  right: 450px;
+  height: 100%;
+  line-height: 60px;
+  position: absolute;
+  font-size: 24px;
+  font-family: Arial, Helvetica, Arial, sans-serif !important;
+}
+#googledrive-login{
+  right: 650px;
+  height: 100%;
+  line-height: 60px;
+  position: absolute;
+  font-size: 24px;
+  font-family: Arial, Helvetica, Arial, sans-serif !important;
+}
+
+.nonactive-account{
+  -webkit-filter: grayscale(100%);
+       -moz-filter: grayscale(100%);
+         -o-filter: grayscale(100%);
+        -ms-filter: grayscale(100%);
+            filter: grayscale(100%);
+}
+
+tr img {
+  width:50px;
+  height:50px;
+  cursor:pointer;
 }

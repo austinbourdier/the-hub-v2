@@ -2,6 +2,7 @@ exports.auth = require('./auth');
 exports.db = require('./db');
 exports.box = require('./box');
 exports.dropbox = require('./dropbox');
+exports.onedrive = require('./onedrive');
 exports.uploader = require('./uploader');
 exports.googledrive = require('./googledrive');
 

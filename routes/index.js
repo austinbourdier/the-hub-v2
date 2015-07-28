@@ -16,11 +16,13 @@ module.exports = function(app, passport) {
 
   // oAuth logins
   router.get('/auth/dropbox/login', controller.dropbox.getDBoxRequestToken, controller.dropbox.requestDBoxAccessToken);
+  router.get('/auth/onedrive/login', controller.onedrive.getOneDriveAccessToken);
   router.get('/auth/googledrive/login', controller.googledrive.generateAuthUrl);
   router.get('/auth/box/login', controller.box.authorizeBox);
 
   // oAuth callbacks
   router.get('/auth/dropbox/callback', controller.dropbox.getDBoxAccessToken, controller.dropbox.getDropBoxFiles, controller.render);
+  router.get('/auth/onedrive/callback', controller.onedrive.printResponse);
   router.get('/auth/googledrive/callback', controller.googledrive.getGoogleDriveToken, controller.googledrive.getGoogleDriveFiles, controller.render);
   router.get('/auth/box/callback', controller.box.getBoxAccessToken, controller.box.getBoxFiles,controller.render);
 
@@ -31,11 +33,13 @@ module.exports = function(app, passport) {
 
   // file deletion route
   router.post('/delete/dropbox', controller.dropbox.deleteDropBoxFiles, controller.dropbox.getDropBoxFiles, controller.sendBackUploadedFiles);
+  // router.post('/delete/onedrive', controller.onedrive.deleteonedriveFiles, controller.onedrive.getGoogleDriveFiles, controller.sendBackUploadedFiles);
   router.post('/delete/googledrive', controller.googledrive.deleteGoogleDriveFiles, controller.googledrive.getGoogleDriveFiles, controller.sendBackUploadedFiles);
   router.post('/delete/box', controller.box.deleteBoxFiles, controller.box.getBoxFiles, controller.sendBackUploadedFiles);
 
   // file download routes
   router.get('/download/dropbox/:id', controller.dropbox.downloadDropBoxFiles);
+  // router.get('/download/onedrive/:id', controller.onedrive.downloadGoogleDriveFiles);
   router.get('/download/googledrive/:id', controller.googledrive.downloadGoogleDriveFiles);
   router.get('/download/box/:id', controller.box.downloadBoxFiles);
 

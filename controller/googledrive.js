@@ -55,7 +55,9 @@ exports.downloadGoogleDriveFiles = function(req, res, next){
       request({method:"GET",url:file.downloadUrl,
         headers: {Authorization: 'Bearer ' + oauth2Client.credentials.access_token}
       },function(err, response, body) {
-      }).pipe(res).on('error', next);
+        // TODO: err catch
+        next();
+      });
     })
   } else {
     next();
