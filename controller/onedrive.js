@@ -2,24 +2,36 @@ var onedrive  = require("node-onedrive-unofficial");
 var request = require('request');
 var querystring = require('querystring');
 
-exports.getOneDriveAccessToken = function(req, res, next) {
-  var data = {
+
+exports.getOneDriveAuthCode = function(req, res, next) {
+  var onedriveQueryData = {
     client_id: process.env.onedriveClientId || require('../config.js').get('onedrive:client_id'),
     scope: 'onedrive.readwrite wl.offline_access wl.signin',
     redirect_uri: process.env.onedriveRedirectUrl || require('../config.js').get('onedrive:redirect'),
     response_type: 'code'
   };
-  request({method:'GET', url:'https://login.live.com/oauth20_authorize.srf',
-    qs: data
-  }, function(err, response, body) {
-    // TODO: err catch
-    next();
-  });
+  res.redirect('https://login.live.com/oauth20_authorize.srf?' + querystring.stringify(onedriveQueryData));
 };
 
-exports.printResponse = function(req, res, next) {
-  console.log(req.query)
-  console.log("HERERERERERERER")
+exports.getOneDriveAccessToken = function(req, res, next) {
+  var onedriveQueryData = {
+    client_id: process.env.onedriveClientId || require('../config.js').get('onedrive:client_id'),
+    redirect_uri: process.env.onedriveRedirectUrl || require('../config.js').get('onedrive:redirect'),
+    client_secret: process.env.onedriveClientSecret || require('../config.js').get('onedrive:client_secret'),
+    code: req.query.code,
+    grant_type: 'authorization_code'
+  };
+  console.log(onedriveQueryData)
+  request({method: 'POST', url: 'https://login.live.com/oauth20_token.srf',
+    form: onedriveQueryData,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+  }, function(err, response, body) {
+    // TODO: err catch
+    console.log(response)
+    console.log("HERERERERERERERRERERERE!!!!!!!!!")
+  });
 };
 // exports.requestDBoxAccessToken = function(req, res, next) {
 //   res.redirect(req.session.dbox_request_token.authorize_url + "&oauth_callback="+dropboxAppCallback);
