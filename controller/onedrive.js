@@ -22,7 +22,6 @@ exports.getOneDriveAccessToken = function(req, res, next) {
     code: req.query.code,
     grant_type: 'authorization_code'
   };
-  console.log(req.query)
   request({method: 'POST', url: 'https://login.live.com/oauth20_token.srf',
     form: onedriveQueryData,
     headers: {
@@ -32,40 +31,26 @@ exports.getOneDriveAccessToken = function(req, res, next) {
     // TODO: err catch
     console.log(response.body)
     console.log("HERERERERERERERRERERERE!!!!!!!!!")
+    req.session.onedrive_access_token = response.body.access_token;
+    next();
   });
 };
-// exports.requestDBoxAccessToken = function(req, res, next) {
-//   res.redirect(req.session.dbox_request_token.authorize_url + "&oauth_callback="+dropboxAppCallback);
-// };
 
-// exports.getDBoxAccessToken = function(req, res, next) {
-//   DBoxApp.accesstoken(req.session.dbox_request_token, function(status, access_token){
-//         // TODO: error catch
-
-//     req.session.dbox_access_token = access_token;
-//     req.session.dropboxAccess = true;
-//     next();
-//   })
-// };
-
-
-// exports.getDropBoxFiles = function(req,res,next){
-//   if(req.session.dropboxAccess){
-//     DBoxApp.client(req.session.dbox_access_token).metadata('/',{
-//       file_limit         : 10000,
-//       list               : true,
-//       include_deleted    : false,
-//       locale             : "en",
-//       root             : "dropbox"
-//     },function(status, data){
-//       // TODO: error catch
-//       req.session.user.dropboxfiles = data.contents;
-//       next();
-//     })
-//   } else {
-//     next();
-//   }
-// };
+exports.getOneDriveFiles = function(req,res,next){
+  if(req.session.onedrive_access_token){
+    onedrive.api(req.session.onedrive_access_token, {
+      path: '/drive/root'
+    }, function(folderListing, err) {
+      if (!err) {
+        console.log('YOOOOOo')
+        console.log(folderListing)
+    // do something with folderListing
+      }
+    });
+  } else {
+    next();
+  }
+};
 
 // exports.deleteDropBoxFiles = function(req,res,next){
 //   if(req.session.dropboxAccess){
