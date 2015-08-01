@@ -45,6 +45,9 @@ exports.getOneDriveFiles = function(req,res,next){
         console.log('YOOOOOo')
         console.log(folderListing)
     // do something with folderListing
+      } else {
+        console.log("YOYOYOYOYOYY")
+        console.log(err)
       }
     });
   } else {
