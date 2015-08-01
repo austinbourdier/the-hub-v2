@@ -37,6 +37,8 @@ exports.getOneDriveAccessToken = function(req, res, next) {
 };
 
 exports.getOneDriveFiles = function(req,res,next){
+  console.log('STILL HERE')
+  console.log(req.session.onedrive_access_token)
   if(req.session.onedrive_access_token){
     onedrive.api(req.session.onedrive_access_token, {
       path: '/drive/root'
