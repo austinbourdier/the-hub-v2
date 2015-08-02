@@ -32,6 +32,8 @@ exports.getOneDriveAccessToken = function(req, res, next) {
     console.log(response.body)
     console.log("HERERERERERERERRERERERE!!!!!!!!!")
     console.log(response.body.access_token)
+    console.log(response.body['access_token'])
+    console.log(response.body.scope)
 
     req.session.onedrive_access_token = response.body.access_token;
     req.session.save();
