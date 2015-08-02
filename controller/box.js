@@ -21,8 +21,8 @@ exports.getBoxAccessToken = function(req,res,next){
     body: querystring.stringify(body)
   }, function(error, response, body){
     // TODO: Error catch
-    req.session.box_access_token = JSON.parse(response.body).access_token
-    req.session.box_refresh_token = JSON.parse(response.body).refresh_token
+    req.session.box_access_token = JSON.parse(response.body).access_token;
+    req.session.box_refresh_token = JSON.parse(response.body).refresh_token;
     req.session.boxAccess = true;
     next();
   })
