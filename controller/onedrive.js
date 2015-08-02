@@ -31,27 +31,23 @@ exports.getOneDriveAccessToken = function(req, res, next) {
     // TODO: err catch
 
     req.session.onedrive_access_token = JSON.parse(response.body).access_token;
-    // req.session.save();
     next();
   });
 };
 
 exports.getOneDriveFiles = function(req,res,next){
-  console.log('STILL HERE')
-  console.log(req.session.onedrive_access_token)
   if(req.session.onedrive_access_token){
-    onedrive.api(req.session.onedrive_access_token, {
-      path: '/drive'
-    }, function(folderListing, err) {
-      if (!err) {
-        console.log('YOOOOOo')
-        console.log(folderListing)
-        req.session.user.onedrivefiles = folderListing;
-    // do something with folderListing
-      } else {
-        console.log("YOYOYOYOYOYY")
-        console.log(err)
-      }
+    request({method: 'GET', url: 'https://api.onedrive.com/v1.0/drive',
+      headers: {
+        'Authorization': 'Bearer ' + req.session.box_access_token,
+      },
+    }, function(err, response, body) {
+      // TODO: err catch
+      console.log('MADE IT')
+      console.log(err)
+      console.log(response)
+      console.log('END IT')
+      next();
     });
   } else {
     next();
