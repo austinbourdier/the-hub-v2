@@ -29,15 +29,9 @@ exports.getOneDriveAccessToken = function(req, res, next) {
     },
   }, function(err, response, body) {
     // TODO: err catch
-    console.log(response.body)
-    console.log(typeof response.body)
-    console.log("HERERERERERERERRERERERE!!!!!!!!!")
-    var oneDriveResponse = response.body;
-    console.log(oneDriveResponse)
-    console.log(oneDriveResponse.access_token)
 
-    req.session.onedrive_access_token = response.body.access_token;
-    req.session.save();
+    req.session.onedrive_access_token = JSON.parse(response.body).access_token;
+    // req.session.save();
     next();
   });
 };
