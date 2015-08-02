@@ -39,7 +39,7 @@ exports.getOneDriveFiles = function(req,res,next){
   if(req.session.onedrive_access_token){
     request({method: 'GET', url: 'https://api.onedrive.com/v1.0/drive',
       headers: {
-        'Authorization': 'Bearer ' + req.session.box_access_token,
+        'Authorization': 'Bearer ' + req.session.onedrive_access_token,
       },
     }, function(err, response, body) {
       // TODO: err catch
