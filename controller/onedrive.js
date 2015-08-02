@@ -1,4 +1,3 @@
-var onedrive  = require("node-onedrive-unofficial");
 var request = require('request');
 var querystring = require('querystring');
 
@@ -10,7 +9,6 @@ exports.getOneDriveAuthCode = function(req, res, next) {
     redirect_uri: process.env.onedriveRedirectUrl || require('../config.js').get('onedrive:redirect'),
     response_type: 'code'
   };
-  console.log('https://login.live.com/oauth20_authorize.srf?' + querystring.stringify(onedriveQueryData))
   res.redirect('https://login.live.com/oauth20_authorize.srf?' + querystring.stringify(onedriveQueryData));
 };
 
@@ -35,8 +33,8 @@ exports.getOneDriveAccessToken = function(req, res, next) {
   });
 };
 
-exports.getOneDriveFiles = function(req,res,next){
-  if(req.session.onedrive_access_token){
+exports.getOneDriveFiles = function(req, res, next) {
+  if(req.session.onedrive_access_token) {
     request({method: 'GET', url: 'https://api.onedrive.com/v1.0/drive/root',
       headers: {
         'Authorization': 'Bearer ' + req.session.onedrive_access_token,

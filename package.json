@@ -32,7 +32,6 @@
     "multer": "^0.1.8",
     "nconf": "^0.7.1",
     "node-fullbox-api": "^0.1.4",
-    "node-onedrive-unofficial": "0.0.6",
     "nodejs-box": "0.0.9",
     "passport": "^0.2.1",
     "passport-facebook": "^2.0.0",
