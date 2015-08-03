@@ -44,9 +44,13 @@ exports.getOneDriveFiles = function(req, res, next) {
       req.session.user.onedrivefiles = JSON.parse(response.body).value.filter(function(object){
         return object["@content.downloadUrl"];
       });
+      console.log('req.uploadedOneDriveFile')
+      console.log(req.uploadedOneDriveFile)
       if(req.uploadedOneDriveFile) {
         req.session.user.onedrivefiles.push(req.uploadedOneDriveFile);
       }
+      console.log('req.session.user.onedrivefiles')
+      console.log(req.session.user.onedrivefiles)
       next();
     });
   } else {

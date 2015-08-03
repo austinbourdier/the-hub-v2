@@ -4,22 +4,21 @@ angular.module('mainApp')
 function homeController($scope, $http, $window, UserService, FileService) {
   this.user = UserService.normalizeUser(user);
   this.clouds = ['dropbox', 'googledrive', 'box', 'onedrive'];
-  this.cloudLogin = function(cloud){
+  this.cloudLogin = function(cloud) {
     UserService.logIn(cloud);
   }
-  this.deleteFromCloud = function(id, cloud){
-    FileService.delete(id, cloud).then(function(data){
+  this.deleteFromCloud = function(id, cloud) {
+    FileService.delete(id, cloud).then(function(data) {
       $scope.user = data.user;
-    }, function(err){
+    }, function(err) {
       console.log(err)
       // TODO: err catch
     });
 
   }
-  this.downloadFromCloud = function(id, cloud){
+  this.downloadFromCloud = function(id, cloud) {
     FileService.download(id, cloud);
   }
-  this.organizeFiles
   $scope.dropzoneConfig = {
     'options': { 'url': '/file-upload' },
     'eventHandlers': {
