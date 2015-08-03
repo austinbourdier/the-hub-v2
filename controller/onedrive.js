@@ -71,13 +71,13 @@ exports.deleteOneDriveFiles = function(req, res, next) {
 };
 exports.downloadOneDriveFiles = function(req, res, next) {
   if(req.session.onedrive_access_token) {
-    // res.setHeader('Content-disposition', 'attachment; filename=' + file.name);
     // res.setHeader('Content-type', file.mimeType);
     request({method: 'GET', url: 'https://api.onedrive.com/v1.0/drive/items/' + req.params.id,
       headers: {
         'Authorization': 'Bearer ' + req.session.onedrive_access_token
       },
     }, function(err, response, body) {
+        res.setHeader('Content-disposition', 'attachment; filename=' + JSON.parse(response.body).name);
       request({method: 'GET', url: 'https://api.onedrive.com/v1.0/drive/items/' + JSON.parse(response.body).id + '/content',
         headers: {
           'Authorization': 'Bearer ' + req.session.onedrive_access_token
@@ -88,7 +88,6 @@ exports.downloadOneDriveFiles = function(req, res, next) {
         console.log('WHUUUUUT UPPPPPP')
         console.log('WHUUUUUT UPPPPPP')
         console.log(err)
-        console.log(response.body)
         next();
       });
     });
