@@ -15,7 +15,7 @@
       </thead>
       <tbody>
         <tr ng-repeat='file in user.files' class='row'>
-          <td><img ng-src='../images/{{file.source}}.png'/></td><td>{{file.title}}</td><td><span class='glyphicon glyphicon-cloud-download' ng-click='ctrl.downloadFromCloud(file.path, "dropbox")'></td><td><span class='glyphicon glyphicon-remove' ng-click='ctrl.deleteFromCloud(file.path, "dropbox")'></span></td>
+          <td><img ng-src='../images/{{file.source}}.png'/></td><td>{{file.title}}</td><td><span class='glyphicon glyphicon-cloud-download' ng-click='ctrl.downloadFromCloud(file.path, file.source)'></td><td><span class='glyphicon glyphicon-remove' ng-click='ctrl.deleteFromCloud(file.path, file.source)'></span></td>
         </tr>
       </tbody>
     </table>
