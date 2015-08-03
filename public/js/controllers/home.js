@@ -9,7 +9,7 @@ function homeController($scope, $http, $window, UserService, FileService) {
   }
   this.deleteFromCloud = function(id, cloud) {
     FileService.delete(id, cloud).then(function(data) {
-      $scope.user = data.user;
+      $scope.user = UserService.normalizeUser(data.user);
     }, function(err) {
       console.log(err)
       // TODO: err catch
