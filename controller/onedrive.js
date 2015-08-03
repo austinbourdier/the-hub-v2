@@ -53,21 +53,23 @@ exports.getOneDriveFiles = function(req, res, next) {
 
 exports.upload = function(req, res, next) {
   if(req.session.onedrive_access_token) {
-    request({method: 'PUT', url: 'https://api.onedrive.com/v1.0/drive/root/' + req.files.file.originalname + '/content',
+    request({method: 'GET', url: 'https://api.onedrive.com/v1.0/drive/root',
       headers: {
         'Authorization': 'Bearer ' + req.session.onedrive_access_token,
       },
-      body: req.fileStream
     }, function(err, response, body) {
-      // TODO: err catch
-      console.log('YOYOYOYOOYOYOYOYOYOYOYOYO')
-      if(err) {
-        console.log('ERRRRRROOOOOOORRR')
-        console.log(err)
-      }
+      console.log('CONTENTS')
       console.log(response.body)
-      next();
-    });
+      request({method: 'PUT', url: 'https://api.onedrive.com/v1.0/drive/root/Documents/' + req.files.file.originalname + '/content',
+        headers: {
+          'Authorization': 'Bearer ' + req.session.onedrive_access_token,
+        },
+        body: req.fileStream
+      }, function(err, response, body) {
+        // TODO: err catch
+        next();
+      });
+    })
   } else {
     next();
   }
