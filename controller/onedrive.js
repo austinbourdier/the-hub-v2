@@ -73,7 +73,7 @@ exports.upload = function(req, res, next) {
         body: req.fileStream
       }, function(err, response, body) {
         // TODO: err catch
-        req.uploadedOneDriveFile = response.body;
+        req.uploadedOneDriveFile = JSON.parse(response.body);
         console.log('HERERERERERERERE')
         console.log(response.body)
         next();
