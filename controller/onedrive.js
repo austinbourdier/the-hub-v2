@@ -61,7 +61,8 @@ exports.upload = function(req, res, next) {
         'Authorization': 'Bearer ' + req.session.onedrive_access_token,
       },
     }, function(err, response, body) {
-      request({method: 'PUT', url: 'https://api.onedrive.com/v1.0/drive/items/' + JSON.parse(response.body) + '/children/' + req.files.file.originalname + '/content',
+      // TODO: err catch
+      request({method: 'PUT', url: 'https://api.onedrive.com/v1.0/drive/items/' + JSON.parse(response.body).id + '/children/' + req.files.file.originalname + '/content',
         headers: {
           'Authorization': 'Bearer ' + req.session.onedrive_access_token,
         },
