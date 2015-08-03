@@ -48,3 +48,41 @@ module.exports = function(app, passport) {
 
   app.use(router);
 };
+{
+    "@odata.context": "https://api.onedrive.com/v1.0/$metadata#drives('me')/items/$entity",
+    "createdBy": {
+        "application": {
+            "displayName": "OneDrive website",
+            "id": "44048800"
+        },
+        "user": {
+            "displayName": "Austin Bourdier",
+            "id": "7ed6275f2340188c"
+        }
+    },
+    "createdDateTime": "2015-08-02T21:03:23.053Z",
+    "cTag": "adDo3RUQ2Mjc1RjIzNDAxODhDITEwMy42MzU3NDE0NjI0NDE3MzAwMDA",
+    "eTag": "aN0VENjI3NUYyMzQwMTg4QyExMDMuMA",
+    "id": "7ED6275F2340188C!103",
+    "lastModifiedBy": {
+        "application": {
+            "displayName": "OneDrive website",
+            "id": "44048800"
+        },
+        "user": {
+            "displayName": "Austin Bourdier",
+            "id": "7ed6275f2340188c"
+        }
+    },
+    "lastModifiedDateTime": "2015-08-02T21:04:04.173Z",
+    "name": "root",
+    "size": 664,
+    "webUrl": "https://onedrive.live.com/?cid=7ed6275f2340188c",
+    "fileSystemInfo": {
+        "createdDateTime": "2015-08-02T21:03:23.053Z",
+        "lastModifiedDateTime": "2015-08-02T21:03:23.053Z"
+    },
+    "folder": {
+        "childCount": 3
+    }
+}
