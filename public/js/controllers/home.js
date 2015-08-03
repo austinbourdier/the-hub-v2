@@ -24,6 +24,8 @@ function homeController($scope, $http, $window, UserService, FileService) {
     'eventHandlers': {
       'success': function (file, response, body) {
         // TODO: error catch
+        console.log('response')
+        console.log(response.user)
         $scope.user = response.user;
         $scope.$apply();
       }
