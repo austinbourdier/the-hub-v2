@@ -63,7 +63,11 @@ exports.deleteOneDriveFiles = function(req, res, next) {
       },
     }, function(err, response, body) {
       // TODO: err catch
-
+      console.log('WHUUUUUT UPPPPPP')
+      console.log('WHUUUUUT UPPPPPP')
+      console.log('WHUUUUUT UPPPPPP')
+      console.log(err)
+      console.log(response.body)
       next();
     });
   } else {
