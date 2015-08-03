@@ -60,10 +60,12 @@ exports.upload = function(req, res, next) {
       body: req.fileStream
     }, function(err, response, body) {
       // TODO: err catch
+      console.log('YOYOYOYOOYOYOYOYOYOYOYOYO')
       if(err) {
         console.log('ERRRRRROOOOOOORRR')
         console.log(err)
       }
+      console.log(response.body)
       next();
     });
   } else {
