@@ -33,7 +33,7 @@ module.exports = function(app, passport) {
 
   // file deletion route
   router.post('/delete/dropbox', controller.dropbox.deleteDropBoxFiles, controller.dropbox.getDropBoxFiles, controller.sendBackUploadedFiles);
-  router.post('/delete/onedrive', controller.onedrive.deleteOneDriveFiles, controller.onedrive.getOneDriveFiles, controller.sendBackUploadedFiles);
+  // router.post('/delete/onedrive', controller.onedrive.deleteOneDriveFiles, controller.onedrive.getOneDriveFiles, controller.sendBackUploadedFiles);
   router.post('/delete/googledrive', controller.googledrive.deleteGoogleDriveFiles, controller.googledrive.getGoogleDriveFiles, controller.sendBackUploadedFiles);
   router.post('/delete/box', controller.box.deleteBoxFiles, controller.box.getBoxFiles, controller.sendBackUploadedFiles);
 
