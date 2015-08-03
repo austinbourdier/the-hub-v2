@@ -88,7 +88,7 @@ exports.downloadOneDriveFiles = function(req, res, next) {
         console.log('WHUUUUUT UPPPPPP')
         console.log('WHUUUUUT UPPPPPP')
         console.log(err)
-        console.log('response', response.body)
+        console.log(typeof response.body)
         next();
       });
     });
