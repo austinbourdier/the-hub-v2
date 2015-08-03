@@ -44,6 +44,9 @@ exports.getOneDriveFiles = function(req, res, next) {
       req.session.user.onedrivefiles = JSON.parse(response.body).value.filter(function(object){
         return object["@content.downloadUrl"];
       });
+      if(req.uploadedOneDriveFile) {
+        req.session.user.onedrivefiles.push(req.uploadedOneDriveFile);
+      }
       next();
     });
   } else {
@@ -58,13 +61,14 @@ exports.upload = function(req, res, next) {
         'Authorization': 'Bearer ' + req.session.onedrive_access_token,
       },
     }, function(err, response, body) {
-      request({method: 'PUT', url: 'https://api.onedrive.com/v1.0/drive/items/' + JSON.parse(response.body).id + '/children/' + req.files.file.originalname + '/content',
+      request({method: 'PUT', url: 'https://api.onedrive.com/v1.0/drive/items/' + JSON.parse(response.body) + '/children/' + req.files.file.originalname + '/content',
         headers: {
           'Authorization': 'Bearer ' + req.session.onedrive_access_token,
         },
         body: req.fileStream
       }, function(err, response, body) {
         // TODO: err catch
+        req.uploadedOneDriveFile = response.body;
         console.log('HERERERERERERERE')
         console.log(response.body)
         next();
