@@ -44,13 +44,26 @@ exports.getOneDriveFiles = function(req, res, next) {
       req.session.user.onedrivefiles = JSON.parse(response.body).value.filter(function(object){
         return object["@content.downloadUrl"];
       });
-      console.log('req.uploadedOneDriveFile')
-      console.log(req.uploadedOneDriveFile)
       if(req.uploadedOneDriveFile) {
         req.session.user.onedrivefiles.push(req.uploadedOneDriveFile);
       }
-      console.log('req.session.user.onedrivefiles')
-      console.log(req.session.user.onedrivefiles)
+      next();
+    });
+  } else {
+    next();
+  }
+};
+exports.deleteOneDriveFiles = function(req, res, next) {
+  if(req.session.onedrive_access_token) {
+    console.log('req.body.id')
+    console.log(req.body.id)
+    request({method: 'DELETE', url: 'https://api.onedrive.com/v1.0/drive/items/' + req.body.id,
+      headers: {
+        'Authorization': 'Bearer ' + req.session.onedrive_access_token,
+      },
+    }, function(err, response, body) {
+      // TODO: err catch
+
       next();
     });
   } else {
