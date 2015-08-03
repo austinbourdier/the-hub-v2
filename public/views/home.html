@@ -5,7 +5,7 @@
     id="dropzone">
     </form>
     <div id='cloudLogins'>
-      <cloud-login ng-repeat='c in ctrl.clouds' cloud="{{c}}" ng-class='ctrl.user[c + "files"] ? "":"nonactive-account"'></cloud-login>
+      <cloud-login ng-repeat='c in ctrl.clouds' cloud="{{c}}" ng-class='user[c + "files"] ? "":"nonactive-account"'></cloud-login>
     </div>
   </div>
   <div id='main-container'>
@@ -14,7 +14,7 @@
         <tr class='row'><th>Source</th><th>Title</th><th>Download</th><th>Delete</th></tr>
       </thead>
       <tbody>
-        <tr ng-repeat='file in ctrl.user.files' class='row'>
+        <tr ng-repeat='file in user.files' class='row'>
           <td><img ng-src='../images/{{file.source}}.png'/></td><td>{{file.title}}</td><td><span class='glyphicon glyphicon-cloud-download' ng-click='ctrl.downloadFromCloud(file.path, "dropbox")'></td><td><span class='glyphicon glyphicon-remove' ng-click='ctrl.deleteFromCloud(file.path, "dropbox")'></span></td>
         </tr>
       </tbody>
