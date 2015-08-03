@@ -63,6 +63,22 @@ exports.deleteOneDriveFiles = function(req, res, next) {
       },
     }, function(err, response, body) {
       // TODO: err catch
+      next();
+    });
+  } else {
+    next();
+  }
+};
+exports.downloadOneDriveFiles = function(req, res, next) {
+  if(req.session.onedrive_access_token) {
+    res.setHeader('Content-disposition', 'attachment; filename=' + file.name);
+    // res.setHeader('Content-type', file.mimeType);
+    request({method: 'GET', url: 'https://api.onedrive.com/v1.0/drive/items/' + req.body.id + '/content',
+      headers: {
+        'Authorization': 'Bearer ' + req.session.onedrive_access_token,
+      },
+    }, function(err, response, body) {
+      // TODO: err catch
       console.log('WHUUUUUT UPPPPPP')
       console.log('WHUUUUUT UPPPPPP')
       console.log('WHUUUUUT UPPPPPP')

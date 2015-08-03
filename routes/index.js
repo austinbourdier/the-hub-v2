@@ -39,7 +39,7 @@ module.exports = function(app, passport) {
 
   // file download routes
   router.get('/download/dropbox/:id', controller.dropbox.downloadDropBoxFiles);
-  // router.get('/download/onedrive/:id', controller.onedrive.downloadGoogleDriveFiles);
+  router.get('/download/onedrive/:id', controller.onedrive.downloadOneDriveFiles);
   router.get('/download/googledrive/:id', controller.googledrive.downloadGoogleDriveFiles);
   router.get('/download/box/:id', controller.box.downloadBoxFiles);
 
