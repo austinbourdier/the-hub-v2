@@ -26,7 +26,7 @@ function homeController($scope, $http, $window, UserService, FileService) {
         // TODO: error catch
         console.log('response')
         console.log(response.user)
-        $scope.user = response.user;
+        $scope.user = UserService.normalizeUser(user);
         $scope.$apply();
       }
     }
