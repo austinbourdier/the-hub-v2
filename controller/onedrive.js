@@ -41,7 +41,7 @@ exports.getOneDriveFiles = function(req, res, next) {
       },
     }, function(err, response, body) {
       // TODO: err catch
-      req.session.user.onedrivefiles = response.body.values.map(function(object){
+      req.session.user.onedrivefiles = response.body.value.map(function(object){
         if(object["@content.downloadUrl"]) {
           return object;
         }
