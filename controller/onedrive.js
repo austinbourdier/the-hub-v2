@@ -41,10 +41,12 @@ exports.getOneDriveFiles = function(req, res, next) {
       },
     }, function(err, response, body) {
       // TODO: err catch
-      console.log('MADE IT')
-      console.log(err)
-      console.log(response)
-      console.log('END IT')
+      req.session.user.onedrivefiles = response.body.values.map(function(object){
+        if(object["@content.downloadUrl"]) {
+          return object;
+        }
+      });
+      console.log(req.session.user.onedrivefiles)
       next();
     });
   } else {
