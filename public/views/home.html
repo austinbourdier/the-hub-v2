@@ -14,8 +14,8 @@
         <tr class='row'><th>Source</th><th>Title</th><th>Download</th><th>Delete</th></tr>
       </thead>
       <tbody>
-        <tr ng-repeat='file in user.files' class='row'>
-          <td><img ng-src='../images/{{file.source}}.png'/></td><td>{{file.title}}</td><td><span ng-if='file.source != "onedrive"' class='glyphicon glyphicon-cloud-download' ng-click='ctrl.downloadFromCloud(file.id, file.source)'><span ng-if='file.source == "onedrive"' class='glyphicon glyphicon-cloud-download' href='file["@content.downloadUrl"]'></td><td><span class='glyphicon glyphicon-remove' ng-click='ctrl.deleteFromCloud(file.id, file.source)'></span></td>
+        <tr ng-repeat='file in user.files' class='row'>{{file.source}}
+          <td><img ng-src='../images/{{file.source}}.png'/></td><td>{{file.title}}</td><td><span ng-if='file.source != "onedrive"' class='glyphicon glyphicon-cloud-download' ng-click='ctrl.downloadFromCloud(file.id, file.source)'><span ng-if='file.source == "onedrive"' class='glyphicon glyphicon-cloud-download' ng-href='file["@content.downloadUrl"]'></td><td><span class='glyphicon glyphicon-remove' ng-click='ctrl.deleteFromCloud(file.id, file.source)'></span></td>
         </tr>
       </tbody>
     </table>
