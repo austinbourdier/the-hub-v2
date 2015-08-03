@@ -42,10 +42,8 @@ exports.getOneDriveFiles = function(req, res, next) {
     }, function(err, response, body) {
       // TODO: err catch
       console.log(JSON.parse(response.body))
-      req.session.user.onedrivefiles = JSON.parse(response.body).value.map(function(object){
-        if(object["@content.downloadUrl"]) {
-          return object;
-        }
+      req.session.user.onedrivefiles = JSON.parse(response.body).value.filter(function(object){
+        return object["@content.downloadUrl"];
       });
       console.log(req.session.user.onedrivefiles)
       next();
