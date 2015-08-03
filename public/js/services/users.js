@@ -12,6 +12,7 @@ function UserService($window){
         user.dropboxfiles.forEach(function(f){
           f.source = 'dropbox';
           f.title = f.path;
+          f.id = f.path;
         });
         user.files = user.files.concat(user.dropboxfiles);
       }
