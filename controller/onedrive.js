@@ -51,12 +51,21 @@ exports.getOneDriveFiles = function(req, res, next) {
   }
 };
 
-exports.upload = function(req,res,next){
-  if(req.session.dropboxAccess){
-    DBoxApp.client(req.session.dbox_access_token).put('/'+req.files.file.originalname,req.fileStream,function(status, data){
-      // TODO: error catch
+exports.upload = function(req, res, next) {
+  if(req.session.onedrive_access_token) {
+    request({method: 'PUT', url: 'https://api.onedrive.com/v1.0/drive/root/' + req.files.file.originalname + '/content',
+      headers: {
+        'Authorization': 'Bearer ' + req.session.onedrive_access_token,
+      },
+      body: req.fileStream
+    }, function(err, response, body) {
+      // TODO: err catch
+      if(err) {
+        console.log('ERRRRRROOOOOOORRR')
+        console.log(err)
+      }
       next();
-    })
+    });
   } else {
     next();
   }

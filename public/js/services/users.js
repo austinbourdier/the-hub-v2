@@ -36,7 +36,6 @@ function UserService($window){
         });
         user.files = user.files.concat(user.googledrivefiles.items);
       }
-      console.log(user.files)
       return user;
     }
   }
