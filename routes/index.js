@@ -48,4 +48,58 @@ module.exports = function(app, passport) {
 
   app.use(router);
 };
-
+{
+    "@odata.context": "https://api.onedrive.com/v1.0/$metadata#drives('me')/items/$entity",
+    "@content.downloadUrl": "https://public-ch3301.files.1drv.com/y3m6EORBmGRJD8Tjiu5rYEV1yUKibjg5TWOxODfRapQAAAEQLmmeGgIF8v86BOeqqlAuedk3E0h0NASqHG0YLx6euDiY7wsv3O1medtdk-psPjIYnUBkqNV-oP_WUfb1zRi-V2T_VyUgRXMH9KTpb8SlgJu6ZYbWR_pXigpxvL39F1sIgcXFxJm9aftzjCnbbSz",
+    "createdBy": {
+        "application": {
+            "displayName": "The-Hub",
+            "id": "4015e476"
+        },
+        "user": {
+            "displayName": "Austin Bourdier",
+            "id": "7ed6275f2340188c"
+        }
+    },
+    "createdDateTime": "2015-08-03T17:12:56.95Z",
+    "cTag": "aYzo3RUQ2Mjc1RjIzNDAxODhDITExNi4yNTc",
+    "eTag": "aN0VENjI3NUYyMzQwMTg4QyExMTYuMQ",
+    "id": "7ED6275F2340188C!116",
+    "lastModifiedBy": {
+        "application": {
+            "displayName": "The-Hub",
+            "id": "4015e476"
+        },
+        "user": {
+            "displayName": "Austin Bourdier",
+            "id": "7ed6275f2340188c"
+        }
+    },
+    "lastModifiedDateTime": "2015-08-03T17:13:02.697Z",
+    "name": "bike_chase-wallpaper-2560x1600.jpg",
+    "parentReference": {
+        "driveId": "7ed6275f2340188c",
+        "id": "7ED6275F2340188C!103",
+        "path": "/drive/root:"
+    },
+    "size": 537679,
+    "webUrl": "https://onedrive.live.com/redir?resid=7ED6275F2340188C!116",
+    "file": {
+        "hashes": {
+            "crc32Hash": "3F22AA21",
+            "sha1Hash": "D9CD5F3F58C5D9A67AD29A96079BF03B33880EE1"
+        },
+        "mimeType": "image/jpeg"
+    },
+    "fileSystemInfo": {
+        "createdDateTime": "2015-08-03T17:12:56.95Z",
+        "lastModifiedDateTime": "2015-08-03T17:12:56.95Z"
+    },
+    "image": {
+        "height": 1600,
+        "width": 2560
+    },
+    "photo": {
+        "takenDateTime": "2015-08-03T17:12:56.95Z"
+    }
+}

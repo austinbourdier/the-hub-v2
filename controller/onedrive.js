@@ -78,17 +78,17 @@ exports.downloadOneDriveFiles = function(req, res, next) {
         'Authorization': 'Bearer ' + req.session.onedrive_access_token,
       },
     }, function(err, response, body) {
-      console.log('WHUUUUUT UPPPPPP')
-        console.log('WHUUUUUT UPPPPPP')
-        console.log('WHUUUUUT UPPPPPP')
-        console.log(err)
-        console.log(response.body)
-      request({method: 'GET', url: 'https://api.onedrive.com/v1.0/drive/items/' + req.body.id + '/content',
+      request({method: 'GET', url: 'https://api.onedrive.com/v1.0/drive/items/' + JSON.parse(response.body).id + '/content',
         headers: {
           'Authorization': 'Bearer ' + req.session.onedrive_access_token,
         },
       }, function(err, response, body) {
         // TODO: err catch
+        console.log('WHUUUUUT UPPPPPP')
+        console.log('WHUUUUUT UPPPPPP')
+        console.log('WHUUUUUT UPPPPPP')
+        console.log(err)
+        console.log(response.body)
         next();
       });
     });
