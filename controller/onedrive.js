@@ -78,7 +78,7 @@ exports.downloadOneDriveFiles = function(req, res, next) {
       },
     }, function(err, response, body) {
       res.setHeader('Content-disposition', 'attachment; filename=' + JSON.parse(response.body).name);
-      request({method: 'GET', url: 'https://api.onedrive.com/v1.0/drive/items/' + JSON.parse(response.body).id + '/content',
+      request({method: 'GET', url: 'https://api.onedrive.com/v1.0/drive/items/' + JSON.parse(response.body).id + '/content?download=true',
         headers: {
           'Authorization': 'Bearer ' + req.session.onedrive_access_token
         },
