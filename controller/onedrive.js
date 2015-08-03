@@ -37,7 +37,7 @@ exports.getOneDriveFiles = function(req, res, next) {
   if(req.session.onedrive_access_token) {
     request({method: 'GET', url: 'https://api.onedrive.com/v1.0/drive/root/children',
       headers: {
-        'Authorization': 'Bearer ' + req.session.onedrive_access_token,
+        'Authorization': 'Bearer ' + req.session.onedrive_access_token
       },
     }, function(err, response, body) {
       // TODO: err catch
@@ -59,7 +59,7 @@ exports.deleteOneDriveFiles = function(req, res, next) {
     console.log(req.body.id)
     request({method: 'DELETE', url: 'https://api.onedrive.com/v1.0/drive/items/' + req.body.id,
       headers: {
-        'Authorization': 'Bearer ' + req.session.onedrive_access_token,
+        'Authorization': 'Bearer ' + req.session.onedrive_access_token
       },
     }, function(err, response, body) {
       // TODO: err catch
@@ -75,12 +75,12 @@ exports.downloadOneDriveFiles = function(req, res, next) {
     // res.setHeader('Content-type', file.mimeType);
     request({method: 'GET', url: 'https://api.onedrive.com/v1.0/drive/items/' + req.params.id,
       headers: {
-        'Authorization': 'Bearer ' + req.session.onedrive_access_token,
+        'Authorization': 'Bearer ' + req.session.onedrive_access_token
       },
     }, function(err, response, body) {
       request({method: 'GET', url: 'https://api.onedrive.com/v1.0/drive/items/' + JSON.parse(response.body).id + '/content',
         headers: {
-          'Authorization': 'Bearer ' + req.session.onedrive_access_token,
+          'Authorization': 'Bearer ' + req.session.onedrive_access_token
         },
       }, function(err, response, body) {
         // TODO: err catch
@@ -101,13 +101,13 @@ exports.upload = function(req, res, next) {
   if(req.session.onedrive_access_token) {
     request({method: 'GET', url: 'https://api.onedrive.com/v1.0/drive/root',
       headers: {
-        'Authorization': 'Bearer ' + req.session.onedrive_access_token,
+        'Authorization': 'Bearer ' + req.session.onedrive_access_token
       },
     }, function(err, response, body) {
       // TODO: err catch
       request({method: 'PUT', url: 'https://api.onedrive.com/v1.0/drive/items/' + JSON.parse(response.body).id + '/children/' + req.files.file.originalname + '/content',
         headers: {
-          'Authorization': 'Bearer ' + req.session.onedrive_access_token,
+          'Authorization': 'Bearer ' + req.session.onedrive_access_token
         },
         body: req.fileStream
       }, function(err, response, body) {
