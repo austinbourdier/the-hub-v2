@@ -15,6 +15,13 @@ function UserService($window){
         });
         user.files = user.files.concat(user.dropboxfiles);
       }
+      if(user.onedrivefiles) {
+        user.onedrivefiles.forEach(function(f){
+          f.source = 'onedrive';
+          f.title = f.name;
+        });
+        user.files = user.files.concat(user.onedrivefiles);
+      }
       if(user.boxfiles && user.boxfiles.item_collection && user.boxfiles.item_collection.entries) {
         user.boxfiles.item_collection.entries.forEach(function(f){
           f.source = 'box';
@@ -29,6 +36,7 @@ function UserService($window){
         });
         user.files = user.files.concat(user.googledrivefiles.items);
       }
+      console.log(user.files)
       return user;
     }
   }

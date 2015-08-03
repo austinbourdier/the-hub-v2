@@ -41,11 +41,9 @@ exports.getOneDriveFiles = function(req, res, next) {
       },
     }, function(err, response, body) {
       // TODO: err catch
-      console.log(JSON.parse(response.body))
       req.session.user.onedrivefiles = JSON.parse(response.body).value.filter(function(object){
         return object["@content.downloadUrl"];
       });
-      console.log(req.session.user.onedrivefiles)
       next();
     });
   } else {
@@ -53,42 +51,13 @@ exports.getOneDriveFiles = function(req, res, next) {
   }
 };
 
-// exports.deleteDropBoxFiles = function(req,res,next){
-//   if(req.session.dropboxAccess){
-//     DBoxApp.client(req.session.dbox_access_token).rm(req.body.id,function(status, data){
-//       // TODO: error catch
-//       console.log(status, data)
-//       next();
-//     })
-//   } else {
-//     next();
-//   }
-// };
-
-// exports.downloadDropBoxFiles = function(req,res,next){
-//   if(req.session.dropboxAccess){
-//     var client = DBoxApp.client(req.session.dbox_access_token);
-//     var file = req.params.id;
-//     client.metadata(file, function(status, reply) {
-//       res.setHeader('Content-disposition', 'attachment; filename=' + file);
-//       res.setHeader('Content-type', reply.mime_type);
-//       client
-//         .stream(file)
-//         .pipe(res)
-//         .on('error', next);
-//     });
-//   } else {
-//     next();
-//   }
-// };
-
-// exports.upload = function(req,res,next){
-//   if(req.session.dropboxAccess){
-//     DBoxApp.client(req.session.dbox_access_token).put('/'+req.files.file.originalname,req.fileStream,function(status, data){
-//       // TODO: error catch
-//       next();
-//     })
-//   } else {
-//     next();
-//   }
-// };
+exports.upload = function(req,res,next){
+  if(req.session.dropboxAccess){
+    DBoxApp.client(req.session.dbox_access_token).put('/'+req.files.file.originalname,req.fileStream,function(status, data){
+      // TODO: error catch
+      next();
+    })
+  } else {
+    next();
+  }
+};
