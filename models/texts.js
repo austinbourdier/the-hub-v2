@@ -1,5 +1,3 @@
-
-
 var mongoose = require('mongoose');
 
 var textSchema = new mongoose.Schema({

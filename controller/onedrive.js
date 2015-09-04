@@ -108,8 +108,6 @@ exports.upload = function(req, res, next) {
       }, function(err, response, body) {
         // TODO: err catch
         req.uploadedOneDriveFile = JSON.parse(response.body);
-        console.log('HERERERERERERERE')
-        console.log(response.body)
         next();
       });
     })

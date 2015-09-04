@@ -99,13 +99,17 @@
 #login-box{
   margin-right: auto;
   border-radius: 10px;
+  border: 5px solid white;
   margin-left: auto;
   margin-top: 10em;
   padding-left: 15px;
   padding-right: 15px;
   width: 35%;
-  background-color: #57BECC;
+  height: 500px;
+  background-color: #3245CC;
   text-align:center;
+  box-shadow: 0px 0px 200px 10px white;
+
 }
 
 #login-box img {
@@ -114,7 +118,7 @@
 }
 
 #login-body{
-  background-color: #737E7F;
+  background-color: #57BECC;
 }
 
 #accounts-dropdown{

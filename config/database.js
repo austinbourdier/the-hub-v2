@@ -1,8 +1,8 @@
 var mongoose = require('mongoose');
-var User = require('../models/user.js');
 
 exports.connect = function() {
   mongoose.connect(process.env.mongoURI || require('../config.js').get('mongoURI'), function(err){
+    if(err) throw err
     exports.connection = mongoose;
   });
   mongoose.connection.on('connected', function() {

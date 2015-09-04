@@ -24,12 +24,12 @@ module.exports = function(app, passport) {
   router.get('/auth/dropbox/callback', controller.dropbox.getDBoxAccessToken, controller.dropbox.getDropBoxFiles, controller.render);
   router.get('/auth/onedrive/callback', controller.onedrive.getOneDriveAccessToken, controller.onedrive.getOneDriveFiles, controller.render);
   router.get('/auth/googledrive/callback', controller.googledrive.getGoogleDriveToken, controller.googledrive.getGoogleDriveFiles, controller.render);
-  router.get('/auth/box/callback', controller.box.getBoxAccessToken, controller.box.getBoxFiles,controller.render);
+  router.get('/auth/box/callback', controller.box.getBoxAccessToken, controller.box.getBoxFiles, controller.render);
 
   router.get('/', controller.render);
 
   // upload route
-  router.post('/file-upload', controller.uploader.readFile,controller.googledrive.upload, controller.googledrive.getGoogleDriveFiles,controller.dropbox.upload, controller.dropbox.getDropBoxFiles, controller.box.upload, controller.box.getBoxFiles, controller.onedrive.upload, controller.onedrive.getOneDriveFiles, controller.sendBackUploadedFiles);
+  router.post('/file-upload', controller.uploader.readFile, controller.googledrive.upload, controller.googledrive.getGoogleDriveFiles, controller.dropbox.upload, controller.dropbox.getDropBoxFiles, controller.box.upload, controller.box.getBoxFiles, controller.onedrive.upload, controller.onedrive.getOneDriveFiles, controller.sendBackUploadedFiles);
 
   // file deletion route
   router.post('/delete/dropbox', controller.dropbox.deleteDropBoxFiles, controller.dropbox.getDropBoxFiles, controller.sendBackUploadedFiles);

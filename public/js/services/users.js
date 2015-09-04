@@ -8,6 +8,7 @@ function UserService($window){
     },
     normalizeUser: function(user){
       user.files = [];
+      console.log(user)
       if(user.dropboxfiles) {
         user.dropboxfiles.forEach(function(f){
           f.source = 'dropbox';
@@ -20,6 +21,7 @@ function UserService($window){
         user.onedrivefiles.forEach(function(f){
           f.source = 'onedrive';
           f.title = f.name;
+          f.createdAt = f.createdDateTime;
         });
         user.files = user.files.concat(user.onedrivefiles);
       }

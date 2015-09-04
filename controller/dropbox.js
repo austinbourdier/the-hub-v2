@@ -76,7 +76,7 @@ exports.downloadDropBoxFiles = function(req,res,next){
 
 exports.upload = function(req,res,next){
   if(req.session.dropboxAccess){
-    DBoxApp.client(req.session.dbox_access_token).put('/'+req.files.file.originalname,req.fileStream,function(status, data){
+    DBoxApp.client(req.session.dbox_access_token).put('/'+req.files.file.originalname, req.fileStream, function(status, data) {
       // TODO: error catch
       next();
     })
