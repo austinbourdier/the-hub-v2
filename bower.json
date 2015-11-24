@@ -1,0 +1,26 @@
+{
+  "name": "the-hub",
+  "description": "",
+  "authors": [
+    "Austin Bourdier <austinbourdier@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/austinbourdier/the-hub-v2",
+  "moduleType": [
+    "amd",
+    "es6",
+    "globals",
+    "node",
+    "yui"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-toastr": "~1.6.0"
+  }
+}

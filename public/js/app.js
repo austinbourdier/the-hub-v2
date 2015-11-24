@@ -1,1 +1,1 @@
-angular.module('mainApp', ['ui.router'])
+angular.module('mainApp', ['ui.router', 'toastr'])

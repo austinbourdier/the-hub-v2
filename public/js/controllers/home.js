@@ -1,7 +1,7 @@
 angular.module('mainApp')
   .controller('homeCtrl', homeController)
 
-function homeController($scope, $http, $window, UserService, FileService) {
+function homeController($scope, $http, $window, UserService, FileService, toastr) {
   $scope.user = UserService.normalizeUser(user);
   this.clouds = ['dropbox', 'googledrive', 'box', 'onedrive'];
   this.cloudLogin = function(cloud) {
