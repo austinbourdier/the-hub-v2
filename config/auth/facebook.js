@@ -30,7 +30,6 @@ module.exports = function(passport) {
             })
           } else {
             var newUser = new User();
-            console.log(profile)
             newUser.facebook.id = profile.id;
             newUser.facebook.profPicture = data.picture.data.url;
             newUser.facebook.firstName = profile._json.first_name;

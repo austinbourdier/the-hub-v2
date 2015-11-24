@@ -1,4 +1,4 @@
-angular.module('mainApp', ['ui.router'])
+app
 .config(config)
 
 function config( $stateProvider, $urlRouterProvider, $locationProvider, $interpolateProvider, $httpProvider ) {

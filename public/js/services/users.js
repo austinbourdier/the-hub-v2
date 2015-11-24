@@ -8,7 +8,6 @@ function UserService($window){
     },
     normalizeUser: function(user){
       user.files = [];
-      console.log(user)
       if(user.dropboxfiles) {
         user.dropboxfiles.forEach(function(f){
           f.source = 'dropbox';
@@ -39,7 +38,6 @@ function UserService($window){
         });
         user.files = user.files.concat(user.googledrivefiles.items);
       }
-      console.log(user.files)
       return user;
     }
   }

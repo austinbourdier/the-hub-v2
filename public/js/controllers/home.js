@@ -1,7 +1,7 @@
 angular.module('mainApp')
-  .controller('homeCtrl', homeController)
+  .controller('homeCtrl', homeCtrl)
 
-function homeController($scope, $http, $window, UserService, FileService, toastr) {
+function homeCtrl($scope, $http, $window, UserService, FileService, toastr) {
   $scope.user = UserService.normalizeUser(user);
   this.clouds = ['dropbox', 'googledrive', 'box', 'onedrive'];
   this.cloudLogin = function(cloud) {
@@ -9,6 +9,7 @@ function homeController($scope, $http, $window, UserService, FileService, toastr
   }
   this.deleteFromCloud = function(id, cloud) {
     FileService.delete(id, cloud).then(function(data) {
+      toastr.success('Your File Was Deleted From ' + cloud.charAt(0).toUpperCase() + cloud.slice(1));
       $scope.user = UserService.normalizeUser(data.user);
     }, function(err) {
       console.log(err)
@@ -24,12 +25,10 @@ function homeController($scope, $http, $window, UserService, FileService, toastr
     'eventHandlers': {
       'success': function (file, response, body) {
         // TODO: error catch
-        console.log('response')
-        console.log(response.user)
+        toastr.success('Your File Has Been Uploaded');
         $scope.user = UserService.normalizeUser(response.user);
         $scope.$apply();
       }
     }
   }
 }
-

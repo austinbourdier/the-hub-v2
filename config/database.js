@@ -2,7 +2,6 @@ var mongoose = require('mongoose');
 
 exports.connect = function() {
   mongoose.connect(process.env.mongoURI || require('../config.js').get('mongoURI'), function(err){
-    console.log(err)
     if(err) throw err
     exports.connection = mongoose;
   });
