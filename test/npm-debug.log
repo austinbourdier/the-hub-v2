@@ -1,0 +1,233 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   '–g',
+1 verbose cli   'mocha' ]
+2 info using npm@2.11.3
+3 info using node@v0.12.7
+4 verbose install initial load of /Users/abourdier/Desktop/the-hub-v2/package.json
+5 verbose installManyTop reading scoped package data from /Users/abourdier/Desktop/the-hub-v2/node_modules/async/package.json
+6 verbose installManyTop reading scoped package data from /Users/abourdier/Desktop/the-hub-v2/node_modules/aws-sdk/package.json
+7 verbose installManyTop reading scoped package data from /Users/abourdier/Desktop/the-hub-v2/node_modules/bcrypt-nodejs/package.json
+8 verbose installManyTop reading scoped package data from /Users/abourdier/Desktop/the-hub-v2/node_modules/blueimp-file-upload-expressjs/package.json
+9 verbose installManyTop reading scoped package data from /Users/abourdier/Desktop/the-hub-v2/node_modules/body-parser/package.json
+10 verbose installManyTop reading scoped package data from /Users/abourdier/Desktop/the-hub-v2/node_modules/bower/package.json
+11 verbose installManyTop reading scoped package data from /Users/abourdier/Desktop/the-hub-v2/node_modules/box-sdk/package.json
+12 verbose installManyTop reading scoped package data from /Users/abourdier/Desktop/the-hub-v2/node_modules/box-view/package.json
+13 verbose installManyTop reading scoped package data from /Users/abourdier/Desktop/the-hub-v2/node_modules/boxsdk/package.json
+14 verbose installManyTop reading scoped package data from /Users/abourdier/Desktop/the-hub-v2/node_modules/chai/package.json
+15 verbose installManyTop reading scoped package data from /Users/abourdier/Desktop/the-hub-v2/node_modules/cookie-parser/package.json
+16 verbose installManyTop reading scoped package data from /Users/abourdier/Desktop/the-hub-v2/node_modules/cors/package.json
+17 verbose installManyTop reading scoped package data from /Users/abourdier/Desktop/the-hub-v2/node_modules/dbox/package.json
+18 verbose installManyTop reading scoped package data from /Users/abourdier/Desktop/the-hub-v2/node_modules/debug/package.json
+19 verbose installManyTop reading scoped package data from /Users/abourdier/Desktop/the-hub-v2/node_modules/express/package.json
+20 verbose installManyTop reading scoped package data from /Users/abourdier/Desktop/the-hub-v2/node_modules/express-session/package.json
+21 verbose installManyTop reading scoped package data from /Users/abourdier/Desktop/the-hub-v2/node_modules/fb/package.json
+22 verbose installManyTop reading scoped package data from /Users/abourdier/Desktop/the-hub-v2/node_modules/google-oauth2/package.json
+23 verbose installManyTop reading scoped package data from /Users/abourdier/Desktop/the-hub-v2/node_modules/googleapis/package.json
+24 verbose installManyTop reading scoped package data from /Users/abourdier/Desktop/the-hub-v2/node_modules/grunt/package.json
+25 verbose installManyTop reading scoped package data from /Users/abourdier/Desktop/the-hub-v2/node_modules/grunt-contrib-jshint/package.json
+26 verbose installManyTop reading scoped package data from /Users/abourdier/Desktop/the-hub-v2/node_modules/grunt-contrib-nodeunit/package.json
+27 verbose installManyTop reading scoped package data from /Users/abourdier/Desktop/the-hub-v2/node_modules/grunt-contrib-uglify/package.json
+28 verbose installManyTop reading scoped package data from /Users/abourdier/Desktop/the-hub-v2/node_modules/grunt-nodemon/package.json
+29 verbose installManyTop reading scoped package data from /Users/abourdier/Desktop/the-hub-v2/node_modules/grunt-wiredep/package.json
+30 verbose installManyTop reading scoped package data from /Users/abourdier/Desktop/the-hub-v2/node_modules/gulp-inject/package.json
+31 verbose installManyTop reading scoped package data from /Users/abourdier/Desktop/the-hub-v2/node_modules/load-grunt-tasks/package.json
+32 verbose installManyTop reading scoped package data from /Users/abourdier/Desktop/the-hub-v2/node_modules/main-bower-files/package.json
+33 verbose installManyTop reading scoped package data from /Users/abourdier/Desktop/the-hub-v2/node_modules/mocha/package.json
+34 verbose installManyTop reading scoped package data from /Users/abourdier/Desktop/the-hub-v2/node_modules/moment/package.json
+35 verbose installManyTop reading scoped package data from /Users/abourdier/Desktop/the-hub-v2/node_modules/mongoose/package.json
+36 verbose installManyTop reading scoped package data from /Users/abourdier/Desktop/the-hub-v2/node_modules/morgan/package.json
+37 verbose installManyTop reading scoped package data from /Users/abourdier/Desktop/the-hub-v2/node_modules/multer/package.json
+38 verbose installManyTop reading scoped package data from /Users/abourdier/Desktop/the-hub-v2/node_modules/nconf/package.json
+39 verbose installManyTop reading scoped package data from /Users/abourdier/Desktop/the-hub-v2/node_modules/node-fullbox-api/package.json
+40 verbose installManyTop reading scoped package data from /Users/abourdier/Desktop/the-hub-v2/node_modules/nodejs-box/package.json
+41 verbose installManyTop reading scoped package data from /Users/abourdier/Desktop/the-hub-v2/node_modules/passport/package.json
+42 verbose installManyTop reading scoped package data from /Users/abourdier/Desktop/the-hub-v2/node_modules/passport-facebook/package.json
+43 verbose installManyTop reading scoped package data from /Users/abourdier/Desktop/the-hub-v2/node_modules/querystring/package.json
+44 verbose installManyTop reading scoped package data from /Users/abourdier/Desktop/the-hub-v2/node_modules/request/package.json
+45 verbose installManyTop reading scoped package data from /Users/abourdier/Desktop/the-hub-v2/node_modules/restler/package.json
+46 verbose installManyTop reading scoped package data from /Users/abourdier/Desktop/the-hub-v2/node_modules/serve-favicon/package.json
+47 verbose installManyTop reading scoped package data from /Users/abourdier/Desktop/the-hub-v2/node_modules/serve-static/package.json
+48 verbose installManyTop reading scoped package data from /Users/abourdier/Desktop/the-hub-v2/node_modules/supertest/package.json
+49 verbose installManyTop reading scoped package data from /Users/abourdier/Desktop/the-hub-v2/node_modules/swig/package.json
+50 verbose installManyTop reading scoped package data from /Users/abourdier/Desktop/the-hub-v2/node_modules/test/package.json
+51 verbose installManyTop reading scoped package data from /Users/abourdier/Desktop/the-hub-v2/node_modules/time-grunt/package.json
+52 info package.json async@0.9.0 No license field.
+53 info package.json bcrypt-nodejs@0.0.3 No license field.
+54 info package.json box-sdk@0.0.6 No license field.
+55 info package.json box-view@2.0.0 license should be a valid SPDX license expression
+56 info package.json boxsdk@0.2.11 license should be a valid SPDX license expression
+57 info package.json cookie-parser@1.3.4 No license field.
+58 info package.json fb@0.7.0 No license field.
+59 info package.json google-oauth2@0.1.0 No license field.
+60 info package.json grunt@0.4.5 No license field.
+61 info package.json grunt-contrib-uglify@0.5.1 No license field.
+62 info package.json grunt-wiredep@2.0.0 No license field.
+63 info package.json nconf@0.7.1 No license field.
+64 info package.json passport@0.2.1 No license field.
+65 info package.json querystring@0.2.0 querystring is also the name of a node core module.
+66 info package.json querystring@0.2.0 No license field.
+67 info package.json passport-facebook@2.0.0 No license field.
+68 info package.json aws-sdk@2.1.26 No license field.
+69 info package.json cors@2.6.0 No license field.
+70 info package.json dbox@0.6.4 No license field.
+71 info package.json grunt-contrib-nodeunit@0.4.1 No license field.
+72 info package.json gulp-inject@3.0.0 No license field.
+73 info package.json moment@2.10.2 No license field.
+74 info package.json nodejs-box@0.0.9 license should be a valid SPDX license expression
+75 info package.json restler@3.2.2 No license field.
+76 info package.json test@0.6.0 No license field.
+77 verbose readDependencies loading dependencies from /Users/abourdier/Desktop/the-hub-v2/package.json
+78 silly cache add args [ '–g', null ]
+79 verbose cache add spec –g
+80 verbose install mocha is installed as 2.3.4
+81 silly cache add args [ 'mocha@^2.3.4', null ]
+82 verbose cache add spec mocha@^2.3.4
+83 silly cache add parsed spec { raw: 'mocha@^2.3.4',
+83 silly cache add   scope: null,
+83 silly cache add   name: 'mocha',
+83 silly cache add   rawSpec: '^2.3.4',
+83 silly cache add   spec: '>=2.3.4 <3.0.0',
+83 silly cache add   type: 'range' }
+84 silly addNamed mocha@>=2.3.4 <3.0.0
+85 verbose addNamed ">=2.3.4 <3.0.0" is a valid semver range for mocha
+86 silly addNameRange { name: 'mocha', range: '>=2.3.4 <3.0.0', hasData: false }
+87 silly mapToRegistry name mocha
+88 silly mapToRegistry using default registry
+89 silly mapToRegistry registry https://registry.npmjs.org/
+90 silly mapToRegistry uri https://registry.npmjs.org/mocha
+91 verbose addNameRange registry:https://registry.npmjs.org/mocha not in flight; fetching
+92 silly cache add parsed spec { raw: '–g',
+92 silly cache add   scope: null,
+92 silly cache add   name: null,
+92 silly cache add   rawSpec: '–g',
+92 silly cache add   spec: '/Users/abourdier/Desktop/the-hub-v2/test/–g',
+92 silly cache add   type: 'local' }
+93 error addLocal Could not install /Users/abourdier/Desktop/the-hub-v2/test/–g
+94 verbose get https://registry.npmjs.org/mocha not expired, no request
+95 silly addNameRange number 2 { name: 'mocha', range: '>=2.3.4 <3.0.0', hasData: true }
+96 silly addNameRange versions [ 'mocha',
+96 silly addNameRange   [ '0.0.1-alpha1',
+96 silly addNameRange     '0.0.1-alpha2',
+96 silly addNameRange     '0.0.1-alpha3',
+96 silly addNameRange     '0.0.1-alpha4',
+96 silly addNameRange     '0.0.1-alpha5',
+96 silly addNameRange     '0.0.1-alpha6',
+96 silly addNameRange     '0.0.1',
+96 silly addNameRange     '0.0.2',
+96 silly addNameRange     '0.0.3',
+96 silly addNameRange     '0.0.4',
+96 silly addNameRange     '0.0.5',
+96 silly addNameRange     '0.0.6',
+96 silly addNameRange     '0.0.7',
+96 silly addNameRange     '0.0.8',
+96 silly addNameRange     '0.1.0',
+96 silly addNameRange     '0.2.0',
+96 silly addNameRange     '0.3.0',
+96 silly addNameRange     '0.3.1',
+96 silly addNameRange     '0.3.2',
+96 silly addNameRange     '0.3.3',
+96 silly addNameRange     '0.3.4',
+96 silly addNameRange     '0.3.6',
+96 silly addNameRange     '0.4.0',
+96 silly addNameRange     '0.5.0',
+96 silly addNameRange     '0.6.0',
+96 silly addNameRange     '0.7.0',
+96 silly addNameRange     '0.7.1',
+96 silly addNameRange     '0.8.0',
+96 silly addNameRange     '0.8.1',
+96 silly addNameRange     '0.9.0',
+96 silly addNameRange     '0.10.0',
+96 silly addNameRange     '0.10.1',
+96 silly addNameRange     '0.10.2',
+96 silly addNameRange     '0.11.0',
+96 silly addNameRange     '0.12.0',
+96 silly addNameRange     '0.12.1',
+96 silly addNameRange     '0.13.0',
+96 silly addNameRange     '0.14.0',
+96 silly addNameRange     '0.14.1',
+96 silly addNameRange     '1.0.0',
+96 silly addNameRange     '1.0.1',
+96 silly addNameRange     '1.0.2',
+96 silly addNameRange     '1.0.3',
+96 silly addNameRange     '1.1.0',
+96 silly addNameRange     '1.2.0',
+96 silly addNameRange     '1.2.1',
+96 silly addNameRange     '1.2.2',
+96 silly addNameRange     '1.3.0',
+96 silly addNameRange     '1.3.1',
+96 silly addNameRange     '1.3.2',
+96 silly addNameRange     '1.4.0',
+96 silly addNameRange     '1.4.1',
+96 silly addNameRange     '1.4.2',
+96 silly addNameRange     '1.4.3',
+96 silly addNameRange     '1.5.0',
+96 silly addNameRange     '1.6.0',
+96 silly addNameRange     '1.7.0',
+96 silly addNameRange     '1.7.1',
+96 silly addNameRange     '1.7.2',
+96 silly addNameRange     '1.7.3',
+96 silly addNameRange     '1.7.4',
+96 silly addNameRange     '1.8.0',
+96 silly addNameRange     '1.8.1',
+96 silly addNameRange     '1.8.2',
+96 silly addNameRange     '1.9.0',
+96 silly addNameRange     '1.10.0',
+96 silly addNameRange     '1.11.0',
+96 silly addNameRange     '1.12.0',
+96 silly addNameRange     '1.12.1',
+96 silly addNameRange     '1.13.0',
+96 silly addNameRange     '1.14.0',
+96 silly addNameRange     '1.15.0',
+96 silly addNameRange     '1.15.1',
+96 silly addNameRange     '1.16.0',
+96 silly addNameRange     '1.16.1',
+96 silly addNameRange     '1.16.2',
+96 silly addNameRange     '1.17.0',
+96 silly addNameRange     '1.17.1',
+96 silly addNameRange     '1.18.0',
+96 silly addNameRange     '1.18.1',
+96 silly addNameRange     '1.18.2',
+96 silly addNameRange     '1.19.0',
+96 silly addNameRange     '1.20.0',
+96 silly addNameRange     '1.20.1',
+96 silly addNameRange     '1.21.0',
+96 silly addNameRange     '1.21.1',
+96 silly addNameRange     '1.21.2',
+96 silly addNameRange     '1.21.3',
+96 silly addNameRange     '1.21.4',
+96 silly addNameRange     '1.21.5',
+96 silly addNameRange     '2.0.0',
+96 silly addNameRange     '2.0.1',
+96 silly addNameRange     '2.1.0',
+96 silly addNameRange     '2.2.0',
+96 silly addNameRange     '2.2.1',
+96 silly addNameRange     '2.2.3',
+96 silly addNameRange     '2.2.4',
+96 silly addNameRange     '2.2.5',
+96 silly addNameRange     '2.3.0',
+96 silly addNameRange     '2.3.1',
+96 silly addNameRange     '2.3.2',
+96 silly addNameRange     '2.3.3',
+96 silly addNameRange     '2.3.4' ] ]
+97 silly addNamed mocha@2.3.4
+98 verbose addNamed "2.3.4" is a plain semver version for mocha
+99 silly cache afterAdd mocha@2.3.4
+100 verbose afterAdd /Users/abourdier/.npm/mocha/2.3.4/package/package.json not in flight; writing
+101 verbose afterAdd /Users/abourdier/.npm/mocha/2.3.4/package/package.json written
+102 verbose stack Error: ENOENT, open '/Users/abourdier/Desktop/the-hub-v2/test/–g'
+102 verbose stack     at Error (native)
+103 verbose cwd /Users/abourdier/Desktop/the-hub-v2/test
+104 error Darwin 15.0.0
+105 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "install" "–g" "mocha"
+106 error node v0.12.7
+107 error npm  v2.11.3
+108 error path /Users/abourdier/Desktop/the-hub-v2/test/–g
+109 error code ENOENT
+110 error errno -2
+111 error enoent ENOENT, open '/Users/abourdier/Desktop/the-hub-v2/test/–g'
+111 error enoent This is most likely not a problem with npm itself
+111 error enoent and is related to npm not being able to find a file.
+112 verbose exit [ -2, true ]
