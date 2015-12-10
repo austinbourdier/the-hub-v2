@@ -15,7 +15,6 @@ var options = {
     type: 'local'
   }
 };
-var uploader = require('blueimp-file-upload-expressjs')(options);
 exports.generateAuthUrl = function(req, res, next){
   res.redirect(oauth2Client.generateAuthUrl({
     access_type: 'offline',
