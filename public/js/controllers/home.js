@@ -31,4 +31,6 @@ function homeCtrl($scope, $http, $window, UserService, FileService, toastr) {
       }
     }
   }
+
+  $scope.$watch('')
 }

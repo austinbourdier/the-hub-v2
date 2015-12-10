@@ -13,7 +13,7 @@ exports.render = function(req, res) {
 };
 
 exports.sendBackUploadedFiles = function(req, res) {
-  res.send({user: req.session.user})
+  res.send({user: req.session.user});
 };
 
 

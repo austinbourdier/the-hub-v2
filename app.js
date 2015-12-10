@@ -1,4 +1,3 @@
-
 var express = require('express');
 var cors = require('cors');
 var path = require('path');
@@ -31,11 +30,11 @@ var sessionOpts = {
   saveUninitialized: true,
   resave: true,
   secret: process.env.sessionSecret || require('./config.js').get('session:secret'),
-      cookie: {
-        maxAge: new Date(Date.now() + 1209600000),
-        expires: new Date(Date.now() + 1209600000)
-      }
-    }
+  cookie: {
+    maxAge: new Date(Date.now() + 1209600000),
+    expires: new Date(Date.now() + 1209600000)
+  }
+}
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
@@ -62,4 +61,6 @@ var server = http.createServer(app);
  * Listen on provided port, on all network interfaces.
  */
 
-module.exports = server;
+server.listen(port);
+
+module.exports = app;

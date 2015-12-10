@@ -3,6 +3,10 @@
   color: white;
   height: 60px;
 }
+.contain {
+  width: 80%;
+}
+
 .navbar span{
   color: white;
   left: 10px;
