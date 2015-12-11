@@ -40,6 +40,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-mocha-test');
 
   // register the tasks that should be ran when initializing the server
-  grunt.registerTask('serve', ['mochaTest', 'jshint', 'wiredep', 'nodemon']);  
+  grunt.registerTask('test', ['mochaTest']);  
+  grunt.registerTask('serve', ['jshint', 'wiredep', 'nodemon']);  
 
 };

@@ -61,3 +61,5 @@ var server = http.createServer(app);
  */
 
 server.listen(app.get('port'));
+
+module.exports = server;
