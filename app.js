@@ -34,10 +34,8 @@ var sessionOpts = {
     maxAge: new Date(Date.now() + 1209600000),
     expires: new Date(Date.now() + 1209600000)
   }
-}
+};
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(multer());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -61,6 +59,6 @@ var server = http.createServer(app);
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port);
+server.listen(app.get('port'));
 
-module.exports = app;
+module.exports = server;

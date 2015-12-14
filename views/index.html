@@ -1,41 +1,53 @@
 <!DOCTYPE html>
 <html ng-app='mainApp'>
-<head>
-  <base href="/"></base>
-  <script src='/js/script.js'></script>
-  <link rel="stylesheet" href="/css/style.css"></link>
-  <link rel="stylesheet" href="/assets/css/bootstrap.css"></link>
-  <link rel="stylesheet" href="/assets/css/dropzone.css"></link>
-  <link rel="stylesheet" href="/bower_components/angular-toastr/dist/angular-toastr.css"></link>
-  <script src="/assets/js/jquery.js"></script>
-  <script src="/assets/js/bootstrap.js"></script>
-  <script src="/assets/js/jquery-ui.js"></script>
-  <script src="/assets/js/dropzone.js"></script>
-  <script src="/assets/js/angular.js"></script>
-  <script src="/assets/js/angular-route.js"></script>
-  <script src="/assets/js/angular-ui-router.js"></script>
-  <script src="/bower_components/angular-toastr/dist/angular-toastr.tpls.js"></script>
-  <script src="/bower_components/angular-animate/angular-animate.js"></script>
-  <script src="/js/app.js"></script>
-  <script src="/js/app_config.js"></script>
-  <script type="text/javascript">
-  var user = {{user|raw|json_encode}};
-  var files = {{files|raw|json_encode}};
-  </script>
-  <script src="/js/controllers/navBar.js"></script>
-  <script src="/js/controllers/home.js"></script>
-  <script src="/js/directives/cloudLogin.js"></script>
-  <script src="/js/directives/dropzone.js"></script>
-  <script src="/js/services/files.js"></script>
-  <script src="/js/services/users.js"></script>
-  <script src="/js/script.js"></script>
-</head>
-<body>
-  <div class="navbar">
-    <span id='welcome'>Welcome {{user.facebook.firstName}}</span>
-    <a id='logout' ng-click="logout()">Log Out</a>
-    <img id='profilePicture' src='{{user.facebook.profPicture}}'>
-  </div>
-  <div role="main" ui-view></div>
-</body>
+
+  <head>
+    <base href="/"></base>
+    <script src='/js/script.js'></script>
+    <link rel="stylesheet" href="/css/style.css"></link>
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-toastr/dist/angular-toastr.tpls.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/dropzone/dist/min/dropzone.min.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/jquery-ui/jquery-ui.js"></script>
+    <!-- endbower -->
+
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/angular-toastr/dist/angular-toastr.css" />
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/dropzone/dist/min/dropzone.min.css" />
+    <!-- endbower -->
+    <script src="/js/app.js"></script>
+    <script src="/js/app_config.js"></script>
+
+    <script src="/js/controllers/navBar.js"></script>
+    <script type="text/javascript">
+      var user = {{user|raw|json_encode}};
+      var files = {{files|raw|json_encode}};
+    </script>
+    <script src="/js/controllers/home.js"></script>
+    <script src="/js/directives/cloudLogin.js"></script>
+    <script src="/js/directives/dropzone.js"></script>
+    <script src="/js/services/files.js"></script>
+    <script src="/js/services/users.js"></script>
+    <script src="/js/script.js"></script>
+  </head>
+
+  <body>
+    <div class="navbar" ng-controller='navCtrl'>
+      <span id='welcome'>Welcome {{user.facebook.firstName}}</span>
+      <a id='logout' ng-click="logout()">Log Out</a>
+      <img id='profilePicture' src='{{user.facebook.profPicture}}'>
+    </div>
+
+    <div ui-view='oauth'></div>
+    <div ui-view='dropzone'></div>
+    <div ui-view='files'></div>
+    <div ui-view='files'></div>
+  </body>
 </html>

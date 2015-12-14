@@ -55,8 +55,6 @@ exports.getOneDriveFiles = function(req, res, next) {
 };
 exports.deleteOneDriveFiles = function(req, res, next) {
   if(req.session.onedrive_access_token) {
-    console.log('req.body.id')
-    console.log(req.body.id)
     request({method: 'DELETE', url: 'https://api.onedrive.com/v1.0/drive/items/' + req.body.id,
       headers: {
         'Authorization': 'Bearer ' + req.session.onedrive_access_token

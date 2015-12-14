@@ -7,19 +7,22 @@ function config( $stateProvider, $urlRouterProvider, $locationProvider, $interpo
 
   .state('home', {
     url: '/',
-    controller: 'homeCtrl as ctrl',
-    templateUrl: "/views/home.html"
+    views : {
+      'oauth': {
+        controller: 'oauthCtrl as ctrl',
+        templateUrl: "/views/oauth.html"
+      },
+      'files': {
+        controller: 'filesCtrl as ctrl',
+        templateUrl: "/views/files.html"
+      },
+      'dropzone': {
+        controller: 'dropzoneCtrl as ctrl',
+        templateUrl: "/views/dropzone.html"
+      }
+    }
   })
-  .state('manage', {
-    url: '/manage',
-    controller: 'manageCtrl as ctrl',
-    templateUrl : '/views/manage.html'
-  })
-  .state('dashboard', {
-    url: '/dashboard',
-    controller: 'dashboardCtrl as ctrl',
-    templateUrl : '/views/dashboard.html'
-  })
+
   $locationProvider.html5Mode(true);
   $urlRouterProvider.otherwise("/");
   $httpProvider.defaults.useXDomain = true;

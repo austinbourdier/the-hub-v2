@@ -6,16 +6,7 @@ var oauth2Client = new OAuth2(process.env.googleDriveClientId || require('../con
   process.env.googleDriveClientSecret || require('../config.js').get('googleDrive:client_secret'),
   process.env.googleDriveClientRedirect || require('../config.js').get('googleDrive:redirect')
   );
-var fs = require('fs');
-var options = {
-  tmpDir: __dirname + '/../public/uploaded/tmp',
-  uploadDir: __dirname + '/../public/uploaded/files',
-  uploadUrl: '/uploaded/files/',
-  storage: {
-    type: 'local'
-  }
-};
-var uploader = require('blueimp-file-upload-expressjs')(options);
+
 exports.generateAuthUrl = function(req, res, next){
   res.redirect(oauth2Client.generateAuthUrl({
     access_type: 'offline',
