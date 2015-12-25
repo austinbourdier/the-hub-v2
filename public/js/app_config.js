@@ -9,15 +9,15 @@ function config( $stateProvider, $urlRouterProvider, $locationProvider, $interpo
     url: '/',
     views : {
       'oauth': {
-        controller: 'oauthCtrl as ctrl',
+        controller: 'oauthCtrl',
         templateUrl: "/views/oauth.html"
       },
       'files': {
-        controller: 'filesCtrl as ctrl',
+        controller: 'filesCtrl',
         templateUrl: "/views/files.html"
       },
       'dropzone': {
-        controller: 'dropzoneCtrl as ctrl',
+        controller: 'dropzoneCtrl',
         templateUrl: "/views/dropzone.html"
       }
     }

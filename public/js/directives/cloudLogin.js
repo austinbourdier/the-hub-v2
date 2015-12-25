@@ -1,4 +1,4 @@
-angular.module('mainApp')
+app
   .directive('cloudLogin', CloudLoginDirective);
 
 function CloudLoginDirective() {

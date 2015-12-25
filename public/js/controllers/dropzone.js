@@ -2,6 +2,7 @@ angular.module('mainApp')
   .controller('dropzoneCtrl', dropzoneCtrl)
 
 function dropzoneCtrl($scope, $http, $window, UserService, FileService, toastr) {
+  $scope.user = user;
   $scope.dropzoneConfig = {
     'options': { 'url': '/file-upload' },
     'eventHandlers': {

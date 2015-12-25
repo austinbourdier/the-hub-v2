@@ -3,7 +3,6 @@
 
   <head>
     <base href="/"></base>
-    <script src='/js/script.js'></script>
     <link rel="stylesheet" href="/css/style.css"></link>
     <!-- bower:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
@@ -15,6 +14,7 @@
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="bower_components/jquery-ui/jquery-ui.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <!-- endbower -->
 
     <!-- bower:css -->
@@ -30,24 +30,28 @@
       var user = {{user|raw|json_encode}};
       var files = {{files|raw|json_encode}};
     </script>
-    <script src="/js/controllers/home.js"></script>
+    <script src="/js/controllers/dropzone.js"></script>
+    <script src="/js/controllers/files.js"></script>
+    <script src="/js/controllers/navBar.js"></script>
+    <script src="/js/controllers/oauth.js"></script>
+    <script src="/js/directives/cloudFiles.js"></script>
     <script src="/js/directives/cloudLogin.js"></script>
     <script src="/js/directives/dropzone.js"></script>
     <script src="/js/services/files.js"></script>
     <script src="/js/services/users.js"></script>
-    <script src="/js/script.js"></script>
   </head>
 
   <body>
-    <div class="navbar" ng-controller='navCtrl'>
+    <div class="navbar" ng-controller='navCtrl' id="top-navbar">
       <span id='welcome'>Welcome {{user.facebook.firstName}}</span>
       <a id='logout' ng-click="logout()">Log Out</a>
       <img id='profilePicture' src='{{user.facebook.profPicture}}'>
     </div>
-
-    <div ui-view='oauth'></div>
-    <div ui-view='dropzone'></div>
-    <div ui-view='files'></div>
-    <div ui-view='files'></div>
+    <div id='side-bar'>
+      <div id='oauth-view' ui-view='oauth'></div>
+      <div id='dropzone-view' ui-view='dropzone'></div>
+    </div>
+    <div id='files-view' ui-view='files'></div>
+    <div id='tabs-view' ui-view='tabs'></div>
   </body>
 </html>

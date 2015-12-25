@@ -1,3 +1,9 @@
-<div id='cloudLogins'>
-  <cloud-login ng-repeat='c in ctrl.clouds' cloud="{{c}}" ng-class='user[c + "files"] ? "":"nonactive-account"'></cloud-login>
-</div>
+ <!-- OAUTH -->
+ <div id='cloudLogins'>
+  <!-- <cloud-login ng-repeat='c in clouds' cloud="{{c}}" ng-class='user[c + "files"] ? "":"nonactive-account"'></cloud-login> -->
+
+  <div></div>
+  <ul class="list-group">
+    <li ng-hide="user.accessedClouds[cloud]" class="list-group-item" ng-repeat='cloud in clouds' ng-click='cloudLogin(cloud)'><img src='../images/{{cloud}}.png'/>{{cloud}}</li>
+  </ul>
+

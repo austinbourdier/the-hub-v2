@@ -1,10 +1,18 @@
-angular.module('mainApp')
+app
   .service('UserService', UserService)
 
-function UserService($window, $http){
+function UserService($window, $http, $q){
   return {
     logIn: function (cloud) {
-      $window.location = $window.location.protocol + '//' + $window.location.host + '/auth/' + cloud + '/login';
+      return $http.get($window.location.protocol + '//' + $window.location.host + '/auth/' + cloud + '/login').then(function(response) {
+        if (typeof response.data === 'object') {
+          return response.data;
+        } else {
+          return $q.reject(response.data);
+        }
+      }, function(response) {
+        return $q.reject(response.data);
+      });
     },
     getUser: function () {
       return $http.get('/user').then(function(response) {

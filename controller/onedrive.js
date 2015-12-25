@@ -29,12 +29,16 @@ exports.getOneDriveAccessToken = function(req, res, next) {
     // TODO: err catch
 
     req.session.onedrive_access_token = JSON.parse(response.body).access_token;
+    if(req.session.user.accessedClouds)
+      req.session.user.accessedClouds.onedrive = true;
+    else
+      req.session.user.accessedClouds = {onedrive:true};
     next();
   });
 };
 
 exports.getOneDriveFiles = function(req, res, next) {
-  if(req.session.onedrive_access_token) {
+  if(req.session.user.accessedClouds.onedrive) {
     request({method: 'GET', url: 'https://api.onedrive.com/v1.0/drive/root/children',
       headers: {
         'Authorization': 'Bearer ' + req.session.onedrive_access_token
@@ -54,7 +58,7 @@ exports.getOneDriveFiles = function(req, res, next) {
   }
 };
 exports.deleteOneDriveFiles = function(req, res, next) {
-  if(req.session.onedrive_access_token) {
+  if(req.session.user.accessedClouds.onedrive) {
     request({method: 'DELETE', url: 'https://api.onedrive.com/v1.0/drive/items/' + req.body.id,
       headers: {
         'Authorization': 'Bearer ' + req.session.onedrive_access_token
@@ -68,7 +72,7 @@ exports.deleteOneDriveFiles = function(req, res, next) {
   }
 };
 exports.downloadOneDriveFiles = function(req, res, next) {
-  if(req.session.onedrive_access_token) {
+  if(req.session.user.accessedClouds.onedrive) {
     // res.setHeader('Content-type', file.mimeType);
     request({method: 'GET', url: 'https://api.onedrive.com/v1.0/drive/items/' + req.params.id,
       headers: {
@@ -91,7 +95,7 @@ exports.downloadOneDriveFiles = function(req, res, next) {
 };
 
 exports.upload = function(req, res, next) {
-  if(req.session.onedrive_access_token) {
+  if(req.session.user.accessedClouds.onedrive) {
     request({method: 'GET', url: 'https://api.onedrive.com/v1.0/drive/root',
       headers: {
         'Authorization': 'Bearer ' + req.session.onedrive_access_token

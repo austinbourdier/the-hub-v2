@@ -21,14 +21,17 @@ exports.getDBoxAccessToken = function(req, res, next) {
         // TODO: error catch
 
     req.session.dbox_access_token = access_token;
-    req.session.dropboxAccess = true;
+    if(req.session.user.accessedClouds)
+      req.session.user.accessedClouds.dropbox = true;
+    else
+      req.session.user.accessedClouds = {dropbox:true};
     next();
   })
 };
 
 
 exports.getDropBoxFiles = function(req,res,next){
-  if(req.session.dropboxAccess){
+  if(req.session.user.accessedClouds.dropbox){
     DBoxApp.client(req.session.dbox_access_token).metadata('/',{
       file_limit         : 10000,
       list               : true,
@@ -46,7 +49,7 @@ exports.getDropBoxFiles = function(req,res,next){
 };
 
 exports.deleteDropBoxFiles = function(req,res,next){
-  if(req.session.dropboxAccess){
+  if(req.session.user.accessedClouds.dropbox){
     DBoxApp.client(req.session.dbox_access_token).rm(req.body.id,function(status, data){
       // TODO: error catch
       console.log(status, data)
@@ -58,7 +61,7 @@ exports.deleteDropBoxFiles = function(req,res,next){
 };
 
 exports.downloadDropBoxFiles = function(req,res,next){
-  if(req.session.dropboxAccess){
+  if(req.session.user.accessedClouds.dropbox){
     var client = DBoxApp.client(req.session.dbox_access_token);
     var file = req.params.id;
     client.metadata(file, function(status, reply) {
@@ -75,7 +78,7 @@ exports.downloadDropBoxFiles = function(req,res,next){
 };
 
 exports.upload = function(req,res,next){
-  if(req.session.dropboxAccess){
+  if(req.session.user.accessedClouds.dropbox){
     DBoxApp.client(req.session.dbox_access_token).put('/'+req.files.file.originalname, req.fileStream, function(status, data) {
       // TODO: error catch
       next();

@@ -6,8 +6,8 @@ exports.readFile = function(req, res, next){
     var newPath = __dirname + "/uploads/" + req.files.file.originalname;
     fs.writeFile(newPath, data, function (err) {
       // TODO: ERR CATCH
-          req.fileStream = data;
-          next();
+      req.fileStream = data;
+      next();
     })
   })
 };

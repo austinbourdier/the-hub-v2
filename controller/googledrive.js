@@ -21,13 +21,16 @@ exports.getGoogleDriveToken = function(req, res, next){
       access_token: tokens.access_token,
       refresh_token: tokens.refresh_token
     });
-    req.session.googleDriveAccess = true;
+    if(req.session.user.accessedClouds)
+      req.session.user.accessedClouds.googledrive = true;
+    else
+      req.session.user.accessedClouds = {googledrive:true};
     next();
   })
 };
 
 exports.getGoogleDriveFiles = function(req, res, next){
-  if(req.session.googleDriveAccess){
+  if(req.session.user.accessedClouds.googledrive){
     googleapis.drive({ version: 'v2', auth: oauth2Client }).files.list({}, function(err, data) {
       // TODO: Error catch
       req.session.user.googledrivefiles = data;
@@ -39,13 +42,13 @@ exports.getGoogleDriveFiles = function(req, res, next){
 };
 
 exports.downloadGoogleDriveFiles = function(req, res, next){
-  if(req.session.googleDriveAccess){
+  if(req.session.user.accessedClouds.googledrive){
     googleapis.drive({ version: 'v2', auth: oauth2Client }).files.get({fileId:req.params.id}, function(err, file) {
       res.setHeader('Content-disposition', 'attachment; filename=' + file.title);
       res.setHeader('Content-type', file.mimeType);
       request({method:"GET",url:file.downloadUrl,
         headers: {Authorization: 'Bearer ' + oauth2Client.credentials.access_token}
-      },function(err, response, body) {
+      }, function(err, response, body) {
         // TODO: err catch
         next();
       });
@@ -56,7 +59,7 @@ exports.downloadGoogleDriveFiles = function(req, res, next){
 };
 
 exports.deleteGoogleDriveFiles = function(req, res, next){
-  if(req.session.googleDriveAccess){
+  if(req.session.user.accessedClouds.googledrive){
     googleapis.drive({ version: 'v2', auth: oauth2Client }).files.delete({ fileId: req.body.id }, function(err, data) {
       // TODO: Error catch
       next();
@@ -67,7 +70,7 @@ exports.deleteGoogleDriveFiles = function(req, res, next){
 };
 
 exports.upload = function(req,res,next){
-  if(req.session.googleDriveAccess){
+  if(req.session.user.accessedClouds.googledrive){
     googleapis.drive({ version: 'v2', auth: oauth2Client }).files.insert({resource: {
       title: req.files.file.originalname,
       mimeType: req.files.file.mimetype
