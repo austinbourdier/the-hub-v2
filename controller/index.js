@@ -8,7 +8,7 @@ exports.googledrive = require('./googledrive');
 
 
 exports.render = function(req, res) {
-  if(req.session.user) return res.render('index', {user: req.session.user});
+  if(req.session.user) return res.render('index', {user: req.session.user, justAdded:req.justAdded});
   else res.render('login');
 };
 

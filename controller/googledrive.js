@@ -21,6 +21,7 @@ exports.getGoogleDriveToken = function(req, res, next){
       access_token: tokens.access_token,
       refresh_token: tokens.refresh_token
     });
+    req.justAdded = 'googledrive';
     if(req.session.user.accessedClouds)
       req.session.user.accessedClouds.googledrive = true;
     else

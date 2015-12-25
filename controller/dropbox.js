@@ -21,6 +21,7 @@ exports.getDBoxAccessToken = function(req, res, next) {
         // TODO: error catch
 
     req.session.dbox_access_token = access_token;
+    req.justAdded = 'dropbox';
     if(req.session.user.accessedClouds)
       req.session.user.accessedClouds.dropbox = true;
     else

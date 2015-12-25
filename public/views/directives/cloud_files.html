@@ -1,5 +1,3 @@
-
-{{title}}
 <uib-accordion>
 <uib-accordion-group ng-repeat="file in files" heading="{{file.title}}">
 <div><span ng-click='downloadFromCloud(file.id, file.source)'>download</span><span ng-click='deleteFromCloud(file.id, file.source)'>delete</span></div>

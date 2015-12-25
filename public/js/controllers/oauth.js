@@ -6,6 +6,5 @@ function oauthCtrl($scope, $rootScope, $http, $window, UserService, FileService,
   $scope.clouds = ['dropbox', 'googledrive', 'box', 'onedrive'];
   $scope.cloudLogin = function(cloud) {
     UserService.logIn(cloud);
-    $rootScope.$broadcast('loggedInCloud', {cloud: cloud});
   }
 }

@@ -28,6 +28,7 @@ exports.getOneDriveAccessToken = function(req, res, next) {
   }, function(err, response, body) {
     // TODO: err catch
 
+    req.justAdded = 'onedrive';
     req.session.onedrive_access_token = JSON.parse(response.body).access_token;
     if(req.session.user.accessedClouds)
       req.session.user.accessedClouds.onedrive = true;
