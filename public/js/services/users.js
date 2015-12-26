@@ -36,7 +36,7 @@ function normalize (user) {
     user.files = user.files.concat(user.dropboxfiles);
   }
   if(user.onedrivefiles) {
-    user.onedrivefiles.forEach(function(f){
+    user.onedrivefiles.forEach(function (f) {
       f.source = 'onedrive';
       f.title = f.name;
       f.createdAt = f.createdDateTime;
@@ -44,17 +44,34 @@ function normalize (user) {
     user.files = user.files.concat(user.onedrivefiles);
   }
   if(user.boxfiles && user.boxfiles.item_collection && user.boxfiles.item_collection.entries) {
+    user.boxfolders = [];
+    var tempFiles = [];
     user.boxfiles.item_collection.entries.forEach(function(f){
-      f.source = 'box';
-      f.title = f.name;
+      if(f.type == 'folder') {
+        user.boxfolders.push(f);
+      } else {
+        f.source = 'box';
+        f.title = f.name;
+        tempFiles.push(f);
+      }
     });
+    user.boxfiles.item_collection.entries = tempFiles;
     user.files = user.files.concat(user.boxfiles.item_collection.entries);
   }
   if(user.googledrivefiles && user.googledrivefiles.items) {
-    user.googledrivefiles.items.forEach(function(f){
-      f.source = 'googledrive';
-      f.title = f.title;
+    user.googledrivefolders = [];
+    var tempFiles = [];
+    user.googledrivefiles.items.forEach(function (f, i) {
+      // seperate files from folders, google indicates a file is a folder by mimetype == 'application/vnd.google-apps.folder'
+      if(f.mimeType == 'application/vnd.google-apps.folder') {
+        user.googledrivefolders.push(f);
+      } else {
+        f.source = 'googledrive';
+        f.title = f.title;
+        tempFiles.push(f);
+      }
     });
+    user.googledrivefiles.items = tempFiles;
     user.files = user.files.concat(user.googledrivefiles.items);
   }
   return user.files;

@@ -35,11 +35,19 @@ exports.getBoxAccessToken = function(req,res,next){
 exports.getBoxFiles = function(req, res, next){
   if(req.session.user.accessedClouds.box){
     var box = new Box({access_token: req.session.box_access_token,refresh_token: req.session.box_refresh_token});
-    box.folders.root(function(err, data){
-      // TODO: Error catch
-      req.session.user.boxfiles = data;
-      next();
-    })
+    if (req.query.folderId) {
+      box.folders.info(req.query.folderId, function(err, data){
+        // TODO: Error catch
+        req.session.user.boxfiles = data;
+        next();
+      })
+    } else {
+      box.folders.root(function(err, data){
+        // TODO: Error catch
+        req.session.user.boxfiles = data;
+        next();
+      })
+    }
   } else {
     next();
   }

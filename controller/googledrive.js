@@ -32,7 +32,8 @@ exports.getGoogleDriveToken = function(req, res, next){
 
 exports.getGoogleDriveFiles = function(req, res, next){
   if(req.session.user.accessedClouds.googledrive){
-    googleapis.drive({ version: 'v2', auth: oauth2Client }).files.list({}, function(err, data) {
+    var params = req.query.folderId ? {folderId: req.query.folderId} : {};
+    googleapis.drive({ version: 'v2', auth: oauth2Client })[req.query.folderId ? 'children' : 'files'].list(params, function(err, data) {
       // TODO: Error catch
       req.session.user.googledrivefiles = data;
       next();
@@ -71,7 +72,7 @@ exports.deleteGoogleDriveFiles = function(req, res, next){
 };
 
 exports.upload = function(req,res,next){
-  if(req.session.user.accessedClouds.googledrive){
+  if(req.session.user.accessedClouds.googledrive) {
     googleapis.drive({ version: 'v2', auth: oauth2Client }).files.insert({resource: {
       title: req.files.file.originalname,
       mimeType: req.files.file.mimetype

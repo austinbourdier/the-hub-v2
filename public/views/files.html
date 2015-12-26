@@ -1,14 +1,30 @@
 <div id='main-container'>
   <div class="nav navbar">
     <ul class="nav nav-tabs">
-      <li ng-show='user.accessedClouds.dropbox' role="presentation" class="active"><a ng-click='toggleClouds("dropbox")'><img src='../images/dropbox.png'/> Dropbox</a></li>
-      <li ng-show='user.accessedClouds.googledrive' role="presentation" class="active"><a ng-click='toggleClouds("googledrive")'><img src='../images/googledrive.png'/> Google Drive</a></li>
-      <li ng-show='user.accessedClouds.box' role="presentation" class="active"><a ng-click='toggleClouds("box")'><img src='../images/box.png'/> Box</a></li>
-      <li ng-show='user.accessedClouds.onedrive' role="presentation" class="active"><a ng-click='toggleClouds("onedrive")'><img src='../images/onedrive.png'/> OneDrive</a></li>
+      <li ng-show='user.accessedClouds.dropbox' role="presentation" ng-class="tabs.dropbox? 'active':''"><a ng-click='toggleClouds("dropbox")'><img src='../images/dropbox.png'/> Dropbox</a></li>
+      <li ng-show='user.accessedClouds.googledrive' role="presentation" ng-class="tabs.googledrive? 'active':''"><a ng-click='toggleClouds("googledrive")'><img src='../images/googledrive.png'/> Google Drive</a></li>
+      <li ng-show='user.accessedClouds.box' role="presentation" ng-class="tabs.box? 'active':''"><a ng-click='toggleClouds("box")'><img src='../images/box.png'/> Box</a></li>
+      <li ng-show='user.accessedClouds.onedrive' role="presentation" ng-class="tabs.onedrive? 'active':''"><a ng-click='toggleClouds("onedrive")'><img src='../images/onedrive.png'/> OneDrive</a></li>
+    </ul>
+  </div>
+  <div class='folder-navigation'>
+    <ul ng-show='tabs.googledrive' class="nav nav-tabs">
+      <li role="presentation"><span class="centered" ng-click='getGoogleDriveFolder()'><i class='fa fa-folder'></i> ROOT</span></li>
+      <li ng-repeat='folder in user.googledrivefolders'><span class="centered" ng-click='getGoogleDriveFolder(folder.id)'><i class='fa fa-folder'></i> {{folder.title}}</span></li>
+    </ul>
+    <ul ng-show='tabs.box' class="nav nav-tabs">
+      <li role="presentation"><span class="centered" ng-click='getBoxFolder()'><i class='fa fa-folder'></i> ROOT</span></li>
+      <li ng-repeat='folder in user.boxfolders'><span class="centered" ng-click='getBoxFolder(folder.id)'><i class='fa fa-folder'></i> {{folder.name}}</span></li>
+    </ul>
+    <ul ng-show='tabs.dropbox' class="nav nav-tabs">
+      <li role="presentation"><i class='fa fa-folder'></i> ROOT</li>
+    </ul>
+    <ul ng-show='tabs.onedrive' class="nav nav-tabs">
+      <li role="presentation"><i class='fa fa-folder'></i> ROOT</li>
     </ul>
   </div>
   <div ng-hide='user.accessedClouds' class="alert alert-warning alert-dismissible" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true" ng-click='alert()'>&times;</span></button>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
     Login to your accounts by clicking to the left!
   </div>
   <cloud-files ng-show='tabs.googledrive' download="downloadFromCloud(file.id, file.source)" delete="deleteFromCloud(file.id, file.source)" cloud="google drive" files='user.googledrivefiles.items'></cloud-files>
@@ -19,15 +35,3 @@
 
   <cloud-files ng-show='tabs.onedrive' download="" delete="deleteFromCloud(file.id, file.source)" cloud='one drive' files='user.onedrivefiles'></cloud-files>
 </div>
-
-<!--   <table class='table'>
-    <thead>
-      <tr class='row'><th>Source</th><th>Title</th><th>Download</th><th>Delete</th></tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat='file in user.files' class='row'>
-        <td><img ng-src='../images/{{file.source}}.png'/></td><td>{{file.title}}</td><td><a ng-show='file.source != "onedrive"' class='glyphicon glyphicon-cloud-download' ng-click='downloadFromCloud(file.id, file.source)'></a><a ng-show='file.source == "onedrive"' class='glyphicon glyphicon-cloud-download' ng-href='{{file["@content.downloadUrl"]}}'></a></td><td><a class='glyphicon glyphicon-remove' ng-click='deleteFromCloud(file.id, file.source)'></a></td>
-      </tr>
-    </tbody>
-  </table> -->
-

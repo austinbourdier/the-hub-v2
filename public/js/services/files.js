@@ -14,17 +14,27 @@ function FileService($http, $q, $window){
         return $q.reject(response.data);
       })
     },
-    convertNumCloudsToClassName: function (numClouds) {
-      if(numClouds == 1)
-        return 'full';
-      else if(numClouds == 2)
-        return 'one-half';
-      else if(numClouds == 3)
-        return 'one-third';
-      else if(numClouds == 4)
-        return 'one-fourth';
-      else
-        return 'none';
+    getBoxFolder: function (id) {
+      return $http.get('/folder/box', {params: {folderId: id}}).then(function (response) {
+        if (typeof response.data === 'object') {
+          return response.data;
+        } else {
+          return $q.reject(response.data);
+        }
+      }, function(response) {
+        return $q.reject(response.data);
+      })
+    },
+    getGoogleDriveFolder: function (id) {
+      return $http.get('/folder/googledrive', {params: {folderId: id}}).then(function (response) {
+        if (typeof response.data === 'object') {
+          return response.data;
+        } else {
+          return $q.reject(response.data);
+        }
+      }, function(response) {
+        return $q.reject(response.data);
+      })
     },
     download: function (id, cloud) {
       $window.location = $window.location.protocol + '//' + $window.location.host + '/download/' + cloud + '/'+id.replace('/','%2F');

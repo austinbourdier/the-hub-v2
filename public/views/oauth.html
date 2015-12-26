@@ -1,9 +1,96 @@
  <!-- OAUTH -->
- <div id='cloudLogins'>
-  <!-- <cloud-login ng-repeat='c in clouds' cloud="{{c}}" ng-class='user[c + "files"] ? "":"nonactive-account"'></cloud-login> -->
+ <!-- <div id='cloudLogins' class='nav-collapse'> -->
+ <!-- <cloud-login ng-repeat='c in clouds' cloud="{{c}}" ng-class='user[c + "files"] ? "":"nonactive-account"'></cloud-login> -->
+ <aside>
+  <div id="sidebar"  class="nav-collapse">
+    <!-- sidebar menu start-->
+    <ul class="sidebar-menu" id="nav-accordion">
 
-  <div></div>
-  <ul class="list-group">
-    <li ng-hide="user.accessedClouds[cloud]" class="list-group-item" ng-repeat='cloud in clouds' ng-click='cloudLogin(cloud)'><img src='../images/{{cloud}}.png'/>{{cloud}}</li>
-  </ul>
+      <p class="centered"><a href="profile.html"><img src='{{user.facebook.profPicture}}' class="img-circle" width="60"></a></p>
+      <h5 class="centered">{{user.facebook.firstName}}</h5>
 
+<!--       <li class="mt">
+        <a class="active" href="index.html">
+          <i class="fa fa-dashboard"></i>
+          <span>Dashboard</span>
+        </a>
+      </li> -->
+
+      <li ng-repeat='cloud in clouds' class="sub-menu" on-finish-render="assignClickListener()">
+        <a href="javascript:;" >
+          <i class="fa fa-desktop"></i>
+          <span>{{cloud}}</span>
+        </a>
+        <ul class="sub">
+          <li><a href="general.html">Show Files</a></li>
+          <li><a href='#' ng-click='cloudLogin(cloud)'>Login</a></li>
+          <li><a href="panels.html">Logout</a></li>
+        </ul>
+      </li>
+
+      <!-- <li class="sub-menu">
+        <a href="javascript:;" >
+          <i class="fa fa-cogs"></i>
+          <span>Components</span>
+        </a>
+        <ul class="sub">
+          <li><a  href="calendar.html">Calendar</a></li>
+          <li><a  href="gallery.html">Gallery</a></li>
+          <li><a  href="todo_list.html">Todo List</a></li>
+        </ul>
+      </li>
+      <li class="sub-menu">
+        <a href="javascript:;" >
+          <i class="fa fa-book"></i>
+          <span>Extra Pages</span>
+        </a>
+        <ul class="sub">
+          <li><a  href="blank.html">Blank Page</a></li>
+          <li><a  href="login.html">Login</a></li>
+          <li><a  href="lock_screen.html">Lock Screen</a></li>
+        </ul>
+      </li>
+      <li class="sub-menu">
+        <a href="javascript:;" >
+          <i class="fa fa-tasks"></i>
+          <span>Forms</span>
+        </a>
+        <ul class="sub">
+          <li><a  href="form_component.html">Form Components</a></li>
+        </ul>
+      </li>
+      <li class="sub-menu">
+        <a href="javascript:;" >
+          <i class="fa fa-th"></i>
+          <span>Data Tables</span>
+        </a>
+        <ul class="sub">
+          <li><a  href="basic_table.html">Basic Table</a></li>
+          <li><a  href="responsive_table.html">Responsive Table</a></li>
+        </ul>
+      </li>
+      <li class="sub-menu">
+        <a href="javascript:;" >
+          <i class=" fa fa-bar-chart-o"></i>
+          <span>Charts</span>
+        </a>
+        <ul class="sub">
+          <li><a  href="morris.html">Morris</a></li>
+          <li><a  href="chartjs.html">Chartjs</a></li>
+        </ul>
+      </li> -->
+
+    </ul>
+    <!-- sidebar menu end-->
+  </div>
+</aside>
+<!--   <ul class="sidebar-menu" id='nav-accordion'>
+    <li ng-hide="user.accessedClouds[cloud]" class="sub-menu dcjq-parent-li" ng-repeat='cloud in clouds' ng-click='cloudLogin(cloud)'><img src='../images/{{cloud}}.png'/>{{cloud}}
+      <ul class='sub'>
+        <li>Show Files</li>
+        <li>Login</li>
+        <li>Logout</li>
+      </ul>
+    </li>
+  </ul> -->
+  <!-- </div> -->

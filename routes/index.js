@@ -29,13 +29,17 @@ module.exports = function(app, passport) {
   router.get('/', controller.render);
 
   // upload route
-  router.post('/file-upload', controller.uploader.readFile, controller.googledrive.upload, controller.googledrive.getGoogleDriveFiles, controller.dropbox.upload, controller.dropbox.getDropBoxFiles, controller.box.upload, controller.box.getBoxFiles, controller.onedrive.upload, controller.onedrive.getOneDriveFiles, controller.sendBackUploadedFiles);
+  router.post('/file-upload', controller.uploader.readFile, controller.googledrive.upload, controller.googledrive.getGoogleDriveFiles, controller.dropbox.upload, controller.dropbox.getDropBoxFiles, controller.box.upload, controller.box.getBoxFiles, controller.onedrive.upload, controller.onedrive.getOneDriveFiles, controller.sendBackFiles);
+
+  // retrieve folder
+  router.get('/folder/googledrive', controller.googledrive.getGoogleDriveFiles, controller.sendBackFiles);
+  router.get('/folder/box', controller.box.getBoxFiles, controller.sendBackFiles);
 
   // file deletion route
-  router.post('/delete/dropbox', controller.dropbox.deleteDropBoxFiles, controller.dropbox.getDropBoxFiles, controller.sendBackUploadedFiles);
-  router.post('/delete/onedrive', controller.onedrive.deleteOneDriveFiles, controller.onedrive.getOneDriveFiles, controller.sendBackUploadedFiles);
-  router.post('/delete/googledrive', controller.googledrive.deleteGoogleDriveFiles, controller.googledrive.getGoogleDriveFiles, controller.sendBackUploadedFiles);
-  router.post('/delete/box', controller.box.deleteBoxFiles, controller.box.getBoxFiles, controller.sendBackUploadedFiles);
+  router.post('/delete/dropbox', controller.dropbox.deleteDropBoxFiles, controller.dropbox.getDropBoxFiles, controller.sendBackFiles);
+  router.post('/delete/onedrive', controller.onedrive.deleteOneDriveFiles, controller.onedrive.getOneDriveFiles, controller.sendBackFiles);
+  router.post('/delete/googledrive', controller.googledrive.deleteGoogleDriveFiles, controller.googledrive.getGoogleDriveFiles, controller.sendBackFiles);
+  router.post('/delete/box', controller.box.deleteBoxFiles, controller.box.getBoxFiles, controller.sendBackFiles);
 
   // file download routes
   router.get('/download/dropbox/:id', controller.dropbox.downloadDropBoxFiles);
