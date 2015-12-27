@@ -45,6 +45,7 @@ exports.getOneDriveFiles = function(req, res, next) {
         'Authorization': 'Bearer ' + req.session.onedrive_access_token
       },
     }, function(err, response, body) {
+      console.log(response.body)
       // TODO: err catch
       req.session.user.onedrivefiles = JSON.parse(response.body).value.filter(function(object){
         return object["@content.downloadUrl"];
