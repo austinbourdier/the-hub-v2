@@ -28,11 +28,19 @@ function UserService($window, $http){
 function normalize (user) {
   user.files = [];
   if(user.dropboxfiles) {
+    user.dropboxfolders = [];
+    var tempFiles = [];
     user.dropboxfiles.forEach(function(f){
-      f.source = 'dropbox';
-      f.title = f.path;
-      f.id = f.path;
+      if(f.is_dir) {
+        user.dropboxfolders.push(f);
+      } else {
+        f.source = 'dropbox';
+        f.title = f.path;
+        f.id = f.path;
+        tempFiles.push(f)
+      }
     });
+    user.dropboxfiles = tempFiles;
     user.files = user.files.concat(user.dropboxfiles);
   }
   if(user.onedrivefiles) {

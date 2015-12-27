@@ -193,8 +193,8 @@
   .navbar {
     margin-bottom: 0px!important;
   }
-.nav-tabs{
-  border-bottom: none!important;
+#files-container {
+
 }
 .showAccordion {
   display: block!important;
