@@ -32,4 +32,12 @@ function filesCtrl($scope, $rootScope, $http, $window, UserService, FileService,
       toastr.error('Folder information was not retrieved from Box, please try again!');
     })
   }
+  $scope.getOneDriveFolder = function (id) {
+    FileService.getOneDriveFolder(id).then(function (data) {
+      console.log(data)
+      $scope.user = UserService.normalizeUser(data.user);
+    }, function (err) {
+      toastr.error('Folder information was not retrieved from OneDrive, please try again!');
+    })
+  }
 }
