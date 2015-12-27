@@ -33,26 +33,40 @@ exports.getOneDriveAccessToken = function(req, res, next) {
     if(req.session.user.accessedClouds)
       req.session.user.accessedClouds.onedrive = true;
     else
-      req.session.user.accessedClouds = {onedrive:true};
+      req.session.user.accessedClouds = {onedrive: true};
     next();
   });
 };
 
 exports.getOneDriveFiles = function(req, res, next) {
   if(req.session.user.accessedClouds.onedrive) {
-    request({method: 'GET', url: 'https://api.onedrive.com/v1.0/drive/root/children',
-      headers: {
-        'Authorization': 'Bearer ' + req.session.onedrive_access_token
-      },
-    }, function(err, response, body) {
-      console.log(response.body)
-      // TODO: err catch
-      req.session.user.onedrivefiles = JSON.parse(response.body).value;
-      if(req.uploadedOneDriveFile) {
-        req.session.user.onedrivefiles.push(req.uploadedOneDriveFile);
-      }
-      next();
-    });
+    if (req.query.folderId) {
+      request({method: 'GET', url: 'https://api.onedrive.com/v1.0/drive/root/' + req.query.folderId + '/children',
+        headers: {
+          'Authorization': 'Bearer ' + req.session.onedrive_access_token
+        },
+      }, function(err, response, body) {
+        // TODO: err catch
+        req.session.user.onedrivefiles = JSON.parse(response.body).value;
+        if(req.uploadedOneDriveFile) {
+          req.session.user.onedrivefiles.push(req.uploadedOneDriveFile);
+        }
+        next();
+      });
+    } else {
+      request({method: 'GET', url: 'https://api.onedrive.com/v1.0/drive/root/children',
+        headers: {
+          'Authorization': 'Bearer ' + req.session.onedrive_access_token
+        },
+      }, function(err, response, body) {
+        // TODO: err catch
+        req.session.user.onedrivefiles = JSON.parse(response.body).value;
+        if(req.uploadedOneDriveFile) {
+          req.session.user.onedrivefiles.push(req.uploadedOneDriveFile);
+        }
+        next();
+      });
+    }
   } else {
     next();
   }

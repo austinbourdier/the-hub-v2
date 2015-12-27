@@ -32,6 +32,7 @@ module.exports = function(app, passport) {
   router.post('/file-upload', controller.uploader.readFile, controller.googledrive.upload, controller.googledrive.getGoogleDriveFiles, controller.dropbox.upload, controller.dropbox.getDropBoxFiles, controller.box.upload, controller.box.getBoxFiles, controller.onedrive.upload, controller.onedrive.getOneDriveFiles, controller.sendBackFiles);
 
   // retrieve folder
+  router.get('/folder/onedrive', controller.googledrive.getGoogleDriveFiles, controller.sendBackFiles);
   router.get('/folder/googledrive', controller.googledrive.getGoogleDriveFiles, controller.sendBackFiles);
   router.get('/folder/box', controller.box.getBoxFiles, controller.sendBackFiles);
 

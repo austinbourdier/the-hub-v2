@@ -20,7 +20,8 @@
       <li role="presentation"><i class='fa fa-folder'></i> ROOT</li>
     </ul>
     <ul ng-show='tabs.onedrive' class="nav nav-tabs">
-      <li role="presentation"><i class='fa fa-folder'></i> ROOT</li>
+      <li role="presentation"><span class="centered" ng-click='getOneDriveFolder()'><i class='fa fa-folder'></i> ROOT</span></li>
+      <li ng-repeat='folder in user.onedrivefolders'><span class="centered" ng-click='getOneDriveFolder(folder.id)'><i class='fa fa-folder'></i> {{folder.name}}</span>
     </ul>
   </div>
   <div ng-hide='user.accessedClouds' class="alert alert-warning alert-dismissible" role="alert">

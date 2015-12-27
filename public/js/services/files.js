@@ -14,6 +14,17 @@ function FileService($http, $q, $window){
         return $q.reject(response.data);
       })
     },
+    getOneDriveFolder: function (id) {
+      return $http.get('/folder/onedrive', {params: {folderId: id}}).then(function (response) {
+        if (typeof response.data === 'object') {
+          return response.data;
+        } else {
+          return $q.reject(response.data);
+        }
+      }, function(response) {
+        return $q.reject(response.data);
+      })
+    },
     getBoxFolder: function (id) {
       return $http.get('/folder/box', {params: {folderId: id}}).then(function (response) {
         if (typeof response.data === 'object') {
