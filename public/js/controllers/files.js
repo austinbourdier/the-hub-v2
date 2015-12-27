@@ -17,27 +17,15 @@ function filesCtrl($scope, $rootScope, $http, $window, UserService, FileService,
   $rootScope.$on('userUpdated', function (event, user) {
     $scope.user = user;
   });
-  $scope.getGoogleDriveFolder = function (id) {
-    FileService.getGoogleDriveFolder(id).then(function (data) {
+  $scope.getFolder = function (id, cloud) {
+    if(arguments.length == 1) {
+      cloud = id;
+      id = undefined
+    }
+    FileService.getFolder(id, cloud).then(function (data) {
       $scope.user = UserService.normalizeUser(data.user);
     }, function (err) {
-      toastr.error('Folder information was not retrieved from Google Drive, please try again!');
-    })
-  }
-  $scope.getBoxFolder = function (id) {
-    FileService.getBoxFolder(id).then(function (data) {
-      console.log(data)
-      $scope.user = UserService.normalizeUser(data.user);
-    }, function (err) {
-      toastr.error('Folder information was not retrieved from Box, please try again!');
-    })
-  }
-  $scope.getOneDriveFolder = function (id) {
-    FileService.getOneDriveFolder(id).then(function (data) {
-      console.log(data)
-      $scope.user = UserService.normalizeUser(data.user);
-    }, function (err) {
-      toastr.error('Folder information was not retrieved from OneDrive, please try again!');
+      toastr.error('Folder information was not retrieved, please try again!');
     })
   }
 }

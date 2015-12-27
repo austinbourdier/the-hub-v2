@@ -9,19 +9,19 @@
   </div>
   <div class='folder-navigation'>
     <ul ng-show='tabs.googledrive' class="nav nav-tabs">
-      <li role="presentation"><span class="centered" ng-click='getGoogleDriveFolder()'><i class='fa fa-folder'></i> ROOT</span></li>
-      <li ng-repeat='folder in user.googledrivefolders'><span class="centered" ng-click='getGoogleDriveFolder(folder.id)'><i class='fa fa-folder'></i> {{folder.title}}</span></li>
+      <li role="presentation"><span class="centered" ng-click='getFolder("googledrive")'><i class='fa fa-folder'></i> ROOT</span></li>
+      <li ng-repeat='folder in user.folders'><span class="centered" ng-click='getFolder(folder.id, "googledrive")'><i class='fa fa-folder'></i> {{folder.title}}</span></li>
     </ul>
     <ul ng-show='tabs.box' class="nav nav-tabs">
-      <li role="presentation"><span class="centered" ng-click='getBoxFolder()'><i class='fa fa-folder'></i> ROOT</span></li>
-      <li ng-repeat='folder in user.boxfolders'><span class="centered" ng-click='getBoxFolder(folder.id)'><i class='fa fa-folder'></i> {{folder.name}}</span></li>
+      <li role="presentation"><span class="centered" ng-click='getFolder("box")'><i class='fa fa-folder'></i> ROOT</span></li>
+      <li ng-repeat='folder in user.boxfolders'><span class="centered" ng-click='getFolder(folder.id, "box")'><i class='fa fa-folder'></i> {{folder.name}}</span></li>
     </ul>
     <ul ng-show='tabs.dropbox' class="nav nav-tabs">
       <li role="presentation"><i class='fa fa-folder'></i> ROOT</li>
     </ul>
     <ul ng-show='tabs.onedrive' class="nav nav-tabs">
-      <li role="presentation"><span class="centered" ng-click='getOneDriveFolder()'><i class='fa fa-folder'></i> ROOT</span></li>
-      <li ng-repeat='folder in user.onedrivefolders'><span class="centered" ng-click='getOneDriveFolder(folder.id)'><i class='fa fa-folder'></i> {{folder.name}}</span>
+      <li role="presentation"><span class="centered" ng-click='getFolder("onedrive")'><i class='fa fa-folder'></i> ROOT</span></li>
+      <li ng-repeat='folder in user.onedrivefolders'><span class="centered" ng-click='getFolder(folder.id, "onedrive")'><i class='fa fa-folder'></i> {{folder.name}}</span>
     </ul>
   </div>
   <div ng-hide='user.accessedClouds' class="alert alert-warning alert-dismissible" role="alert">

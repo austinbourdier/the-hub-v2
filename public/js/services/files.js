@@ -25,7 +25,7 @@ function FileService($http, $q, $window){
       }, function(response) {
         return $q.reject(response.data);
       })
-    }
+    },
     download: function (id, cloud) {
       $window.location = $window.location.protocol + '//' + $window.location.host + '/download/' + cloud + '/'+id.replace('/','%2F');
     }
