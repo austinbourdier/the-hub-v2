@@ -16,6 +16,7 @@ function FileService($http, $q, $window){
     },
     getFolder: function (id, cloud) {
       console.log('CLIENT')
+      console.log(id)
       return $http.get('/folder/' + cloud, {params: {folderId: id}}).then(function (response) {
         if (typeof response.data === 'object') {
           return response.data;
