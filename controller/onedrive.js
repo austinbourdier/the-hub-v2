@@ -39,17 +39,8 @@ exports.getOneDriveAccessToken = function(req, res, next) {
 };
 
 exports.getOneDriveFiles = function(req, res, next) {
-  console.log('SERVER')
-  console.log('req.query')
-  console.log(req.query)
-  console.log('req.body')
-  console.log(req.body)
-  console.log('req.params')
-  console.log(req.params)
-  console.log('SERVER')
   if(req.session.user.accessedClouds.onedrive) {
     if (req.query.folderId) {
-      console.log('HEREREREREERERERERERERRERERERE')
       request({method: 'GET', url: 'https://api.onedrive.com/v1.0/drive/items/' + req.query.folderId + '/children',
         headers: {
           'Authorization': 'Bearer ' + req.session.onedrive_access_token
