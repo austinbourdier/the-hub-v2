@@ -35,7 +35,7 @@ function normalize (user) {
     });
     user.files = user.files.concat(user.dropboxfiles);
   }
-  if(user.onedrivefiles) {
+  if(user.onedrivefiles) {console.
     user.onedrivefolders = [];
     var tempFiles = [];
     user.onedrivefiles.forEach(function (f) {
