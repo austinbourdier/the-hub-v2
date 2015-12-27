@@ -15,6 +15,7 @@ function FileService($http, $q, $window){
       })
     },
     getOneDriveFolder: function (id) {
+      console.log('CLIENT')
       return $http.get('/folder/onedrive', {params: {folderId: id}}).then(function (response) {
         if (typeof response.data === 'object') {
           return response.data;
