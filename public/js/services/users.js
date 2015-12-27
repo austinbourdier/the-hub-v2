@@ -36,11 +36,19 @@ function normalize (user) {
     user.files = user.files.concat(user.dropboxfiles);
   }
   if(user.onedrivefiles) {
+    user.onedrivefolders = [];
+    var tempFiles = [];
     user.onedrivefiles.forEach(function (f) {
-      f.source = 'onedrive';
-      f.title = f.name;
-      f.createdAt = f.createdDateTime;
+      if(f["@content.downloadUrl"]) {
+        f.source = 'onedrive';
+        f.title = f.name;
+        f.createdAt = f.createdDateTime;
+        tempFiles.push(f);
+      } else if (f.folder) {
+        user.onedrivefolders.push(f);
+      }
     });
+    user.onedrivefiles = tempFiles;
     user.files = user.files.concat(user.onedrivefiles);
   }
   if(user.boxfiles && user.boxfiles.item_collection && user.boxfiles.item_collection.entries) {
