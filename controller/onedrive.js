@@ -40,7 +40,12 @@ exports.getOneDriveAccessToken = function(req, res, next) {
 
 exports.getOneDriveFiles = function(req, res, next) {
   console.log('SERVER')
-  console.log(req.query.folderId)
+  console.log('req.query')
+  console.log(req.query)
+  console.log('req.body')
+  console.log(req.body)
+  console.log('req.params')
+  console.log(req.params)
   console.log('SERVER')
   if(req.session.user.accessedClouds.onedrive) {
     if (req.query.folderId) {
