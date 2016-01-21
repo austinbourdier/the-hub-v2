@@ -6,7 +6,8 @@ function filesCtrl($scope, $rootScope, $http, $window, UserService, FileService,
   $scope.showFolders = true;
   $scope.currentFolders = {'dropbox': $cookies.get('current_dropbox'), 'googledrive': $cookies.get('current_googledrive'), 'box': $cookies.get('current_box'), 'onedrive': $cookies.get('current_onedrive')};
   $scope.tabs = {'dropbox':false, 'googledrive':false, 'box':false, 'onedrive':false};
-
+  $scope.modalShown = false;
+  
   $scope.toggleClouds = function (cloud) {
     $scope.tabs = {'dropbox':false, 'googledrive':false, 'box':false, 'onedrive':false};
     $scope.tabs[cloud] = true;
@@ -36,6 +37,7 @@ function filesCtrl($scope, $rootScope, $http, $window, UserService, FileService,
       toastr.error('Folder information was not retrieved, please try again!');
     })
   }
+
 
   $scope.toggleFolderView = function () {
     $scope.showFolders = !$scope.showFolders;

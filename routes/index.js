@@ -49,6 +49,8 @@ module.exports = function(app, passport) {
   router.get('/download/googledrive/:id', controller.googledrive.downloadGoogleDriveFiles);
   router.get('/download/box/:id', controller.box.downloadBoxFiles);
 
+  router.post('/rename/googledrive', controller.googledrive.updateGoogleDriveFileName, controller.googledrive.getGoogleDriveFiles, controller.sendBackFiles);
+
   // logout
   router.get('/auth/logout', controller.auth.logout);
 

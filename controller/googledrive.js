@@ -43,6 +43,21 @@ exports.getGoogleDriveFiles = function(req, res, next){
   }
 };
 
+exports.updateGoogleDriveFileName = function(req, res, next){
+  if(req.session.user.accessedClouds.googledrive){
+    googleapis.drive({ version: 'v2', auth: oauth2Client }).files.patch({fileId:req.body.id, resource: {title: req.body.title}}, function(err, file) {
+        // TODO: err catch
+        if(err.code == '403')
+          return res.status(err.code).send('Not Authorized');
+        else if (err)
+          return res.status(err.code);
+        else
+          next();
+    })
+  } else {
+    next();
+  }
+};
 exports.downloadGoogleDriveFiles = function(req, res, next){
   if(req.session.user.accessedClouds.googledrive){
     googleapis.drive({ version: 'v2', auth: oauth2Client }).files.get({fileId:req.params.id}, function(err, file) {
