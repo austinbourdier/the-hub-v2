@@ -36,49 +36,5 @@ nconf.defaults({
   }
 })
 
-nconf.getInt = function(key, _default){
-  var val = nconf.get(key);
-  if(typeof val == "number")
-    return Math.floor(val);
-
-  try{
-    val = parseInt(val);
-    if(isNaN(val))
-      return _default;
-    else
-      return val;
-  }catch(err){
-    return _default;
-  }
-};
-
-nconf.getFloat = function(key, _default){
-  var val = nconf.get(key);
-  if(typeof val == "number")
-    return val;
-
-  try{
-    val = parseFloat(val);
-    if(isNaN(val))
-      return _default;
-    else
-      return val;
-  }catch(err){
-    return _default;
-  }
-};
-
-nconf.getBool = function(key, _default){
-  var val = nconf.get(key);
-  if(val == "true")
-    return true;
-  if(val == "false")
-    return false;
-
-  if(typeof _default == "undefined")
-    return false;
-
-  return _default;
-};
 
 module.exports = nconf;

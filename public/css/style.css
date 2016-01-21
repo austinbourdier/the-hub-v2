@@ -1,5 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Ruda);
-
+html, body{
+    height: 100%;
+}
 #top-navbar{
   background-color: black;
   color: white;
@@ -68,134 +70,105 @@
   left: 200px;
   position: absolute;
 }
-/*#single_message, #scheduled_message{
-  width: 50%;
-  display: inline;
-}
-#single_message{
-  float:left;
-}
-#scheduled_message{
-  float:right;
-}
-.individualContainer{
-  width: 33%;
-  float:left;
-  height: 500px;
-  overflow-y:scroll;
-}
-.mainContainer{
-  height: 600px;
-}
-#admin-section{
-  height: 150px;
+
+
+#login-box {
+  color:white;
+  top: 0; left: 0;
+  width, height: 100%;
+  background-color: black;
+  position: absolute;
+  min-width: 100%;
+  min-height: 100%;
+  text-align:center;
 }
 
-#main-container, #admin-section{
-  width: 80%;
-  margin-right: auto;
-  margin-left: auto;
-  }*/
+#login-box span {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -40%);
+  transform: translate(-50%, -40%);
+  font-family: "Lucida Grande";
+}
 
-  #login-box {
-    color:white;
-    top: 0; left: 0;
-    width, height: 100%;
-    background-color: black;
-    position: absolute;
-    min-width: 100%;
-    min-height: 100%;
-    text-align:center;
-  }
+#login-box img {
+  width: 200px;
+  height: 42px;
+}
 
-  #login-box span {
-    position: fixed;
-    top: 40%;
-    left: 50%;
-    -webkit-transform: translate(-50%, -40%);
-    transform: translate(-50%, -40%);
-    font-family: "Lucida Grande";
-  }
-
-  #login-box img {
-    width: 200px;
-    height: 42px;
-  }
-
-  #login-body{
-    background-color: #57BECC;
-  }
+#login-body{
+  background-color: #57BECC;
+}
 
 
-  .nonactive-account{
-    -webkit-filter: grayscale(100%);
-    -moz-filter: grayscale(100%);
-    -o-filter: grayscale(100%);
-    -ms-filter: grayscale(100%);
-    filter: grayscale(100%);
-  }
+.nonactive-account{
+  -webkit-filter: grayscale(100%);
+  -moz-filter: grayscale(100%);
+  -o-filter: grayscale(100%);
+  -ms-filter: grayscale(100%);
+  filter: grayscale(100%);
+}
 
-  tr img {
-    width:50px;
-    height:50px;
-    cursor:pointer;
-  }
-  #side-bar {
-    width:200px;
-    height: 100%;
-    position: fixed;
-    background: #424a5d;
-  }
+tr img {
+  width:50px;
+  height:50px;
+  cursor:pointer;
+}
+#side-bar {
+  width:200px;
+  height: 100%;
+  position: fixed;
+  background: #424a5d;
+}
 
-  #oatuh-view {
-    width:200px;
-    height:200px;
-  }
-  #files-view {
-    margin-left: 210px;
-    padding-top: 60px;
-  }
+#oatuh-view {
+  width:200px;
+  height:200px;
+}
+#files-view {
+  margin-left: 210px;
+  padding-top: 60px;
+}
 
-  #main-container {
-    display: table;
-    table-layout: fixed;
-    width:1200px;
-    height: 100%;
-  }
-  cloud-files td {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 1200px;
-  }
-  .panel-group .panel-default {
-    display: block!important;
-  }
-  .overlay{
-    display:none;
-  }
-  cloud-files td:hover .overlay {
-    display:block;
-    background-color:red;
-    top:0;
-    opacity:0.75;
-
-  }
-  #cloudLogins ul{
-    /*margin-left: -100px;*/
-    width: 200px;
-  }
-  #cloudLogins div{
-    height: 50px;
-    width: 200px;
-    display: table-cell; vertical-align: middle;
-  }
-  .navbar {
-    margin-bottom: 0px!important;
-  }
-#files-container {
+#main-container {
+  display: table;
+  table-layout: fixed;
+  width:1200px;
+  height: 100%;
+}
+cloud-files td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 1200px;
+}
+.panel-group .panel-default {
+  display: block!important;
+}
+.overlay{
+  display:none;
+}
+cloud-files td:hover .overlay {
+  display:block;
+  background-color:red;
+  top:0;
+  opacity:0.75;
 
 }
+#cloudLogins ul{
+  /*margin-left: -100px;*/
+  width: 200px;
+}
+#cloudLogins div{
+  height: 50px;
+  width: 200px;
+  display: table-cell; vertical-align: middle;
+}
+.navbar {
+  margin-bottom: 0px!important;
+}
+
 .showAccordion {
   display: block!important;
 }
@@ -208,6 +181,23 @@ ul.sidebar-menu {
 body {
   font-family: 'Ruda', sans-serif!important;
 }
-.folder-navigation li {
+#folder-navigation li {
   padding-top: 15px!important;
+}
+
+#folder-navigation {
+  width: 400px;
+  height: 600px;
+  border: black 1px solid;
+}
+#files-container {
+  width: 400px;
+  height: 600px;
+  border: black 1px solid;
+}
+#files-table td {
+  vertical-align: top;
+}
+#files-table th {
+  text-align: center;
 }
