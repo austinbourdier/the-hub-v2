@@ -8,11 +8,11 @@
     </ul>
   </div>
   <table id='files-table'>
-    <thead><tr><th colspan="2">{{currentFolders[currentTab]}}</th></tr></thead>
+    <thead><tr><th>Folder Navigation<i ng-class='showFolders ? "fa fa-arrow-left fa-2":"fa fa-arrow-right fa-2"' ng-click="toggleFolderView()"></i></th><th>{{currentFolders[currentTab]}}</th></tr></thead>
     <tbody>
       <tr>
-        <td id='folder-navigation'>
-        <ul ng-show='tabs.googledrive'>
+        <td id='folder-navigation' ng-class='showFolders ? "show-folders":"hide-folders"'>
+          <ul ng-show='tabs.googledrive'>
             <li role="presentation"><span class="centered" ng-click='getFolder("googledrive", "ROOT")'><i class='fa fa-folder'></i> ROOT</span></li>
             <li ng-repeat='folder in user.googledrivefolders'><span class="centered" ng-click='getFolder(folder.id, "googledrive", folder.title)'><i class='fa fa-folder'></i> {{folder.title}}</span></li>
           </ul>

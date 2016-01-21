@@ -122,20 +122,20 @@ tr img {
   background: #424a5d;
 }
 
-#oatuh-view {
+#oauth-view {
   width:200px;
   height:200px;
 }
 #files-view {
   margin-left: 210px;
   padding-top: 60px;
+  height: 100%;
 }
 
 #main-container {
   display: table;
   table-layout: fixed;
-  width:1200px;
-  height: 100%;
+  width:98%;
 }
 cloud-files td {
   white-space: nowrap;
@@ -185,19 +185,45 @@ body {
   padding-top: 15px!important;
 }
 
-#folder-navigation {
-  width: 400px;
-  height: 600px;
-  border: black 1px solid;
+#folder-navigation ul {
+  padding-left: 25px!important;
+}
+
+#folder-navigation.show-folders {
+  min-width: 300px;
+  width: 25vh;
+  height:80vh;
+  border: 1px solid #ddd;
+}
+#folder-navigation.hide-folders {
+  width: 0vh;
+  height:80vh;
+  border: 1px solid #ddd;
+}
+
+#folder-navigation.hide-folders span{
+  display: none;
 }
 #files-container {
-  width: 400px;
-  height: 600px;
-  border: black 1px solid;
+  width: 100%;
+  height:80vh;
 }
 #files-table td {
   vertical-align: top;
 }
-#files-table th {
+#files-table th:nth-child(2) {
   text-align: center;
+  width: 100%;
+}
+#files-table th:nth-child(1) {
+  text-align: right;
+  padding-right: 5px;
+  border-right: 1px solid #ddd;
+}
+table, tr, tbody, td, thead, th {
+  border-top: none!important;
+}
+
+.fa-arrow-left, .fa-arrow-right {
+  font-size: 1.5em!important;
 }

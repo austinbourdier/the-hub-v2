@@ -3,17 +3,17 @@ angular.module('mainApp')
 
 function filesCtrl($scope, $rootScope, $http, $window, UserService, FileService, toastr, $cookies) {
   $scope.user = user;
-  console.log(user)
-  $scope.currentTab;
+  $scope.showFolders = true;
   $scope.currentFolders = {'dropbox': $cookies.get('current_dropbox'), 'googledrive': $cookies.get('current_googledrive'), 'box': $cookies.get('current_box'), 'onedrive': $cookies.get('current_onedrive')};
-  console.log($scope.currentFolders)
+  $scope.tabs = {'dropbox':false, 'googledrive':false, 'box':false, 'onedrive':false};
+
   $scope.toggleClouds = function (cloud) {
     $scope.tabs = {'dropbox':false, 'googledrive':false, 'box':false, 'onedrive':false};
     $scope.tabs[cloud] = true;
     $cookies.put('currentCloud', cloud);
     $scope.currentTab = $cookies.get('currentCloud')
   };
-  $scope.tabs = {'dropbox':false, 'googledrive':false, 'box':false, 'onedrive':false};
+
   if(justAdded)
     $scope.toggleClouds(justAdded);
   if($cookies.get('currentCloud'))
@@ -21,6 +21,7 @@ function filesCtrl($scope, $rootScope, $http, $window, UserService, FileService,
   $rootScope.$on('userUpdated', function (event, user) {
     $scope.user = user;
   });
+
   $scope.getFolder = function (id, cloud, name) {
     if(arguments.length == 2) {
       name = cloud;
@@ -35,4 +36,9 @@ function filesCtrl($scope, $rootScope, $http, $window, UserService, FileService,
       toastr.error('Folder information was not retrieved, please try again!');
     })
   }
+
+  $scope.toggleFolderView = function () {
+    $scope.showFolders = !$scope.showFolders;
+  }
+
 }
