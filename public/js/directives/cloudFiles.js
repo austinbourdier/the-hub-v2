@@ -12,6 +12,7 @@ function cloudFiles($compile) {
       delete: '&'
     },
     controller: function($scope, toastr, FileService, UserService) {
+      $scope.newTitle = {};
       $scope.oldTitle = {};
       $scope.deleteFromCloud = function(id, cloud) {
         FileService.delete(id, cloud).then(function(data) {
@@ -24,22 +25,27 @@ function cloudFiles($compile) {
       $scope.downloadFromCloud = function(id, cloud) {
         FileService.download(id, cloud);
       }
-      $scope.renameGoogleFile = function(id) {
-        FileService.renameGoogleDriveFile(id, $scope.newTitle[id]).then(function(data) {
-          toastr.success("Your File's Name Was Updated ");
+      $scope.renameFile = function(id) {
+        console.log($scope.title.replace(" ", ""))
+        FileService.renameFile(id, $scope.title.replace(" ", ""), $scope.newTitle[id]).then(function(data) {
+          toastr.success("Your File's Name Was Updated!");
           $scope.user = UserService.normalizeUser(data.user);
-          angular.element('#update-name').replaceWith('<span>' + $scope.newTitle[id] + '</span>')
+          var elementStr = "<h4 class='panel-title'><a href='' tabindex='0' class='accordion-toggle' ng-click='toggleOpen()' uib-accordion-transclude='heading'><span ng-class='{'text-muted': isDisabled}' class='ng-binding'>" + $scope.newTitle[id] + "</span></a></h4>";
+          $compile(elementStr)($scope)
+          angular.element('#update-name').replaceWith(elementStr);
         }, function(err) {
           if(err == 'Not Authorized')
             toastr.error("You are not authorized to update this file! It's probably shared or owner by other users.");
           else
             toastr.error("Something went wrong!");
-          angular.element('#update-name').replaceWith('<span>' + $scope.oldTitle[id] + '</span>')
+          angular.element('#update-name').replaceWith('<span>' + $scope.oldTitle[id] + '</span>');
         });
       }
-      $scope.changeToInputFieldGoogle = function($event, id, title) {
+      $scope.changeToInputField = function($event, id, title) {
+        console.log(title)
         $scope.oldTitle[id] = title;
-        var elementStr = '<form id="update-name" ng-submit="renameGoogleFile(' + "'" + id + "'" +')"><input ng-model="newTitle[' + "'" + id + "'" + ']" type="text" autofocus value=' + title.replace(" ", "&nbsp;") + '></input></form>';
+        $scope.newTitle[id] = title;
+        var elementStr = '<form id="update-name" ng-submit="renameFile(' + "'" + id + "'" + ')"><input ng-model="newTitle[' + "'" + id + "'" + ']" value=' + title.replace(" ", "&nbsp;") + '></input></form>';
         angular.element(angular.element($event.target).parents()[3].children[0].children[0]).replaceWith($compile(elementStr)($scope));
       }
     },
