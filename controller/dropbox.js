@@ -33,7 +33,7 @@ exports.getDBoxAccessToken = function (req, res, next) {
 
 exports.getDropBoxFiles = function (req,res,next) {
   if(req.session.user.accessedClouds.dropbox) {
-    DBoxApp.client(req.session.dbox_access_token).metadata(req.query.folderId || '/', {
+    DBoxApp.client(req.session.dbox_access_token).metadata(req.body.currentFolder || req.query.folderId || '/', {
       file_limit         : 10000,
       list               : true,
       include_deleted    : false,
@@ -42,6 +42,18 @@ exports.getDropBoxFiles = function (req,res,next) {
     }, function (status, data) {
       // TODO: error catch
       req.session.user.dropboxfiles = data.contents;
+      next();
+    })
+  } else {
+    next();
+  }
+};
+
+exports.updateDropBoxFileName = function (req,res,next) {
+  if(req.session.user.accessedClouds.dropbox) {
+    DBoxApp.client(req.session.dbox_access_token).mv(req.body.id, req.body.title, function (status, data) {
+      // TODO: error catch
+      console.log(status, data)
       next();
     })
   } else {

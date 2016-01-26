@@ -7,11 +7,12 @@ function cloudFiles($compile, $state) {
     templateUrl: "../../views/directives/cloud_files.html",
     scope: {
       title: '@cloud',
+      currentfolder: '=',
       files: '=',
       download: '&',
       delete: '&'
     },
-    controller: function($scope, toastr, FileService, UserService) {
+    controller: function($scope, $rootScope, toastr, FileService, UserService) {
       $scope.newTitle = {};
       $scope.oldTitle = {};
       $scope.deleteFromCloud = function(id, cloud) {
@@ -26,24 +27,31 @@ function cloudFiles($compile, $state) {
         FileService.download(id, cloud);
       }
       $scope.renameFile = function(id) {
-        console.log($scope.title.replace(" ", ""))
-        FileService.renameFile(id, $scope.title.replace(" ", ""), $scope.newTitle[id]).then(function(data) {
+        var newTitle = '';
+        if($scope.dropboxPrefix) {
+          newTitle += $scope.dropboxPrefix + '/';
+        }
+        newTitle += $scope.newTitle[id];
+        FileService.renameFile(id, $scope.title.replace(" ", ""), $scope.currentfolder, newTitle).then(function(data) {
           toastr.success("Your File's Name Was Updated!");
-          $scope.user = UserService.normalizeUser(data.user);
-          $state.reload();
+          $rootScope.$emit('updateUser', data.user)
         }, function(err) {
           if(err == 'Not Authorized')
-            toastr.error("You are not authorized to update this file! It's probably shared or owner by other users.");
+            toastr.error("You are not authorized to update this file! It's probably a shared file or owner by other users.");
           else
             toastr.error("Something went wrong!");
-          $state.reload();
         });
       }
       $scope.changeToInputField = function($event, id, title) {
-        console.log(title)
         $scope.oldTitle[id] = title;
         $scope.newTitle[id] = title;
-        var elementStr = '<form id="update-name" ng-submit="renameFile(' + "'" + id + "'" + ')"><input ng-model="newTitle[' + "'" + id + "'" + ']" value=' + title.replace(" ", "&nbsp;") + '></input></form>';
+        var displayTitle = title;
+        if($scope.title == 'dropbox') {
+          var parts = displayTitle.split('/');
+          $scope.dropboxPrefix = parts.slice(0, -1).join('/');
+          $scope.newTitle[id] = parts.pop();
+        }
+        var elementStr = '<form id="update-name" ng-submit="renameFile(' + "'" + id + "'" + ')"><input ng-model="newTitle[' + "'" + id + "'" + ']" value=' + displayTitle.replace(" ", "&nbsp;") + '></input></form>';
         angular.element(angular.element($event.target).parents()[3].children[0].children[0]).replaceWith($compile(elementStr)($scope));
       }
     },

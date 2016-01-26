@@ -4,22 +4,23 @@ var request = require('request');
 var fs = require('fs');
 var restler = require('restler');
 var path = require('path');
+var exec = require('child_process').exec;
 var boxRedirect = process.env.boxRedirect || require('../config.js').get('box:redirect');
 var boxClientID = process.env.boxClientID || require('../config.js').get('box:client_id');
 var boxClientSecurityToken = process.env.boxClientSecurityToken || require('../config.js').get('box:client_security_token');
 var boxClientSecret = process.env.boxClientSecret||require('../config.js').get('box:client_secret');
 
-exports.authorizeBox = function(req,res,next){
+exports.authorizeBox = function (req,res,next) {
   res.redirect("https://app.box.com/api/oauth2/authorize?response_type=code&client_id=" + boxClientID + "&state=" + boxClientSecurityToken + "&redirect_uri=" + boxRedirect);
 };
 
-exports.getBoxAccessToken = function(req,res,next){
+exports.getBoxAccessToken = function (req,res,next) {
   var body = {grant_type:'authorization_code', code: req.query.code, client_id:boxClientID, client_secret:boxClientSecret, redirect_uri: boxRedirect};
   request.post({
     url: 'https://app.box.com/api/oauth2/token',
     headers:{'content-type': 'application/x-www-form-urlencoded'},
     body: querystring.stringify(body)
-  }, function(error, response, body){
+  }, function (error, response, body) {
     // TODO: Error catch
     req.justAdded = 'box';
     req.session.box_access_token = JSON.parse(response.body).access_token;
@@ -32,17 +33,17 @@ exports.getBoxAccessToken = function(req,res,next){
   })
 };
 
-exports.getBoxFiles = function(req, res, next){
-  if(req.session.user.accessedClouds.box){
+exports.getBoxFiles = function (req, res, next) {
+  if(req.session.user.accessedClouds.box) {
     var box = new Box({access_token: req.session.box_access_token,refresh_token: req.session.box_refresh_token});
-    if (req.query.folderId) {
-      box.folders.info(req.query.folderId, function(err, data){
+    if (req.body.currentFolder || req.query.folderId) {
+      box.folders.info(req.body.currentFolder || req.query.folderId, function (err, data) {
         // TODO: Error catch
         req.session.user.boxfiles = data;
         next();
       })
     } else {
-      box.folders.root(function(err, data){
+      box.folders.root(function (err, data) {
         // TODO: Error catch
         req.session.user.boxfiles = data;
         next();
@@ -53,14 +54,14 @@ exports.getBoxFiles = function(req, res, next){
   }
 };
 
-exports.deleteBoxFiles = function(req, res, next){
-  if(req.session.user.accessedClouds.box){
-    request({method:"DELETE",url:"https://api.box.com/2.0/files/"+req.body.id.id,
+exports.deleteBoxFiles = function (req, res, next) {
+  if(req.session.user.accessedClouds.box) {
+    request({method:"DELETE", url:"https://api.box.com/2.0/files/"+req.body.id.id,
       headers:{
         'Authorization': 'Bearer ' + req.session.box_access_token,
         'If-Match':req.body.id.etag
       }
-    },function(err, response, body) {
+    }, function (err, response, body) {
         next();
     });
   } else {
@@ -68,12 +69,29 @@ exports.deleteBoxFiles = function(req, res, next){
   }
 };
 
-exports.downloadBoxFiles = function(req, res, next){
-  if(req.session.user.accessedClouds.box){
+exports.updateBoxFileName = function (req, res, next) {
+  if(req.session.user.accessedClouds.box) {
+    var command = 'curl https://api.box.com/2.0/files/' + req.body.id + ' -H "Authorization: Bearer ' + req.session.box_access_token + '"' + " -d '" + JSON.stringify({name: req.body.title}) + "' -X PUT"
+    console.log(command)
+    child = exec(command, function(error, stdout, stderr){
+      if(error !== null)
+      {
+        console.log('exec error: ' + error);
+      } else {
+        next();
+      }
+    });
+  } else {
+    next();
+  }
+};
+
+exports.downloadBoxFiles = function (req, res, next) {
+  if(req.session.user.accessedClouds.box) {
     res.setHeader('Content-disposition', 'attachment; filename=' + req.params.id);
     request({method:"GET",url:"https://api.box.com/2.0/files/"+req.params.id+'/content',
       headers:{'Authorization': 'Bearer ' + req.session.box_access_token}
-    },function(err, response, body) {
+    },function (err, response, body) {
       next();
     }).pipe(res).on('error', next);
   } else {
@@ -81,9 +99,9 @@ exports.downloadBoxFiles = function(req, res, next){
   }
 };
 
-exports.upload = function(req,res,next){
-  if(req.session.user.accessedClouds.box){
-    fs.stat(req.files.file.path, function(err, stats) {
+exports.upload = function (req,res,next) {
+  if(req.session.user.accessedClouds.box) {
+    fs.stat(req.files.file.path, function (err, stats) {
       restler.post("https://upload.box.com/api/2.0/files/content", {
         headers:{'Authorization': 'Bearer ' + req.session.box_access_token},
         multipart: true,
@@ -91,10 +109,10 @@ exports.upload = function(req,res,next){
           "folder_id": "0",
           "filename": restler.file(path.join(req.files.file.path), req.files.file.originalname, stats.size, req.files.file.originalname, req.files.file.mimetype)
         }
-      }).on("complete", function(err, response, body) {
+      }).on("complete", function (err, response, body) {
           // TODO: Error catch
           // status code 409 signifies that a file with the same name is already in this folder, need to catch for this
-          if(JSON.parse(response.statusCode)){
+          if(JSON.parse(response.statusCode)) {
             // repeat file name error catch here
           }
           next();
