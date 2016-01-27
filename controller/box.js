@@ -36,19 +36,11 @@ exports.getBoxAccessToken = function (req,res,next) {
 exports.getBoxFiles = function (req, res, next) {
   if(req.session.user.accessedClouds.box) {
     var box = new Box({access_token: req.session.box_access_token,refresh_token: req.session.box_refresh_token});
-    if (req.body.currentFolder || req.query.folderId) {
-      box.folders.info(req.body.currentFolder || req.query.folderId, function (err, data) {
-        // TODO: Error catch
-        req.session.user.boxfiles = data;
-        next();
-      })
-    } else {
-      box.folders.root(function (err, data) {
-        // TODO: Error catch
-        req.session.user.boxfiles = data;
-        next();
-      })
-    }
+    box.folders.info(req.body.currentFolder || req.query.folderId || '0', function (err, data) {
+      // TODO: Error catch
+      req.session.user.boxfiles = data;
+      next();
+    })
   } else {
     next();
   }
@@ -56,14 +48,14 @@ exports.getBoxFiles = function (req, res, next) {
 
 exports.deleteBoxFiles = function (req, res, next) {
   if(req.session.user.accessedClouds.box) {
-    request({method:"DELETE", url:"https://api.box.com/2.0/files/"+req.body.id.id,
-      headers:{
-        'Authorization': 'Bearer ' + req.session.box_access_token,
-        'If-Match':req.body.id.etag
-      }
-    }, function (err, response, body) {
-        next();
-    });
+    console.log(req.body.options)
+    var box = new Box({access_token: req.session.box_access_token,refresh_token: req.session.box_refresh_token});
+    box.files.delete(req.body.options.id, req.body.options.eTag, function(err, data) {
+      // TODO: err catch
+      console.log(err)
+      console.log(data)
+      next();
+    })
   } else {
     next();
   }
@@ -72,7 +64,6 @@ exports.deleteBoxFiles = function (req, res, next) {
 exports.updateBoxFileName = function (req, res, next) {
   if(req.session.user.accessedClouds.box) {
     var command = 'curl https://api.box.com/2.0/files/' + req.body.id + ' -H "Authorization: Bearer ' + req.session.box_access_token + '"' + " -d '" + JSON.stringify({name: req.body.title}) + "' -X PUT"
-    console.log(command)
     child = exec(command, function(error, stdout, stderr){
       if(error !== null)
       {

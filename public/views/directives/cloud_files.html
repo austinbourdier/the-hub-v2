@@ -1,6 +1,6 @@
 <uib-accordion>
 <uib-accordion-group ng-repeat="file in files" heading="{{file.title.split('/').slice(-1)[0]}}">
-<div ng-click='toggleOpen()'><span ng-click='downloadFromCloud(file.id, file.source)'>download</span><span ng-click='deleteFromCloud(file.id, file.source)'>delete</span><span ng-click='changeToInputField($event, file.id, file.title, currentTab)'>Rename</span></div>
+<div ng-click='toggleOpen()'><span ng-click='moreInfo(file.id, file.source)'>More Info</span><span ng-click='downloadFromCloud(file.id, file.source)'>Download</span><span ng-click='deleteFromCloud({id: file.id, eTag: file.etag}, file.source)'>Delete</span><span ng-click='changeToInputField($event, file.id, file.title, currentTab)'>Rename</span><span ng-click='opendialog()'>Move</span></div>
 </uib-accordion-group>
 </uib-accordion>
 

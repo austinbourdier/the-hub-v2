@@ -9,16 +9,17 @@ function cloudFiles($compile, $state) {
       title: '@cloud',
       currentfolder: '=',
       files: '=',
+      opendialog: '&',
       download: '&',
       delete: '&'
     },
     controller: function($scope, $rootScope, toastr, FileService, UserService) {
       $scope.newTitle = {};
       $scope.oldTitle = {};
-      $scope.deleteFromCloud = function(id, cloud) {
-        FileService.delete(id, cloud).then(function(data) {
+      $scope.deleteFromCloud = function(options, cloud) {
+        FileService.delete(options, cloud).then(function(data) {
           toastr.success('Your File Was Deleted From ' + cloud.charAt(0).toUpperCase() + cloud.slice(1));
-          $scope.user = UserService.normalizeUser(data.user);
+          $rootScope.$emit('updateUser', data.user)
         }, function(err) {
           toastr.error('Your File Was NOT Deleted From ' + cloud.charAt(0).toUpperCase() + cloud.slice(1) + '. Please try again!');
         });
@@ -28,18 +29,14 @@ function cloudFiles($compile, $state) {
       }
       $scope.renameFile = function(id) {
         var newTitle = '';
-        if($scope.dropboxPrefix) {
-          newTitle += $scope.dropboxPrefix + '/';
-        }
+        if($scope.dropboxPrefix) newTitle += $scope.dropboxPrefix + '/';
         newTitle += $scope.newTitle[id];
         FileService.renameFile(id, $scope.title.replace(" ", ""), $scope.currentfolder, newTitle).then(function(data) {
           toastr.success("Your File's Name Was Updated!");
           $rootScope.$emit('updateUser', data.user)
         }, function(err) {
-          if(err == 'Not Authorized')
-            toastr.error("You are not authorized to update this file! It's probably a shared file or owner by other users.");
-          else
-            toastr.error("Something went wrong!");
+          if(err == 'Not Authorized') toastr.error("You are not authorized to update this file! It's probably a shared file or owner by other users.");
+          else toastr.error("Something went wrong!");
         });
       }
       $scope.changeToInputField = function($event, id, title) {

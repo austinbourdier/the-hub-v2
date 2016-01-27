@@ -63,9 +63,8 @@ exports.updateDropBoxFileName = function (req,res,next) {
 
 exports.deleteDropBoxFiles = function (req,res,next) {
   if(req.session.user.accessedClouds.dropbox) {
-    DBoxApp.client(req.session.dbox_access_token).rm(req.body.id,function (status, data) {
+    DBoxApp.client(req.session.dbox_access_token).rm(req.body.options.id,function (status, data) {
       // TODO: error catch
-      console.log(status, data)
       next();
     })
   } else {

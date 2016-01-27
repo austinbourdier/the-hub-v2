@@ -1,7 +1,6 @@
 var request = require('request');
 var querystring = require('querystring');
 
-
 exports.getOneDriveAuthCode = function(req, res, next) {
   var onedriveQueryData = {
     client_id: process.env.onedriveClientId || require('../config.js').get('onedrive:client_id'),
@@ -73,7 +72,7 @@ exports.getOneDriveFiles = function(req, res, next) {
 };
 exports.deleteOneDriveFiles = function(req, res, next) {
   if(req.session.user.accessedClouds.onedrive) {
-    request({method: 'DELETE', url: 'https://api.onedrive.com/v1.0/drive/items/' + req.body.id,
+    request({method: 'DELETE', url: 'https://api.onedrive.com/v1.0/drive/items/' + req.body.options.id,
       headers: {
         'Authorization': 'Bearer ' + req.session.onedrive_access_token
       },

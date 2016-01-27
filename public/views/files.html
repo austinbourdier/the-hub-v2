@@ -17,11 +17,12 @@
             <li ng-repeat='folder in user.googledrivefolders'><span class="centered" ng-click='getFolder(folder.id, "googledrive", folder.title)'><i class='fa fa-folder'></i> {{folder.title}}</span></li>
           </ul>
           <ul ng-show='tabs.box'>
-            <li role="presentation"><span class="centered" ng-click='getFolder("box", "ROOT")'><i class='fa fa-folder'></i> ROOT </span></li>
+            <li role="presentation"><span class="centered" ng-click='getFolder(user.boxfiles.parent.id, "box", user.boxfiles.parent.name)'><i class='fa fa-folder'></i> {{user.boxfiles.parent.name || 'All Files'}} (parent) </span></li>
             <li ng-repeat='folder in user.boxfolders'><span class="centered" ng-click='getFolder(folder.id, "box", folder.name)'><i class='fa fa-folder'></i> {{folder.name}} </span></li>
           </ul>
           <ul ng-show='tabs.dropbox'>
-            <li role="presentation"><span class="centered" ng-click='getFolder("dropbox", "ROOT")'><i class='fa fa-folder'></i> ROOT </span></li>
+            <li role="presentation"><span class="centered" ng-click='getFolder("dropbox", "ROOT")'><i class='fa fa-folder'></i> All Files </span></li>
+            <li role="presentation"><span class="centered" ng-click='getFolder("dropbox", "ROOT")'><i class='fa fa-folder'></i>{{currentFolders['dropbox'].split('/').slice(0, -1).join('/')}} </span></li>
             <li ng-repeat='folder in user.dropboxfolders'><span class="centered" ng-click='getFolder(folder.path, "dropbox", folder.path)'><i class='fa fa-folder'></i> {{folder.path}} </span></li>
           </ul>
           <ul ng-show='tabs.onedrive'>
@@ -34,13 +35,13 @@
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             Login to your accounts by clicking to the left!
           </div>
-          <cloud-files ng-show='tabs.googledrive' currentfolder='currentFoldersID["googledrive"]' download="downloadFromCloud(file.id, file.source)" delete="deleteFromCloud(file.id, file.source)" cloud="google drive" files='user.googledrivefiles.items'></cloud-files>
+          <cloud-files ng-show='tabs.googledrive' currentfolder='currentFoldersID["googledrive"]' opendialog='openDialog()' download="downloadFromCloud(file.id, file.source)" delete="deleteFromCloud(file.id, file.source)" cloud="google drive" files='user.googledrivefiles.items'></cloud-files>
 
-          <cloud-files ng-show='tabs.dropbox' currentfolder='currentFoldersID["dropbox"]' download="downloadFromCloud(file.id, file.source)" delete="deleteFromCloud(file.id, file.source)" cloud='dropbox' files='user.dropboxfiles'></cloud-files>
+          <cloud-files ng-show='tabs.dropbox' currentfolder='currentFoldersID["dropbox"]' opendialog='openDialog()' download="downloadFromCloud(file.id, file.source)" delete="deleteFromCloud(file.id, file.source)" cloud='dropbox' files='user.dropboxfiles'></cloud-files>
 
-          <cloud-files ng-show='tabs.box' currentfolder='currentFoldersID["box"]' download="downloadFromCloud(file.id, file.source)" delete="deleteFromCloud(file.id, file.source)" cloud='box' files='user.boxfiles.item_collection.entries'></cloud-files>
+          <cloud-files ng-show='tabs.box' currentfolder='currentFoldersID["box"]' opendialog='openDialog()' download="downloadFromCloud(file.id, file.source)" delete="deleteFromCloud(file.id, file.source)" cloud='box' files='user.boxfiles.item_collection.entries'></cloud-files>
 
-          <cloud-files ng-show='tabs.onedrive' currentfolder='currentFoldersID["onedrive"]' download="" delete="deleteFromCloud(file.id, file.source)" cloud='one drive' files='user.onedrivefiles'></cloud-files>
+          <cloud-files ng-show='tabs.onedrive' currentfolder='currentFoldersID["onedrive"]' opendialog='openDialog()' download="" delete="deleteFromCloud(file.id, file.source)" cloud='one drive' files='user.onedrivefiles'></cloud-files>
         </td>
       </tr>
     </tbody>

@@ -3,8 +3,8 @@ app
 
 function FileService($http, $q, $window){
   return {
-    delete: function (id, cloud) {
-      return $http.post('/delete/' + cloud, {id: id}).then(function (response) {
+    delete: function (options, cloud) {
+      return $http.post('/delete/' + cloud, {options: options}).then(function (response) {
         if (typeof response.data === 'object') {
           return response.data;
         } else {

@@ -79,7 +79,7 @@ exports.downloadGoogleDriveFiles = function (req, res, next) {
 
 exports.deleteGoogleDriveFiles = function (req, res, next) {
   if(req.session.user.accessedClouds.googledrive) {
-    googleapis.drive({ version: 'v2', auth: oauth2Client }).files.delete({ fileId: req.body.id }, function (err, data) {
+    googleapis.drive({ version: 'v2', auth: oauth2Client }).files.delete({ fileId: req.body.options.id }, function (err, data) {
       // TODO: Error catch
       next();
     });

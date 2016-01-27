@@ -1,7 +1,7 @@
 angular.module('mainApp')
   .controller('filesCtrl', filesCtrl)
 
-function filesCtrl($scope, $rootScope, $http, $window, UserService, FileService, toastr, $cookies, $state) {
+function filesCtrl($scope, $rootScope, $http, $window, UserService, FileService, toastr, $cookies, $state, ngDialog) {
   $scope.user = user;
   $scope.showFolders = true;
   $scope.currentFolders = {'dropbox': $cookies.get('current_dropbox'), 'googledrive': $cookies.get('current_googledrive'), 'box': $cookies.get('current_box'), 'onedrive': $cookies.get('current_onedrive')};
@@ -21,6 +21,7 @@ function filesCtrl($scope, $rootScope, $http, $window, UserService, FileService,
     $scope.toggleClouds(justAdded);
   if($cookies.get('currentCloud'))
     $scope.toggleClouds($cookies.get('currentCloud'));
+
 
   $scope.getFolder = function (id, cloud, name) {
     if(arguments.length == 2) {
@@ -42,4 +43,12 @@ function filesCtrl($scope, $rootScope, $http, $window, UserService, FileService,
   $scope.toggleFolderView = function () {
     $scope.showFolders = !$scope.showFolders;
   }
+
+  $scope.openDialog = function () {
+    ngDialog.open({
+      template: '../../views/directives/move_file.html',
+      scope: $scope
+    });
+  };
+
 }
