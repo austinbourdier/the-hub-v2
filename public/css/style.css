@@ -10,7 +10,9 @@ html, body{
 .contain {
   width: 80%;
 }
-
+.folder {
+  text-decoration: underline;
+}
 #top-navbar span{
   color: white;
   left: 10px;

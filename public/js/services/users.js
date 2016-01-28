@@ -26,6 +26,7 @@ function UserService($window, $http){
 };
 
 function normalize (user) {
+  console.log(user)
   user.files = [];
   if(user.dropboxfiles) {
     user.dropboxfolders = [];
@@ -59,10 +60,10 @@ function normalize (user) {
     user.onedrivefiles = tempFiles;
     user.files = user.files.concat(user.onedrivefiles);
   }
-  if(user.boxfiles && user.boxfiles.item_collection && user.boxfiles.item_collection.entries) {
+  if(user.boxfiles) {
     user.boxfolders = [];
     var tempFiles = [];
-    user.boxfiles.item_collection.entries.forEach(function(f){
+    user.boxfiles.items.forEach(function(f){
       if(f.type == 'folder') {
         user.boxfolders.push(f);
       } else {
@@ -71,8 +72,8 @@ function normalize (user) {
         tempFiles.push(f);
       }
     });
-    user.boxfiles.item_collection.entries = tempFiles;
-    user.files = user.files.concat(user.boxfiles.item_collection.entries);
+    user.boxfiles = tempFiles;
+    user.files = user.files.concat(user.boxfiles);
   }
   if(user.googledrivefiles && user.googledrivefiles.items) {
     user.googledrivefolders = [];
