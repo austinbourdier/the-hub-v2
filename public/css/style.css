@@ -13,6 +13,9 @@ html, body{
 .folder {
   text-decoration: underline;
 }
+.file {
+  margin-left: 15px;
+}
 #top-navbar span{
   color: white;
   left: 10px;
