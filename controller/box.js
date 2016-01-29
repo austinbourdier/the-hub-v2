@@ -33,21 +33,16 @@ exports.getBoxAccessToken = function (req,res,next) {
   })
 };
 
+
 function updateTree(id, update, tree) {
   if (tree.id === id) {
-    tree.items = update
+    console.log(tree)
+    console.log(update)
+    tree.items = update;
   } else {
-    if ((tree.items || []).length) {
+    if(tree.items) {
       tree.items.map(function(item) {
-        if (item.id === id) {
-          item.items = update
-        }
-        if (item.items && item.items.length) {
-          for(var i = 0; i < item.items.length; i++) {
-            item.items[i] = updateTree(id, update, item.items[i])
-          }
-        }
-        return item;
+        return updateTree(id, update, item);
       })
     }
   }
@@ -62,7 +57,9 @@ exports.getBoxFiles = function (req, res, next) {
       if(!req.session.user.boxfiles) {
         req.session.user.boxfiles = {
           id: data.id,
-          items: data.item_collection.entries
+          items: data.item_collection.entries,
+          name: 'root',
+          type: 'folder'
         }
       } else {
         req.session.user.boxfiles = updateTree(req.body.currentFolder || req.query.folderId, data.item_collection.entries, req.session.user.boxfiles);

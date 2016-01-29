@@ -10,10 +10,16 @@ html, body{
 .contain {
   width: 80%;
 }
-.folder {
+.folder > span {
   text-decoration: underline;
 }
+.folder {
+  border: 1px black solid;
+}
 .file {
+  text-decoration: none!important;
+}
+.sub {
   margin-left: 15px;
 }
 #top-navbar span{
@@ -190,9 +196,9 @@ body {
   padding-top: 15px!important;
 }
 
-#folder-navigation ul {
+/*#folder-navigation ul {
   padding-left: 25px!important;
-}
+}*/
 
 #folder-navigation.show-folders {
   min-width: 300px;

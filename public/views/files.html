@@ -1,10 +1,4 @@
-<script type="text/ng-template" id="item_template">
- {{item.name}}
- <ul>
-    <li ng-repeat="item in item.items" ng-include="'item_template'" class='{{item.type}}'>
-    </li>
-  </ul>
-</script>
+
 <div id='main-container'>
   <div class="nav navbar">
     <ul class="nav nav-tabs">
@@ -43,16 +37,16 @@
           </div>
 
 
-<ul>
-  <li ng-repeat="item in user.boxfiles.items" ng-include="'item_template'" class='{{item.type}}'>
-  </li>
-</ul>
+          <ul ng-if='tabs.box' class='folder'>
+            {{user.boxfiles.name}}
+            <li ng-repeat="item in user.boxfiles.items" ng-include="'item_template'" ng-click='getFolder($event, item, "box")' class='sub' ng-class='item.type'></li>
+          </ul>
           <!-- <uib-accordion>
             <uib-accordion-group ng-repeat="item in user.boxfiles.items" heading="{{item.name}}" class='{{item.type}}'>
             <div ng-click='toggleOpen()'><span ng-click='moreInfo(file.id, file.source)'>More Info</span><span ng-click='downloadFromCloud(file.id, file.source)'>Download</span><span ng-click='deleteFromCloud({id: file.id, eTag: file.etag}, file.source)'>Delete</span><span ng-click='changeToInputField($event, file.id, file.title, currentTab)'>Rename</span><span ng-click='opendialog()'>Move</span></div>
             </uib-accordion-group>
           </uib-accordion>
- -->
+        -->
 
 <!--           <cloud-files ng-show='tabs.googledrive' currentfolder='currentFoldersID["googledrive"]' opendialog='openDialog()' download="downloadFromCloud(file.id, file.source)" delete="deleteFromCloud(file.id, file.source)" cloud="google drive" files='user.googledrivefiles.items'></cloud-files>
 
@@ -66,3 +60,15 @@
     </tbody>
   </table>
 </div>
+
+
+<!-- FILE CONTAINER PARTIAL -->
+<script type="text/ng-template" id="item_template">
+  <span ng-if='item.type == "folder"'>{{item.name}}</span>
+  <uib-accordion ng-if='item.type == "file"'>
+  <uib-accordion-group heading="{{item.name}}">
+  <div ng-click='toggleOpen()'><span ng-click='moreInfo(item.id, "box")'>More Info</span><span ng-click='downloadFromCloud(item.id, "box")'>Download</span><span ng-click='deleteFromCloud({id: item.id, eTag: item.etag}, "box")'>Delete</span><span ng-click='changeToInputField($event, item.id, item.name)'>Rename</span><span ng-click='opendialog()'>Move</span></div>
+</uib-accordion-group>
+</uib-accordion>
+<ul><li ng-repeat="item in item.items" ng-click='getFolder($event, item, "box")' ng-include="'item_template'" ng-class='item.type'></li></ul>
+</script>

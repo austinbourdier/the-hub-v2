@@ -1,14 +1,14 @@
 angular.module('mainApp')
-  .controller('filesCtrl', filesCtrl)
+.controller('filesCtrl', filesCtrl)
 
-function filesCtrl($scope, $rootScope, $http, $window, UserService, FileService, toastr, $cookies, $state, ngDialog) {
+function filesCtrl($scope, $rootScope, $http, $window, UserService, FileService, toastr, $cookies, $state, ngDialog, $compile) {
   $scope.user = user;
-  console.log($scope.user)
   $scope.showFolders = true;
   $scope.currentFolders = {'dropbox': $cookies.get('current_dropbox'), 'googledrive': $cookies.get('current_googledrive'), 'box': $cookies.get('current_box'), 'onedrive': $cookies.get('current_onedrive')};
   $scope.currentFoldersID = {'dropbox': $cookies.get('currentID_dropbox'), 'googledrive': $cookies.get('currentID_googledrive'), 'box': $cookies.get('currentID_box'), 'onedrive': $cookies.get('currentID_onedrive')};
   $scope.tabs = {'dropbox':false, 'googledrive':false, 'box':false, 'onedrive':false};
-
+  $scope.newTitle = {}
+  $scope.oldTitle = {}
   $scope.toggleClouds = function (cloud) {
     $scope.tabs = {'dropbox':false, 'googledrive':false, 'box':false, 'onedrive':false};
     $scope.tabs[cloud] = true;
@@ -16,7 +16,7 @@ function filesCtrl($scope, $rootScope, $http, $window, UserService, FileService,
     $scope.currentTab = $cookies.get('currentCloud')
   };
   $rootScope.$on('updateUser', function(event, user) {
-    $scope.user = UserService.normalizeUser(user);
+    $scope.user = user;
   })
   if(justAdded)
     $scope.toggleClouds(justAdded);
@@ -24,21 +24,55 @@ function filesCtrl($scope, $rootScope, $http, $window, UserService, FileService,
     $scope.toggleClouds($cookies.get('currentCloud'));
 
 
-  $scope.getFolder = function (id, cloud, name) {
-    if(arguments.length == 2) {
-      name = cloud;
-      cloud = id;
-      id = undefined
+  $scope.getFolder = function (event, item, cloud) {
+    event.stopPropagation();
+    if(item.type == 'folder') {
+      FileService.getFolder(item.id, cloud).then(function (data) {
+        $scope.user = data.user;
+      }, function (err) {
+        toastr.error('Folder information was not retrieved, please try again!');
+      })
     }
-    $scope.currentFolders[$scope.currentTab] = name;
-    $scope.currentFoldersID[$scope.currentTab] = id;
-    $cookies.put('current_' + cloud, $scope.currentFolders[$scope.currentTab]);
-    $cookies.put('currentID_' + cloud, $scope.currentFoldersID[$scope.currentTab]);
-    FileService.getFolder(id, cloud).then(function (data) {
-      $scope.user = UserService.normalizeUser(data.user);
-    }, function (err) {
-      toastr.error('Folder information was not retrieved, please try again!');
-    })
+  }
+  $scope.deleteFromCloud = function(options, cloud) {
+    FileService.delete(options, cloud).then(function(data) {
+      toastr.success('Your File Was Deleted From ' + cloud.charAt(0).toUpperCase() + cloud.slice(1));
+      $rootScope.$emit('updateUser', data.user)
+    }, function(err) {
+      toastr.error('Your File Was NOT Deleted From ' + cloud.charAt(0).toUpperCase() + cloud.slice(1) + '. Please try again!');
+    });
+  }
+  $scope.downloadFromCloud = function(id, cloud) {
+    FileService.download(id, cloud);
+  }
+  $scope.renameFile = function(id) {
+    var newTitle = '';
+    if($scope.dropboxPrefix) newTitle += $scope.dropboxPrefix + '/';
+    newTitle += $scope.newTitle[id];
+    FileService.renameFile(id, $scope.currentTab, newTitle).then(function(data) {
+      toastr.success("Your File's Name Was Updated!");
+      $rootScope.$emit('updateUser', data.user)
+    }, function(err) {
+      if(err == 'Not Authorized') toastr.error("You are not authorized to update this file! It's probably a shared file or owner by other users.");
+      else toastr.error("Something went wrong!");
+    });
+  }
+  $scope.changeToInputField = function($event, id, title) {
+    $scope.oldTitle[id] = title;
+    $scope.newTitle[id] = title;
+    var displayTitle = title;
+    if($scope.title == 'dropbox') {
+      var parts = displayTitle.split('/');
+      $scope.dropboxPrefix = parts.slice(0, -1).join('/');
+      $scope.newTitle[id] = parts.pop();
+    }
+    // console.log(angular.element(angular.element($event.target).parents()[3].children[0].children[0]).replaceWith($compile(elementStr)($scope)))
+    var elementStr = '<form id="update-name" ng-submit="renameFile(' + "'" + id + "'" + ')"><input ng-model="newTitle[' + "'" + id + "'" + ']" value=' + displayTitle.replace(" ", "&nbsp;") + '></input></form>';
+    console.log(angular.element(angular.element($event.target).parents()[3].children[0].children[0]).replaceWith($compile(elementStr)($scope)))
+    // angular.element(angular.element($event.target).parents()[3].children[0].children[0]).replaceWith($compile(elementStr)($scope));
+  }
+  $scope.downloadFromCloud = function(id, cloud) {
+    FileService.download(id, cloud);
   }
 
   $scope.toggleFolderView = function () {

@@ -25,8 +25,8 @@ function FileService($http, $q, $window){
         return $q.reject(response.data);
       })
     },
-    renameFile: function (id, cloud, currentFolder, title) {
-      return $http.post('/rename/' + cloud, {id: id, currentFolder: currentFolder, title: title}).then(function (response) {
+    renameFile: function (id, cloud, title) {
+      return $http.post('/rename/' + cloud, {id: id, title: title}).then(function (response) {
         if (typeof response.data === 'object') {
           return response.data;
         } else {

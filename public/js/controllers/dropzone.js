@@ -9,7 +9,7 @@ function dropzoneCtrl($rootScope, $scope, $http, $window, UserService, FileServi
       'success': function (file, response, body) {
         // TODO: error catch
         toastr.success('Your File Has Been Uploaded');
-        $scope.user = UserService.normalizeUser(response.user);
+        $scope.user = response.user;
         $scope.$apply();
         $rootScope.$emit('updateUser', $scope.user);
       }
