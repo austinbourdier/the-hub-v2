@@ -53,6 +53,8 @@ module.exports = function(app, passport) {
   router.post('/rename/dropbox', controller.dropbox.updateDropBoxFileName, controller.dropbox.getDropBoxFiles, controller.sendBackFiles);
   router.post('/rename/box', controller.box.updateBoxFileName, controller.box.getBoxFiles, controller.sendBackFiles);
 
+  router.post('/moveFile/box', controller.box.moveBoxFile, controller.sendBackFiles);
+
   // logout
   router.get('/auth/logout', controller.auth.logout);
 

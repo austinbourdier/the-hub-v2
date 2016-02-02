@@ -37,6 +37,17 @@ function FileService($http, $q, $window){
         return $q.reject(response.data);
       })
     },
+    moveFile: function (file, parentID, cloud) {
+      return $http.post('/moveFile/' + cloud, {file: file, parentID: parentID}).then(function (response) {
+        if (typeof response.data === 'object') {
+          return response.data;
+        } else {
+          return $q.reject(response.data);
+        }
+      }, function(response) {
+        return $q.reject(response.data);
+      })
+    },
     download: function (id, cloud) {
       $window.location = $window.location.protocol + '//' + $window.location.host + '/download/' + cloud + '/'+id.replace('/','%2F');
     }

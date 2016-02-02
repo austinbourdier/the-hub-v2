@@ -35,10 +35,10 @@ exports.getBoxAccessToken = function (req,res,next) {
 
 
 function updateTree(id, update, tree) {
-  if (tree && tree.id === id) {
+  if (tree && tree.id == id) {
     tree.items = update;
   } else {
-    if(tree && tree.items) {
+    if(tree.items) {
       tree.items.map(function(item) {
         return updateTree(id, update, item);
       })
@@ -47,13 +47,27 @@ function updateTree(id, update, tree) {
   return tree;
 }
 
-function updateTreeDelete(parentID, fileID, update, tree) {
+function updateTreeDelete(parentID, fileID, tree) {
+  console.log
   if (tree && tree.id == parentID) {
-    tree.items.splice(tree.items.map(function(item){return item.id}).indexOf(fileID), 1)
+    tree.items.splice(tree.items.map(function(item){return item.id}).indexOf(fileID), 1);
   } else {
     if(tree && tree.items) {
       tree.items.map(function(item) {
-        return updateTree(parentID, fileID, update, item);
+        return updateTreeDelete(parentID, fileID, item);
+      })
+    }
+  }
+  return tree;
+}
+function insertIntoTree(file, parentID, tree) {
+  if (tree && tree.id == parentID) {
+    file.parentID = parentID;
+    tree.items.push(file);
+  } else {
+    if(tree && tree.items) {
+      tree.items.map(function(item) {
+        return insertIntoTree(file, parentID, item);
       })
     }
   }
@@ -63,15 +77,15 @@ function updateTreeDelete(parentID, fileID, update, tree) {
 exports.getBoxFiles = function (req, res, next) {
   if(req.session.user.accessedClouds.box) {
     var box = new Box({access_token: req.session.box_access_token,refresh_token: req.session.box_refresh_token});
-    if (req.body.options && req.body.options.parentID) {var parentID = req.body.options.parentID;var fileID=req.body.options.id};
+    if (req.delete) {
+      var parentID = req.body.options.parentID;
+    };
     var id = parentID || req.body.currentFolder || req.query.folderId || '0';
     box.folders.info(id, function (err, data) {
       // TODO: Error catch
-      
       if(!req.session.user.boxfiles) {
         data.item_collection.entries.forEach(function(item) {
-          if(item.type == 'file')
-            item.parentID = id;
+          item.parentID = id;
         })
         req.session.user.boxfiles = {
           id: data.id,
@@ -81,15 +95,12 @@ exports.getBoxFiles = function (req, res, next) {
           parentID: id
         }
       } else {
-        console.log("parentID:", parentID)
-        if(parentID) {
-          data.item_collection.entries.forEach(function(item) {
-            if(item.type == 'file')
-              item.parentID = id;
-          })
-          req.session.user.boxfiles = updateTreeDelete(parseInt(id), fileID, data.item_collection.entries, req.session.user.boxfiles);
+        if(req.delete) {
+          req.session.user.boxfiles = updateTreeDelete(parseInt(id), req.body.options.id, req.session.user.boxfiles);
         } else {
-
+          data.item_collection.entries.forEach(function(item) {
+            item.parentID = id;
+          })
           req.session.user.boxfiles = updateTree(parseInt(id), data.item_collection.entries, req.session.user.boxfiles);
         }
       }
@@ -105,6 +116,7 @@ exports.deleteBoxFiles = function (req, res, next) {
     var box = new Box({access_token: req.session.box_access_token,refresh_token: req.session.box_refresh_token});
     box.files.delete(req.body.options.id, req.body.options.eTag, function(err, data) {
       // TODO: err catch
+      req.delete = true;
       next();
     })
   } else {
@@ -120,6 +132,24 @@ exports.updateBoxFileName = function (req, res, next) {
       {
         console.log('exec error: ' + error);
       } else {
+        next();
+      }
+    });
+  } else {
+    next();
+  }
+};
+exports.moveBoxFile = function (req, res, next) {
+  if(req.session.user.accessedClouds.box) {
+    var command = 'curl https://api.box.com/2.0/files/' + req.body.file.id + ' -H "Authorization: Bearer ' + req.session.box_access_token + '"' + " -d '" + JSON.stringify({parent: {id: req.body.parentID}}) + "' -X PUT"
+    child = exec(command, function(error, stdout, stderr){
+      if(error !== null)
+      {
+        console.log('exec error: ' + error);
+        console.log('exec error: ' + error);
+      } else {
+        req.session.user.boxfiles = updateTreeDelete(req.body.file.parentID, req.body.file.id, req.session.user.boxfiles);
+        req.session.user.boxfiles = insertIntoTree(req.body.file, req.body.parentID, req.session.user.boxfiles);
         next();
       }
     });

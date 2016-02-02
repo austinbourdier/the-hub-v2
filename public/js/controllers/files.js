@@ -58,6 +58,19 @@ function filesCtrl($scope, $rootScope, $http, $window, UserService, FileService,
       else toastr.error("Something went wrong!");
     });
   }
+
+  $scope.treeOptions = {
+    dropped: function(eventArgs) {
+      var file = eventArgs.source.nodeScope.$modelValue;
+      var parentID = eventArgs.dest.nodesScope.$modelValue[0].parentID;
+      FileService.moveFile(file, parentID, $scope.currentTab).then(function(data) {
+        toastr.success("Your File Was Moved!");
+        $rootScope.$emit('updateUser', data.user)
+      }, function(err) {
+        toastr.error("Something went wrong!");
+      });
+    },
+  };
   $scope.changeToInputField = function($event, id, title) {
     $scope.oldTitle[id] = title;
     $scope.newTitle[id] = title;
