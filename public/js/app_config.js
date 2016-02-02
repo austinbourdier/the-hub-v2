@@ -1,7 +1,7 @@
 app
 .config(config)
 
-function config( $stateProvider, $urlRouterProvider, $locationProvider, $interpolateProvider, $httpProvider ) {
+function config($stateProvider, $urlRouterProvider, $locationProvider, $interpolateProvider, $httpProvider) {
     
   $stateProvider
 

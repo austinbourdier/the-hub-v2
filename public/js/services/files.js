@@ -5,6 +5,7 @@ function FileService($http, $q, $window){
   return {
     delete: function (options, cloud) {
       return $http.post('/delete/' + cloud, {options: options}).then(function (response) {
+        console.log(response.data)
         if (typeof response.data === 'object') {
           return response.data;
         } else {

@@ -35,14 +35,25 @@ exports.getBoxAccessToken = function (req,res,next) {
 
 
 function updateTree(id, update, tree) {
-  if (tree.id === id) {
-    console.log(tree)
-    console.log(update)
+  if (tree && tree.id === id) {
     tree.items = update;
   } else {
-    if(tree.items) {
+    if(tree && tree.items) {
       tree.items.map(function(item) {
         return updateTree(id, update, item);
+      })
+    }
+  }
+  return tree;
+}
+
+function updateTreeDelete(parentID, fileID, update, tree) {
+  if (tree && tree.id == parentID) {
+    tree.items.splice(tree.items.map(function(item){return item.id}).indexOf(fileID), 1)
+  } else {
+    if(tree && tree.items) {
+      tree.items.map(function(item) {
+        return updateTree(parentID, fileID, update, item);
       })
     }
   }
@@ -52,17 +63,35 @@ function updateTree(id, update, tree) {
 exports.getBoxFiles = function (req, res, next) {
   if(req.session.user.accessedClouds.box) {
     var box = new Box({access_token: req.session.box_access_token,refresh_token: req.session.box_refresh_token});
-    box.folders.info(req.body.currentFolder || req.query.folderId || '0', function (err, data) {
+    if (req.body.options && req.body.options.parentID) {var parentID = req.body.options.parentID;var fileID=req.body.options.id};
+    var id = parentID || req.body.currentFolder || req.query.folderId || '0';
+    box.folders.info(id, function (err, data) {
       // TODO: Error catch
+      
       if(!req.session.user.boxfiles) {
+        data.item_collection.entries.forEach(function(item) {
+          if(item.type == 'file')
+            item.parentID = id;
+        })
         req.session.user.boxfiles = {
           id: data.id,
           items: data.item_collection.entries,
           name: 'root',
-          type: 'folder'
+          type: 'folder',
+          parentID: id
         }
       } else {
-        req.session.user.boxfiles = updateTree(req.body.currentFolder || req.query.folderId, data.item_collection.entries, req.session.user.boxfiles);
+        console.log("parentID:", parentID)
+        if(parentID) {
+          data.item_collection.entries.forEach(function(item) {
+            if(item.type == 'file')
+              item.parentID = id;
+          })
+          req.session.user.boxfiles = updateTreeDelete(parseInt(id), fileID, data.item_collection.entries, req.session.user.boxfiles);
+        } else {
+
+          req.session.user.boxfiles = updateTree(parseInt(id), data.item_collection.entries, req.session.user.boxfiles);
+        }
       }
       next();
     })
@@ -73,12 +102,9 @@ exports.getBoxFiles = function (req, res, next) {
 
 exports.deleteBoxFiles = function (req, res, next) {
   if(req.session.user.accessedClouds.box) {
-    console.log(req.body.options)
     var box = new Box({access_token: req.session.box_access_token,refresh_token: req.session.box_refresh_token});
     box.files.delete(req.body.options.id, req.body.options.eTag, function(err, data) {
       // TODO: err catch
-      console.log(err)
-      console.log(data)
       next();
     })
   } else {

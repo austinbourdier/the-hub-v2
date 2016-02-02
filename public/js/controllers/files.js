@@ -1,7 +1,7 @@
 angular.module('mainApp')
 .controller('filesCtrl', filesCtrl)
 
-function filesCtrl($scope, $rootScope, $http, $window, UserService, FileService, toastr, $cookies, $state, ngDialog, $compile) {
+function filesCtrl($scope, $rootScope, $http, $window, UserService, FileService, toastr, $cookies, $state, ngDialog, $compile, $route) {
   $scope.user = user;
   $scope.showFolders = true;
   $scope.currentFolders = {'dropbox': $cookies.get('current_dropbox'), 'googledrive': $cookies.get('current_googledrive'), 'box': $cookies.get('current_box'), 'onedrive': $cookies.get('current_onedrive')};
@@ -17,6 +17,7 @@ function filesCtrl($scope, $rootScope, $http, $window, UserService, FileService,
   };
   $rootScope.$on('updateUser', function(event, user) {
     $scope.user = user;
+    $route.reload();
   })
   if(justAdded)
     $scope.toggleClouds(justAdded);
@@ -28,7 +29,7 @@ function filesCtrl($scope, $rootScope, $http, $window, UserService, FileService,
     event.stopPropagation();
     if(item.type == 'folder') {
       FileService.getFolder(item.id, cloud).then(function (data) {
-        $scope.user = data.user;
+        $rootScope.$emit('updateUser', data.user)
       }, function (err) {
         toastr.error('Folder information was not retrieved, please try again!');
       })

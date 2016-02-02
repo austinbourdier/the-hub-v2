@@ -13,7 +13,6 @@ exports.render = function(req, res) {
 };
 
 exports.sendBackFiles = function(req, res) {
-	console.log(req.session.user)
   res.send({user: req.session.user});
 };
 

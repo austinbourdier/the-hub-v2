@@ -1,6 +1,1 @@
-var app = angular.module('mainApp', ['ui.router', 'ui.bootstrap', 'ngAnimate', 'toastr', 'ngCookies', 'ngDialog']);
-
-// app
-  // .run(function(UserService) {
-  //   user = UserService.normalizeUser(user);
-  // });
+var app = angular.module('mainApp', ['ngRoute', 'ui.router', 'ui.bootstrap', 'ngAnimate', 'toastr', 'ngCookies', 'ngDialog']);
