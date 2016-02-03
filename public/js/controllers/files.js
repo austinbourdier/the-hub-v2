@@ -19,6 +19,7 @@ function filesCtrl($scope, $rootScope, $http, $window, UserService, FileService,
     $scope.user = user;
     $route.reload();
   })
+
   if(justAdded)
     $scope.toggleClouds(justAdded);
   if($cookies.get('currentCloud'))
@@ -71,10 +72,7 @@ function filesCtrl($scope, $rootScope, $http, $window, UserService, FileService,
           toastr.error("Something went wrong!");
         });
       }
-    },
-    // accept: function(sourceNodeScope, destNodesScope, destIndex) {
-    //   console.log(sourceNodeScope, destNodesScope, destIndex)
-    // }
+    }
   };
   $scope.changeToInputField = function($event, id, title) {
     $scope.oldTitle[id] = title;
