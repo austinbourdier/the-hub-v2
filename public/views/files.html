@@ -71,7 +71,7 @@
   <span ng-if='item.type == "folder"'>{{item.name}}</span>
   <uib-accordion ng-if='item.type == "file"'>
   <uib-accordion-group heading="{{item.name}}">
-  <div><span ng-click='moreInfo(item.id, "box")'>More Info</span><span ng-click='downloadFromCloud(item.id, "box")'>Download</span><span ng-click='deleteFromCloud({id: item.id, eTag: item.etag, parentID:item.parentID}, "box")'>Delete</span><span ng-click='changeToInputField($event, item.id, item.name)'>Rename</span><span ng-click='openDialog()'>Move</span></div>
+  <div><span ng-click='moreInfo(item.id, "box")'>More Info</span><span ng-click='downloadFromCloud(item.id, "box")'>Download</span><span ng-click='deleteFromCloud({id: item.id, eTag: item.etag, parentID:item.parentID}, "box")'>Delete</span><span ng-click='changeToInputField($event, item.id, item.name)'>Rename</span><span ng-click='openDialog(item)'>Move</span></div>
 </uib-accordion-group>
 </uib-accordion>
 <ul class='list-group'>

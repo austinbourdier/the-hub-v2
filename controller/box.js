@@ -82,6 +82,7 @@ exports.getBoxFiles = function (req, res, next) {
     var id = parentID || req.body.currentFolder || req.query.folderId || '0';
     box.folders.info(id, function (err, data) {
       // TODO: Error catch
+      console.log(data.item_collection.entries)
       if(!req.session.user.boxfiles) {
         data.item_collection.entries.forEach(function(item) {
           item.parentID = id;

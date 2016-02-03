@@ -1,15 +1,15 @@
-<div>Select a folder to move file </div>
+<div>Select a folder to move {{currentFileToMove.name}} </div>
 <div class='list-group'>
-  <ul ng-if='tabs.box' class='folder list-group list-group-item'>
+  <ul ng-if='tabs.box' class='folder list-group'>
     {{user.boxfiles.name}}
-    <li ng-if='item.type=="folder"' ng-repeat="item in user.boxfiles.items" ng-include="'item_template'" class='sub folder list-group-item'></li>
+    <li ng-if='item.type=="folder"' ng-repeat="item in user.boxfiles.items" ng-include="'item_template'" ng-click='moveFile(currentFileToMove, item.id)' class='sub folder list-group-item'></li>
   </ul>
 </div>
 <!-- FILE CONTAINER PARTIAL -->
 <script type="text/ng-template" id="item_template">
 <span ng-if='item.type == "folder"'>{{item.name}}</span>
 <ul class='list-group'>
-<li ng-if='item.type=="folder"' ng-repeat="item in item.items" ng-include="'item_template'" class='sub folder list-group-item'></li>
+<li ng-repeat="item in item.items" ng-if='item.type=="folder"' ng-click='moveFile(currentFileToMove, item.id)' ng-include="'item_template'" class='sub folder list-group-item'></li>
 </ul>
 </script>
 
