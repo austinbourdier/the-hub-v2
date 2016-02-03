@@ -1,20 +1,15 @@
-<div>Select a folder to move file </div>
-<div>
-  <ul ng-show='tabs.googledrive'>
-    <li role="presentation"><span class="centered" ng-click='getFolder("googledrive", "ROOT")'><i class='fa fa-folder'></i> ROOT</span></li>
-    <li ng-repeat='folder in user.googledrivefolders'><span class="centered" ng-click='getFolder(folder.id, "googledrive", folder.title)'><i class='fa fa-folder'></i> {{folder.title}}</span></li>
-  </ul>
-  <ul ng-show='tabs.box'>
-    <li role="presentation"><span class="centered" ng-click='getFolder("box", "ROOT")'><i class='fa fa-folder'></i> ROOT </span></li>
-    <li role="presentation"><span class="centered" ng-click='getFolder("box", "ROOT")'><i class='fa fa-folder'></i> {{user.boxfiles.parent.name}} </span></li>
-    <li ng-repeat='folder in user.boxfolders'><span class="centered" ng-click='getFolder(folder.id, "box", folder.name)'><i class='fa fa-folder'></i> {{folder.name}} </span></li>
-  </ul>
-  <ul ng-show='tabs.dropbox'>
-    <li role="presentation"><span class="centered" ng-click='getFolder("dropbox", "ROOT")'><i class='fa fa-folder'></i> ROOT </span></li>
-    <li ng-repeat='folder in user.dropboxfolders'><span class="centered" ng-click='getFolder(folder.path, "dropbox", folder.path)'><i class='fa fa-folder'></i> {{folder.path}} </span></li>
-  </ul>
-  <ul ng-show='tabs.onedrive'>
-    <li role="presentation"><span class="centered" ng-click='getFolder("onedrive", "ROOT")'><i class='fa fa-folder'></i> ROOT</span></li>
-    <li ng-repeat='folder in user.onedrivefolders'><span class="centered" ng-click='getFolder(folder.id, "onedrive", folder.name)'><i class='fa fa-folder'></i> {{folder.name}}</span></li>
+<div>Select a folder to move {{currentFileToMove.name}} </div>
+<div class='list-group'>
+  <ul ng-if='tabs.box' class='folder list-group'>
+    {{user.boxfiles.name}}
+    <li ng-if='item.type=="folder"' ng-repeat="item in user.boxfiles.items" ng-include="'item_template'" ng-click='moveFile(currentFileToMove, item.id)' class='sub folder list-group-item'></li>
   </ul>
 </div>
+<!-- FILE CONTAINER PARTIAL -->
+<script type="text/ng-template" id="item_template">
+<span ng-if='item.type == "folder"'>{{item.name}}</span>
+<ul class='list-group'>
+<li ng-repeat="item in item.items" ng-if='item.type=="folder"' ng-click='moveFile(currentFileToMove, item.id)' ng-include="'item_template'" class='sub folder list-group-item'></li>
+</ul>
+</script>
+
