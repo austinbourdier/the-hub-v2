@@ -27,7 +27,7 @@ function filesCtrl($scope, $rootScope, $http, $window, UserService, FileService,
 
   $scope.getFolder = function (event, item, cloud) {
     event.stopPropagation();
-    if(item.type == 'folder') {
+    if(item.type=='folder') {
       FileService.getFolder(item.id, cloud).then(function (data) {
         $rootScope.$emit('updateUser', data.user)
       }, function (err) {
@@ -63,13 +63,18 @@ function filesCtrl($scope, $rootScope, $http, $window, UserService, FileService,
     dropped: function(eventArgs) {
       var file = eventArgs.source.nodeScope.$modelValue;
       var parentID = eventArgs.dest.nodesScope.$modelValue[0].parentID;
-      FileService.moveFile(file, parentID, $scope.currentTab).then(function(data) {
-        toastr.success("Your File Was Moved!");
-        $rootScope.$emit('updateUser', data.user)
-      }, function(err) {
-        toastr.error("Something went wrong!");
-      });
+      if(file.parentID !== parentID) {
+        FileService.moveFile(file, parentID, $scope.currentTab).then(function(data) {
+          toastr.success("Your File Was Moved!");
+          $rootScope.$emit('updateUser', data.user)
+        }, function(err) {
+          toastr.error("Something went wrong!");
+        });
+      }
     },
+    // accept: function(sourceNodeScope, destNodesScope, destIndex) {
+    //   console.log(sourceNodeScope, destNodesScope, destIndex)
+    // }
   };
   $scope.changeToInputField = function($event, id, title) {
     $scope.oldTitle[id] = title;

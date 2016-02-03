@@ -48,7 +48,6 @@ function updateTree(id, update, tree) {
 }
 
 function updateTreeDelete(parentID, fileID, tree) {
-  console.log
   if (tree && tree.id == parentID) {
     tree.items.splice(tree.items.map(function(item){return item.id}).indexOf(fileID), 1);
   } else {

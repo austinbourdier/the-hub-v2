@@ -618,6 +618,10 @@
              */
             dragStart = function (e) {
               // disable right click
+              if (e.toElement.nodeName == 'SPAN' || e.toElement.nodeName == "INPUT") {
+                return;
+              }
+
               if (!hasTouch && (e.button === 2 || e.which === 3)) {
                 return;
               }

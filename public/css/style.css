@@ -13,14 +13,12 @@ html, body{
 .folder > span {
   text-decoration: underline;
 }
-.folder {
-  border: 1px black solid;
-}
+
 .file {
   text-decoration: none!important;
 }
 .sub {
-  margin-left: 15px;
+  margin-left: 15px!important;
 }
 #top-navbar span{
   color: white;
