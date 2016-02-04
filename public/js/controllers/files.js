@@ -24,11 +24,12 @@ function filesCtrl($scope, $rootScope, $http, $window, UserService, FileService,
   if($cookies.get('currentCloud'))
     $scope.toggleClouds($cookies.get('currentCloud'));
 
-
-  $scope.getFolder = function (event, item, cloud) {
+  $scope.getFolder = function (event, item) {
     event.stopPropagation();
+    console.log(item)
     if(item.type=='folder') {
-      FileService.getFolder(item.id, cloud).then(function (data) {
+      FileService.getFolder(item.id, $scope.currentTab).then(function (data) {
+        console.log(data.user)
         $rootScope.$emit('updateUser', data.user)
       }, function (err) {
         toastr.error('Folder information was not retrieved, please try again!');
@@ -37,21 +38,21 @@ function filesCtrl($scope, $rootScope, $http, $window, UserService, FileService,
   }
   $scope.deleteFromCloud = function(options, cloud) {
     FileService.delete(options, cloud).then(function(data) {
-      toastr.success('Your File Was Deleted From ' + cloud.charAt(0).toUpperCase() + cloud.slice(1));
+      toastr.success(options.name + ' Was Deleted From ' + cloud.charAt(0).toUpperCase() + cloud.slice(1));
       $rootScope.$emit('updateUser', data.user)
     }, function(err) {
-      toastr.error('Your File Was NOT Deleted From ' + cloud.charAt(0).toUpperCase() + cloud.slice(1) + '. Please try again!');
+      toastr.error(options.name + ' Was NOT Deleted From ' + cloud.charAt(0).toUpperCase() + cloud.slice(1) + '. Please try again!');
     });
   }
   $scope.downloadFromCloud = function(id, cloud) {
     FileService.download(id, cloud);
   }
-  $scope.renameFile = function(id) {
+  $scope.renameFile = function(id, oldTitle) {
     var newTitle = '';
     if($scope.dropboxPrefix) newTitle += $scope.dropboxPrefix + '/';
     newTitle += $scope.newTitle[id];
     FileService.renameFile(id, $scope.currentTab, newTitle).then(function(data) {
-      toastr.success("Your File's Name Was Updated!");
+      toastr.success(oldTitle + "'s Name Was Updated to " + newTitle + "!");
       $rootScope.$emit('updateUser', data.user)
     }, function(err) {
       if(err == 'Not Authorized') toastr.error("You are not authorized to update this file! It's probably a shared file or owner by other users.");
@@ -62,7 +63,7 @@ function filesCtrl($scope, $rootScope, $http, $window, UserService, FileService,
   $scope.moveFile = function (file, parentID) {
     if(file.parentID !== parentID) {
       FileService.moveFile(file, parentID, $scope.currentTab, $scope.copyFile).then(function(data) {
-        toastr.success("Your File Was Moved!");
+        toastr.success(file.name + " Was Moved!");
         $scope.user = data.user;
         $window.location.reload();
       }, function(err) {
@@ -79,10 +80,8 @@ function filesCtrl($scope, $rootScope, $http, $window, UserService, FileService,
       $scope.dropboxPrefix = parts.slice(0, -1).join('/');
       $scope.newTitle[id] = parts.pop();
     }
-    // console.log(angular.element(angular.element($event.target).parents()[3].children[0].children[0]).replaceWith($compile(elementStr)($scope)))
-    var elementStr = '<form id="update-name" ng-submit="renameFile(' + "'" + id + "'" + ')"><input ng-model="newTitle[' + "'" + id + "'" + ']" value=' + displayTitle.replace(" ", "&nbsp;") + '></input></form>';
-    console.log(angular.element(angular.element($event.target).parents()[3].children[0].children[0]).replaceWith($compile(elementStr)($scope)))
-    // angular.element(angular.element($event.target).parents()[3].children[0].children[0]).replaceWith($compile(elementStr)($scope));
+    var elementStr = '<form id="update-name" ng-submit="renameFile(' + "'" + id + "'," + title + ')"><input ng-model="newTitle[' + "'" + id + "'" + ']" value=' + displayTitle.replace(" ", "&nbsp;") + '></input></form>';
+    angular.element(angular.element($event.target).parents()[0].children[0]).replaceWith($compile(elementStr)($scope))
   }
   $scope.downloadFromCloud = function(id, cloud) {
     FileService.download(id, cloud);

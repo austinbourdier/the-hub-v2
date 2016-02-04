@@ -50,10 +50,12 @@ module.exports = function(app, passport) {
   router.get('/download/box/:id', controller.box.downloadBoxFiles);
 
   router.post('/rename/googledrive', controller.googledrive.updateGoogleDriveFileName, controller.googledrive.getGoogleDriveFiles, controller.sendBackFiles);
+  router.post('/rename/onedrive', controller.onedrive.updateOneDriveFileName, controller.onedrive.getOneDriveFiles, controller.sendBackFiles);
   router.post('/rename/dropbox', controller.dropbox.updateDropBoxFileName, controller.dropbox.getDropBoxFiles, controller.sendBackFiles);
   router.post('/rename/box', controller.box.updateBoxFileName, controller.box.getBoxFiles, controller.sendBackFiles);
 
   router.post('/moveFile/box', controller.box.moveBoxFile, controller.sendBackFiles);
+  router.post('/moveFile/googledrive', controller.googledrive.moveGoogleDriveFile, controller.sendBackFiles);
 
   // logout
   router.get('/auth/logout', controller.auth.logout);

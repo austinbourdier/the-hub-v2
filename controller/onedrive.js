@@ -70,6 +70,23 @@ exports.getOneDriveFiles = function(req, res, next) {
     next();
   }
 };
+exports.updateOneDriveFileName = function(req, res, next) {
+  if(req.session.user.accessedClouds.onedrive) {
+    request({method: 'PATCH', url: 'https://api.onedrive.com/v1.0/drive/items/' + req.body.options.id,
+      headers: {
+        'Authorization': 'Bearer ' + req.session.onedrive_access_token
+      },
+      body: {
+        name: req.body.title
+      }
+    }, function(err, response, body) {
+      // TODO: err catch
+      next();
+    });
+  } else {
+    next();
+  }
+};
 exports.deleteOneDriveFiles = function(req, res, next) {
   if(req.session.user.accessedClouds.onedrive) {
     request({method: 'DELETE', url: 'https://api.onedrive.com/v1.0/drive/items/' + req.body.options.id,

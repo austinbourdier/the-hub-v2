@@ -145,8 +145,8 @@ exports.updateBoxFileName = function (req, res, next) {
 exports.moveBoxFile = function (req, res, next) {
   if(req.session.user.accessedClouds.box) {
     var action = req.body.copy ? 'POST' : 'PUT';
-    var copyString = req.body.copy ? 'copy/' : '';
-    var command = 'curl https://api.box.com/2.0/files/' + copyString + req.body.file.id + ' -H "Authorization: Bearer ' + req.session.box_access_token + '"' + " -d '" + JSON.stringify({parent: {id: req.body.parentID}}) + "' -X " + action
+    var copyString = req.body.copy ? '/copy' : '';
+    var command = 'curl https://api.box.com/2.0/files/' + req.body.file.id + copyString + ' -H "Authorization: Bearer ' + req.session.box_access_token + '"' + " -d '" + JSON.stringify({parent: {id: req.body.parentID}}) + "' -X " + action
     console.log(command)
     child = exec(command, function(error, stdout, stderr){
       if(error !== null)

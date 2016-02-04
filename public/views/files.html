@@ -17,12 +17,11 @@
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             Login to your accounts by clicking to the left!
           </div>
-
           <div class='list-group'>
-            <ul ng-if='tabs.box' class='folder list-group'>
-              {{user.boxfiles.name}}
-              <li   ng-if='item.type=="folder"' ng-repeat="item in user.boxfiles.items" ng-include="'item_template'" ng-click='getFolder($event, item, "box")' class='sub folder list-group-item'></li>
-              <li ng-if='item.type=="file"' ng-repeat="item in user.boxfiles.items" ng-include="'item_template'" ng-click='getFolder($event, item, "box")' class='sub file list-group-item' ></li>
+            <ul class='folder list-group'>
+              {{user[currentTab + 'files'].name}}
+              <li ng-if='item.type=="folder"' ng-repeat="item in user[currentTab + 'files'].items" ng-include="'item_template'" ng-click='getFolder($event, item)' class='sub folder list-group-item'></li>
+              <li ng-if='item.type=="file"' ng-repeat="item in user[currentTab + 'files'].items" ng-include="'item_template'" ng-click='getFolder($event, item)' class='sub file list-group-item' ></li>
             </ul>
           </div>
         </td>
@@ -35,9 +34,9 @@
 <!-- FILE CONTAINER PARTIAL -->
 <script type="text/ng-template" id="item_template">
   <span ng-if='item.type == "folder"'>{{item.name}}</span>
-  <div ng-if='item.type == "file"'>{{item.name}}<span ng-click='moreInfo(item.id, "box")'>More Info</span><span ng-click='downloadFromCloud(item.id, "box")'>Download</span><span ng-click='deleteFromCloud({id: item.id, eTag: item.etag, parentID:item.parentID}, "box")'>Delete</span><span ng-click='changeToInputField($event, item.id, item.name)'>Rename</span><span ng-click='openMoveFileDialog(item)'>Move</span></div>
+  <div ng-if='item.type == "file"'><span>{{item.name}}</span><span ng-click='moreInfo(item.id, currentTab)'>More Info</span><span ng-click='downloadFromCloud(item.id, currentTab)'>Download</span><span ng-click='deleteFromCloud({id: item.id, name: item.name, eTag: item.etag, parentID:item.parentID}, currentTab)'>Delete</span><span ng-click='changeToInputField($event, item.id, item.name)'>Rename</span><span ng-click='openMoveFileDialog(item)'>Move</span></div>
   <ul class='list-group'>
-    <li ng-if='item.type=="folder"'  ng-repeat="item in item.items" ng-click='getFolder($event, item, "box")' ng-include="'item_template'" class='folder list-group-item'></li>
-    <li ng-if='item.type=="file"' ng-repeat="item in item.items" ng-click='getFolder($event, item, "box")' ng-include="'item_template'" class='file list-group-item'></li>
+    <li ng-if='item.type=="folder"'  ng-repeat="item in item.items" ng-click='getFolder($event, item)' ng-include="'item_template'" class='folder list-group-item'></li>
+    <li ng-if='item.type=="file"' ng-repeat="item in item.items" ng-click='getFolder($event, item)' ng-include="'item_template'" class='file list-group-item'></li>
   </ul>
 </script>

@@ -1,10 +1,10 @@
 <div>Select a folder to move {{currentFileToMove.name}}</div>
 <div class='list-group'>
-  <ul ng-if='tabs.box' class='folder list-group'>
-    <span ng-click='moveFile(currentFileToMove, "0")'>{{user.boxfiles.name}}</span>
-    <li ng-if='item.type=="folder"' ng-repeat="item in user.boxfiles.items" ng-include="'item_template'" ng-click='moveFile(currentFileToMove, item.id)' class='sub folder list-group-item'></li>
+  <ul class='folder list-group'>
+    <span ng-click='moveFile(currentFileToMove, user[[currentTab + "files"]].id)'>{{user[[currentTab + "files"]].name}}</span>
+    <li ng-if='item.type=="folder"' ng-repeat="item in user[currentTab + 'files'].items" ng-include="'item_template'" ng-click='moveFile(currentFileToMove, item.id)' class='sub folder list-group-item'></li>
   </ul>
-  <input type="checkbox" name="vehicle" ng-model='copyFile' value="copy">Make a Copy
+  <input type="checkbox" name="vehicle" ng-model='copyFile' value="copy">Make a Copy</input>
 </div>
 <!-- FILE CONTAINER PARTIAL -->
 <script type="text/ng-template" id="item_template">
