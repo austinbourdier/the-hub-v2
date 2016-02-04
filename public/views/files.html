@@ -34,7 +34,7 @@
 <!-- FILE CONTAINER PARTIAL -->
 <script type="text/ng-template" id="item_template">
   <span ng-if='item.type == "folder"'>{{item.name}}</span>
-  <div ng-if='item.type == "file"'><span>{{item.name}}</span><span ng-click='moreInfo(item.id, currentTab)'>More Info</span><span ng-click='downloadFromCloud(item.id, currentTab)'>Download</span><span ng-click='deleteFromCloud({id: item.id, name: item.name, eTag: item.etag, parentID:item.parentID}, currentTab)'>Delete</span><span ng-click='changeToInputField($event, item.id, item.name)'>Rename</span><span ng-click='openMoveFileDialog(item)'>Move</span></div>
+  <div ng-if='item.type == "file"'><span>{{item.name}}</span><span ng-click='moreInfo(item.id, currentTab)'>More Info</span><span ng-click='downloadFromCloud(item.id, currentTab)'>Download</span><span ng-click='deleteFromCloud({id: item.id, name: item.name, eTag: item.etag, parentID:item.parentID}, currentTab)'>Delete</span><span ng-click='changeToInputField($event, item, item.name)'>Rename</span><span ng-click='openMoveFileDialog(item)'>Move</span></div>
   <ul class='list-group'>
     <li ng-if='item.type=="folder"'  ng-repeat="item in item.items" ng-click='getFolder($event, item)' ng-include="'item_template'" class='folder list-group-item'></li>
     <li ng-if='item.type=="file"' ng-repeat="item in item.items" ng-click='getFolder($event, item)' ng-include="'item_template'" class='file list-group-item'></li>

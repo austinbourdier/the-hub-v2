@@ -1,6 +1,7 @@
 var googleapis = require('googleapis');
 var request = require('request');
 var OAuth2 = googleapis.auth.OAuth2;
+var util = require('../util');
 
 var oauth2Client = new OAuth2(process.env.googleDriveClientId || require('../config.js').get('googleDrive:client_id'),
   process.env.googleDriveClientSecret || require('../config.js').get('googleDrive:client_secret'),
@@ -30,50 +31,9 @@ exports.getGoogleDriveToken = function (req, res, next) {
   })
 };
 
-function updateTree(id, update, tree) {
-  if (tree && tree.id == id) {
-    tree.items = update;
-  } else {
-    if(tree.items) {
-      tree.items.map(function(item) {
-        return updateTree(id, update, item);
-      })
-    }
-  }
-  return tree;
-}
-function updateTreeDelete(parentID, fileID, tree) {
-  if (tree && tree.id == parentID) {
-    console.log(tree.items)
-    console.log(fileID)
-    console.log(tree.items.map(function(item){return item.id}))
-    tree.items.splice(tree.items.map(function(item){return item.id}).indexOf(fileID), 1);
-  } else {
-    if(tree && tree.items) {
-      tree.items.map(function(item) {
-        return updateTreeDelete(parentID, fileID, item);
-      })
-    }
-  }
-  return tree;
-}
-function insertIntoTree(file, parentID, tree) {
-  if (tree && tree.id == parentID) {
-    file.parentID = parentID;
-    tree.items.push(file);
-  } else {
-    if(tree && tree.items) {
-      tree.items.map(function(item) {
-        return insertIntoTree(file, parentID, item);
-      })
-    }
-  }
-  return tree;
-}
-
 exports.getGoogleDriveFiles = function (req, res, next) {
   if(req.session.user.accessedClouds.googledrive) {
-    if (req.delete) {
+    if (req.delete || req.rename) {
       var parentID = req.body.options.parentID;
     };
     var id = parentID || req.body.currentFolder || req.query.folderId || 'root';
@@ -102,7 +62,7 @@ exports.getGoogleDriveFiles = function (req, res, next) {
         }
       } else {
         if(req.delete) {
-          req.session.user.googledrivefiles = updateTreeDelete(id, req.body.options.id, req.session.user.googledrivefiles);
+          req.session.user.googledrivefiles = util.updateTreeDeleteItem(id, req.body.options.id, req.session.user.googledrivefiles);
         } else {
           dataPayload.forEach(function(item) {
             item.parentID = id;
@@ -114,7 +74,7 @@ exports.getGoogleDriveFiles = function (req, res, next) {
               item.type = 'file';
             }
           })
-          req.session.user.googledrivefiles = updateTree(id, dataPayload, req.session.user.googledrivefiles);
+          req.session.user.googledrivefiles = util.updateTreeWithNewPayLoad(id, dataPayload, req.session.user.googledrivefiles);
         }
       }
       next();
@@ -126,8 +86,9 @@ exports.getGoogleDriveFiles = function (req, res, next) {
 
 exports.updateGoogleDriveFileName = function (req, res, next) {
   if(req.session.user.accessedClouds.googledrive) {
-    googleapis.drive({ version: 'v2', auth: oauth2Client }).files.patch({fileId:req.body.id, resource: {title: req.body.title}}, function (err, file) {
+    googleapis.drive({ version: 'v2', auth: oauth2Client }).files.patch({fileId:req.body.options.id, resource: {title: req.body.options.title}}, function (err, file) {
         // TODO: err catch
+        req.rename = true;
         if(err && err.code == '403')
           return res.status(err.code).send('Not Authorized');
         else if (err)
@@ -169,6 +130,9 @@ exports.moveGoogleDriveFile = function (req, res, next) {
   if(req.session.user.accessedClouds.googledrive) {
     googleapis.drive({ version: 'v2', auth: oauth2Client }).files.update({fileId: req.body.file.id, addParents: req.body.parentID, removeParents: req.body.copy ?  '' : req.body.file.parentID}, function (err, data) {
       // TODO: Error catch
+      if(!req.body.copy)
+        req.session.user.googledrivefiles = util.updateTreeDeleteItem(req.body.file.parentID, req.body.file.id, req.session.user.googledrivefiles);
+      req.session.user.googledrivefiles = util.insertItemIntoTree(req.body.file, req.body.parentID, req.session.user.googledrivefiles);
       next();
     });
   } else {

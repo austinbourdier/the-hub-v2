@@ -47,11 +47,11 @@ function filesCtrl($scope, $rootScope, $http, $window, UserService, FileService,
   $scope.downloadFromCloud = function(id, cloud) {
     FileService.download(id, cloud);
   }
-  $scope.renameFile = function(id, oldTitle) {
+  $scope.renameFile = function(id, parentID, oldTitle) {
     var newTitle = '';
     if($scope.dropboxPrefix) newTitle += $scope.dropboxPrefix + '/';
     newTitle += $scope.newTitle[id];
-    FileService.renameFile(id, $scope.currentTab, newTitle).then(function(data) {
+    FileService.renameFile(id, $scope.currentTab, newTitle, parentID).then(function(data) {
       toastr.success(oldTitle + "'s Name Was Updated to " + newTitle + "!");
       $rootScope.$emit('updateUser', data.user)
     }, function(err) {
@@ -71,16 +71,16 @@ function filesCtrl($scope, $rootScope, $http, $window, UserService, FileService,
       });
     }
   };
-  $scope.changeToInputField = function($event, id, title) {
-    $scope.oldTitle[id] = title;
-    $scope.newTitle[id] = title;
+  $scope.changeToInputField = function($event, file, title) {
+    $scope.oldTitle[file.id] = title;
+    $scope.newTitle[file.id] = title;
     var displayTitle = title;
     if($scope.title == 'dropbox') {
       var parts = displayTitle.split('/');
       $scope.dropboxPrefix = parts.slice(0, -1).join('/');
-      $scope.newTitle[id] = parts.pop();
+      $scope.newTitle[file.id] = parts.pop();
     }
-    var elementStr = '<form id="update-name" ng-submit="renameFile(' + "'" + id + "'," + title + ')"><input ng-model="newTitle[' + "'" + id + "'" + ']" value=' + displayTitle.replace(" ", "&nbsp;") + '></input></form>';
+    var elementStr = '<form id="update-name" ng-submit="renameFile(' + "'" + file.id + "', '" + file.parentID + "', '" + displayTitle + "'" + ')"><input ng-model="newTitle[' + "'" + file.id + "'" + ']" value=' + displayTitle.replace(" ", "&nbsp;") + '></input></form>';
     angular.element(angular.element($event.target).parents()[0].children[0]).replaceWith($compile(elementStr)($scope))
   }
   $scope.downloadFromCloud = function(id, cloud) {
