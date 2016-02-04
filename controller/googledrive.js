@@ -1,6 +1,5 @@
 var googleapis = require('googleapis');
 var request = require('request');
-var fs = require('fs');
 var OAuth2 = googleapis.auth.OAuth2;
 
 var oauth2Client = new OAuth2(process.env.googleDriveClientId || require('../config.js').get('googleDrive:client_id'),
