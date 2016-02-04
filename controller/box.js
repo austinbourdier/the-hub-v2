@@ -82,10 +82,11 @@ exports.getBoxFiles = function (req, res, next) {
     var id = parentID || req.body.currentFolder || req.query.folderId || '0';
     box.folders.info(id, function (err, data) {
       // TODO: Error catch
-      console.log(data.item_collection.entries)
       if(!req.session.user.boxfiles) {
         data.item_collection.entries.forEach(function(item) {
           item.parentID = id;
+          if(item.type == 'folder')
+            item.items = [];
         })
         req.session.user.boxfiles = {
           id: data.id,
@@ -100,6 +101,8 @@ exports.getBoxFiles = function (req, res, next) {
         } else {
           data.item_collection.entries.forEach(function(item) {
             item.parentID = id;
+            if(item.type == 'folder')
+              item.items = [];
           })
           req.session.user.boxfiles = updateTree(parseInt(id), data.item_collection.entries, req.session.user.boxfiles);
         }
@@ -141,14 +144,18 @@ exports.updateBoxFileName = function (req, res, next) {
 };
 exports.moveBoxFile = function (req, res, next) {
   if(req.session.user.accessedClouds.box) {
-    var command = 'curl https://api.box.com/2.0/files/' + req.body.file.id + ' -H "Authorization: Bearer ' + req.session.box_access_token + '"' + " -d '" + JSON.stringify({parent: {id: req.body.parentID}}) + "' -X PUT"
+    var action = req.body.copy ? 'POST' : 'PUT';
+    var copyString = req.body.copy ? 'copy/' : '';
+    var command = 'curl https://api.box.com/2.0/files/' + copyString + req.body.file.id + ' -H "Authorization: Bearer ' + req.session.box_access_token + '"' + " -d '" + JSON.stringify({parent: {id: req.body.parentID}}) + "' -X " + action
+    console.log(command)
     child = exec(command, function(error, stdout, stderr){
       if(error !== null)
       {
         console.log('exec error: ' + error);
         console.log('exec error: ' + error);
       } else {
-        req.session.user.boxfiles = updateTreeDelete(req.body.file.parentID, req.body.file.id, req.session.user.boxfiles);
+        if(!req.body.copy)
+          req.session.user.boxfiles = updateTreeDelete(req.body.file.parentID, req.body.file.id, req.session.user.boxfiles);
         req.session.user.boxfiles = insertIntoTree(req.body.file, req.body.parentID, req.session.user.boxfiles);
         next();
       }

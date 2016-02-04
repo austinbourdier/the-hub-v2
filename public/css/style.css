@@ -2,6 +2,10 @@
 html, body{
     height: 100%;
 }
+.hide {
+  /*visibility: hidden;*/
+  height: 1px!important
+}
 #top-navbar{
   background-color: black;
   color: white;
@@ -13,7 +17,6 @@ html, body{
 .folder > span {
   text-decoration: underline;
 }
-
 .file {
   text-decoration: none!important;
 }

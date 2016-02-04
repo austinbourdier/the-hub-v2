@@ -773,7 +773,6 @@
 
               if (dragElm) {
                 e.preventDefault();
-
                 if ($window.getSelection) {
                   $window.getSelection().removeAllRanges();
                 } else if ($window.document.selection) {
@@ -869,7 +868,6 @@
                 } else {
                   dragElm[0].style.display = displayElm;
                 }
-
                 outOfBounds = !UiTreeHelper.elementIsTreeNodeHandle(targetElm) &&
                               !UiTreeHelper.elementIsTreeNode(targetElm) &&
                               !UiTreeHelper.elementIsTreeNodes(targetElm) &&
@@ -934,7 +932,6 @@
                     // is a child element of a node
                     targetNode = targetElm.controller('uiTreeNode').scope;
                   }
-
                   // check it's new position
                   isEmpty = false;
                   if (!targetNode) {
@@ -956,6 +953,10 @@
 
                   if (targetNode.$type != 'uiTreeNode'
                     && !isEmpty) { // Check if it is a uiTreeNode or it's an empty tree
+                    console.log(4)
+                    console.log(targetElm)
+                    console.log(targetNode.$type)
+                    console.log(isEmpty)
                     return;
                   }
 
@@ -1002,6 +1003,7 @@
 
             dragEnd = function (e) {
               var dragEventArgs = dragInfo.eventArgs(elements, pos);
+              console.log(dragEventArgs)
               e.preventDefault();
               unbindDragMoveEvents();
 

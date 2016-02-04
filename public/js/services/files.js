@@ -37,8 +37,8 @@ function FileService($http, $q, $window){
         return $q.reject(response.data);
       })
     },
-    moveFile: function (file, parentID, cloud) {
-      return $http.post('/moveFile/' + cloud, {file: file, parentID: parentID}).then(function (response) {
+    moveFile: function (file, parentID, cloud, copy) {
+      return $http.post('/moveFile/' + cloud, {file: file, parentID: parentID, copy: copy}).then(function (response) {
         if (typeof response.data === 'object') {
           return response.data;
         } else {

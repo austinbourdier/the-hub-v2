@@ -17,20 +17,17 @@ function filesCtrl($scope, $rootScope, $http, $window, UserService, FileService,
   };
   $rootScope.$on('updateUser', function(event, user) {
     $scope.user = user;
-    $state.reload();
     $route.reload();
-    $window.location.reload()
   })
-
   if(justAdded)
     $scope.toggleClouds(justAdded);
   if($cookies.get('currentCloud'))
     $scope.toggleClouds($cookies.get('currentCloud'));
 
+
   $scope.getFolder = function (event, item, cloud) {
     event.stopPropagation();
     if(item.type=='folder') {
-      console.log(item)
       FileService.getFolder(item.id, cloud).then(function (data) {
         $rootScope.$emit('updateUser', data.user)
       }, function (err) {
@@ -62,18 +59,15 @@ function filesCtrl($scope, $rootScope, $http, $window, UserService, FileService,
     });
   }
 
-  $scope.treeOptions = {
-    dropped: function(eventArgs) {
-      var file = eventArgs.source.nodeScope.$modelValue;
-      var parentID = eventArgs.dest.nodesScope.$modelValue[0].parentID;
-      if(file.parentID !== parentID) {
-        FileService.moveFile(file, parentID, $scope.currentTab).then(function(data) {
-          toastr.success("Your File Was Moved!");
-          $rootScope.$emit('updateUser', data.user)
-        }, function(err) {
-          toastr.error("Something went wrong!");
-        });
-      }
+  $scope.moveFile = function (file, parentID) {
+    if(file.parentID !== parentID) {
+      FileService.moveFile(file, parentID, $scope.currentTab, $scope.copyFile).then(function(data) {
+        toastr.success("Your File Was Moved!");
+        $scope.user = data.user;
+        $window.location.reload();
+      }, function(err) {
+        toastr.error("Something went wrong!");
+      });
     }
   };
   $scope.changeToInputField = function($event, id, title) {
@@ -93,28 +87,16 @@ function filesCtrl($scope, $rootScope, $http, $window, UserService, FileService,
   $scope.downloadFromCloud = function(id, cloud) {
     FileService.download(id, cloud);
   }
-  $scope.moveFile = function(itemToMove, id) {
-    console.log(itemToMove, id)
-    event.stopPropagation();
-    if(itemToMove.parentID !== id) {
-      FileService.moveFile(itemToMove, id, $scope.currentTab).then(function(data) {
-        toastr.success("Your File Was Moved!");
-        $rootScope.$emit('updateUser', data.user)
-      }, function(err) {
-        toastr.error("Something went wrong!");
-      });
-    }
-  },
+
   $scope.toggleFolderView = function () {
     $scope.showFolders = !$scope.showFolders;
   }
-
-  $scope.openDialog = function (item) {
+  $scope.openMoveFileDialog = function (item) {
     $scope.currentFileToMove = item;
     ngDialog.open({
       template: '../../views/directives/move_file.html',
-      scope: $scope
+      scope: $scope,
+      controller: 'filesCtrl'
     });
   };
-
 }
