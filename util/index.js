@@ -1,5 +1,5 @@
 exports.updateTreeWithNewPayLoad = function (id, update, tree) {
-  console.log(tree.id + ' = ' + id)
+  console.log(tree)
   if (tree && tree.id == id) {
     tree.items = update;
   } else {
@@ -18,7 +18,7 @@ exports.updateTreeDeleteItem = function (parentID, fileID, tree) {
   } else {
     if(tree && tree.items) {
       tree.items.map(function(item) {
-        return exports.updateTreeDelete(parentID, fileID, item);
+        return exports.updateTreeDeleteItem(parentID, fileID, item);
       })
     }
   }

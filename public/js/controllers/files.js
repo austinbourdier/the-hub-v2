@@ -3,7 +3,6 @@ angular.module('mainApp')
 
 function filesCtrl($scope, $rootScope, $http, $window, UserService, FileService, toastr, $cookies, $state, ngDialog, $compile, $route) {
   $scope.user = user;
-  $scope.showFolders = true;
   $scope.currentFolders = {'dropbox': $cookies.get('current_dropbox'), 'googledrive': $cookies.get('current_googledrive'), 'box': $cookies.get('current_box'), 'onedrive': $cookies.get('current_onedrive')};
   $scope.currentFoldersID = {'dropbox': $cookies.get('currentID_dropbox'), 'googledrive': $cookies.get('currentID_googledrive'), 'box': $cookies.get('currentID_box'), 'onedrive': $cookies.get('currentID_onedrive')};
   $scope.tabs = {'dropbox':false, 'googledrive':false, 'box':false, 'onedrive':false};
@@ -26,10 +25,8 @@ function filesCtrl($scope, $rootScope, $http, $window, UserService, FileService,
 
   $scope.getFolder = function (event, item) {
     event.stopPropagation();
-    console.log(item)
     if(item.type=='folder') {
       FileService.getFolder(item.id, $scope.currentTab).then(function (data) {
-        console.log(data.user)
         $rootScope.$emit('updateUser', data.user)
       }, function (err) {
         toastr.error('Folder information was not retrieved, please try again!');

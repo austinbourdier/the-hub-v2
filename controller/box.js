@@ -26,10 +26,8 @@ exports.getBoxAccessToken = function (req,res,next) {
     req.justAdded = 'box';
     req.session.box_access_token = JSON.parse(response.body).access_token;
     req.session.box_refresh_token = JSON.parse(response.body).refresh_token;
-    if(req.session.user.accessedClouds)
-      req.session.user.accessedClouds.box = true;
-    else
-      req.session.user.accessedClouds = {box:true};
+    if(req.session.user.accessedClouds) req.session.user.accessedClouds.box = true;
+    else req.session.user.accessedClouds = {box:true};
     next();
   })
 };

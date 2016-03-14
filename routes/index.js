@@ -56,6 +56,7 @@ module.exports = function(app, passport) {
 
   router.post('/moveFile/box', controller.box.moveBoxFile, controller.sendBackFiles);
   router.post('/moveFile/googledrive', controller.googledrive.moveGoogleDriveFile, controller.sendBackFiles);
+  router.post('/moveFile/dropbox', controller.dropbox.moveDropBoxFile, controller.sendBackFiles);
 
   // logout
   router.get('/auth/logout', controller.auth.logout);
