@@ -1,5 +1,4 @@
 exports.updateTreeWithNewPayLoad = function (id, update, tree) {
-  console.log(tree)
   if (tree && tree.id == id) {
     tree.items = update;
   } else {
@@ -13,6 +12,10 @@ exports.updateTreeWithNewPayLoad = function (id, update, tree) {
 }
 
 exports.updateTreeDeleteItem = function (parentID, fileID, tree) {
+  console.log('parentID, fileID')
+  console.log(parentID, fileID)
+  console.log('tree.id, parentID')
+  console.log(tree.id, parentID)
   if (tree && tree.id == parentID) {
     tree.items.splice(tree.items.map(function(item){return item.id}).indexOf(fileID), 1);
   } else {

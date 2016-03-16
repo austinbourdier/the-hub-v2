@@ -60,7 +60,7 @@ exports.getDropBoxFiles = function (req,res,next) {
           }
         })
         req.session.user.dropboxfiles = {
-          id: data.id,
+          id: id,
           items: data.contents,
           name: '/',
           type: 'folder',
@@ -106,7 +106,11 @@ exports.updateDropBoxFileName = function (req,res,next) {
 
 exports.moveDropBoxFile = function (req,res,next) {
   if(req.session.user.accessedClouds.dropbox) {
+    console.log('req.body.file.path, req.body.parentID')
+    console.log(req.body.file.path, req.body.parentID)
     DBoxApp.client(req.session.dbox_access_token).mv(req.body.file.path, req.body.parentID, function (status, data) {
+      console.log('req.body.file.path, req.body.parentID')
+      console.log(req.body.file.path, req.body.parentID)
       // TODO: error catch
       if(!req.body.copy)
         req.session.user.dropboxfiles = util.updateTreeDeleteItem(req.body.file.parentID, req.body.file.id, req.session.user.dropboxfiles);

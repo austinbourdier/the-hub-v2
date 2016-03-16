@@ -1,8 +1,9 @@
 angular.module('mainApp')
   .controller('oauthCtrl', oauthCtrl)
 
-function oauthCtrl($scope, $rootScope, $http, $window, UserService, FileService, toastr) {
+function oauthCtrl($scope, UserService, user) {
   $scope.user = user;
+  console.log(user)
   $scope.clouds = ['dropbox', 'googledrive', 'box', 'onedrive'];
   $scope.cloudLogin = function(cloud) {
     UserService.logIn(cloud);

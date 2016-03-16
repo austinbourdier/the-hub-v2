@@ -60,6 +60,7 @@ module.exports = function(app, passport) {
 
   // logout
   router.get('/auth/logout', controller.auth.logout);
+  router.get('/user', controller.user);
 
   app.use(router);
 };

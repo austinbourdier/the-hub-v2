@@ -1,8 +1,9 @@
 angular.module('mainApp')
 .controller('filesCtrl', filesCtrl)
 
-function filesCtrl($scope, $rootScope, $http, $window, UserService, FileService, toastr, $cookies, $state, ngDialog, $compile, $route) {
+function filesCtrl($scope, $rootScope, $window, FileService, toastr, $cookies, ngDialog, $compile, $route, user) {
   $scope.user = user;
+  console.log(user)
   $scope.currentFolders = {'dropbox': $cookies.get('current_dropbox'), 'googledrive': $cookies.get('current_googledrive'), 'box': $cookies.get('current_box'), 'onedrive': $cookies.get('current_onedrive')};
   $scope.currentFoldersID = {'dropbox': $cookies.get('currentID_dropbox'), 'googledrive': $cookies.get('currentID_googledrive'), 'box': $cookies.get('currentID_box'), 'onedrive': $cookies.get('currentID_onedrive')};
   $scope.tabs = {'dropbox':false, 'googledrive':false, 'box':false, 'onedrive':false};

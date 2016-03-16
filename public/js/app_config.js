@@ -20,6 +20,11 @@ function config($stateProvider, $urlRouterProvider, $locationProvider, $interpol
         controller: 'dropzoneCtrl',
         templateUrl: "/views/dropzone.html"
       }
+    },
+    resolve: {
+      user: function(UserService) {
+        return UserService.getUser()
+      }
     }
   })
 
